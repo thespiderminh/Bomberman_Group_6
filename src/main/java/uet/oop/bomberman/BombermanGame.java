@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -18,8 +15,8 @@ import java.util.List;
 
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 31;
+    public static final int HEIGHT = 13;
     
     private GraphicsContext gc;
     private Canvas canvas;
@@ -57,21 +54,60 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        createMap();
+        char[][] map = {
+                {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+                {'#', 'p', ' ', ' ', ' ', ' ', ' ', '*', '*', ' ', '*', ' ', ' ', '1', ' ', '*', ' ', '2', ' ', '*', ' ', ' ', '*', ' ', '*', ' ', '*', ' ', ' ', ' ', '#'},
+                {'#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', '*', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', '*', '#', '*', '#', ' ', '#'},
+                {'#', ' ', ' ', 'x', '*', ' ', ' ', ' ', ' ', ' ', '*', '*', '*', ' ', ' ', '*', ' ', ' ', '1', ' ', ' ', ' ', '*', ' ', '2', ' ', '*', ' ', '*', ' ', '#'},
+                {'#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', '*', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#'},
+                {'#', 'f', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x', ' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' ', '1', ' ', ' ', ' ', ' ', ' ', '#'},
+                {'#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#'},
+                {'#', '*', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+                {'#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'},
+                {'#', '*', ' ', ' ', ' ', ' ', '*', '*', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+                {'#', ' ', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'},
+                {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
+                {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
+        };
+
+
+        createMap(map);
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
+
     }
 
-    public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
+    public void createMap(char [][] a) {
+        for (int i = 0; i < 13; i++) {
+            for (int j = 0; j < 31; j++) {
                 Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
+                if (a[i][j] == '#') {
+                    object = new Wall(j, i, Sprite.wall.getFxImage());
                 }
+                else if (a[i][j] == '*') {
+                    object = new Brick(j, i, Sprite.brick.getFxImage());
+                }
+//                else if (a[i][j] == 'x') {
+//                    object = new Portal(j, i, Sprite.portal.getFxImage());
+//                }
+//                else if (a[i][j] == '1') {
+//                    object = new Balloom(j, i, Sprite.balloom_right1.getFxImage());
+//                }
+//                else if (a[i][j] == '2') {
+//                    object = new Oneal(j, i, Sprite.oneal_right1.getFxImage());
+//                }
+//                else if (a[i][j] == 'b') {
+//                    object = new Bomb(j, i, Sprite.bomb.getFxImage());
+//                }
+//                else if (a[i][j] == 'f') {
+//                    object = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
+//                }
+//                else if (a[i][j] == 's') {
+//                    object = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
+//                }
                 else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
                 }
                 stillObjects.add(object);
             }
