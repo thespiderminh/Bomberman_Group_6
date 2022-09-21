@@ -5,4 +5,6 @@ module uet.oop.bomberman {
 
     opens uet.oop.bomberman to javafx.fxml;
     exports uet.oop.bomberman;
+    exports uet.oop.bomberman.entities;
+    opens uet.oop.bomberman.entities to javafx.fxml;
 }
