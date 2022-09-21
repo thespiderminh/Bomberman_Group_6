@@ -93,8 +93,8 @@ public class BombermanGame extends Application {
     }
 
     public void createMap(char [][] a) {
-        for (int i = 0; i < 13; i++) {
-            for (int j = 0; j < 31; j++) {
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
                 Entity object;
                 if (a[i][j] == '#') {
                     object = new Wall(j, i, Sprite.wall.getFxImage());
