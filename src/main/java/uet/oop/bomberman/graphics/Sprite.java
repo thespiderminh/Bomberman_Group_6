@@ -32,10 +32,10 @@ public class Sprite {
 	| Bomber Sprites
 	|--------------------------------------------------------------------------
 	 */
-	public static Sprite player_up = new Sprite(DEFAULT_SIZE, 0, 0, SpriteSheet.tiles, 12, 16);
-	public static Sprite player_down = new Sprite(DEFAULT_SIZE, 2, 0, SpriteSheet.tiles, 12, 15);
-	public static Sprite player_left = new Sprite(DEFAULT_SIZE, 3, 0, SpriteSheet.tiles, 10, 15);
-	public static Sprite player_right = new Sprite(DEFAULT_SIZE, 1, 0, SpriteSheet.tiles, 10, 16);
+	public static Sprite player_up_0 = new Sprite(DEFAULT_SIZE, 0, 0, SpriteSheet.tiles, 12, 16);
+	public static Sprite player_down_0 = new Sprite(DEFAULT_SIZE, 2, 0, SpriteSheet.tiles, 12, 15);
+	public static Sprite player_left_0 = new Sprite(DEFAULT_SIZE, 3, 0, SpriteSheet.tiles, 10, 15);
+	public static Sprite player_right_0 = new Sprite(DEFAULT_SIZE, 1, 0, SpriteSheet.tiles, 10, 16);
 	
 	public static Sprite player_up_1 = new Sprite(DEFAULT_SIZE, 0, 1, SpriteSheet.tiles, 12, 16);
 	public static Sprite player_up_2 = new Sprite(DEFAULT_SIZE, 0, 2, SpriteSheet.tiles, 12, 15);
@@ -235,6 +235,14 @@ public class Sprite {
 	
 	public int getSize() {
 		return SIZE;
+	}
+
+	public int getX() {
+		return _x;
+	}
+
+	public int getY() {
+		return _y;
 	}
 
 	public int getPixel(int i) {

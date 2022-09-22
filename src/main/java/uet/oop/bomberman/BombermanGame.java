@@ -2,10 +2,12 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
@@ -73,7 +75,29 @@ public class BombermanGame extends Application {
         backgroundMap();
         createMap(map);
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Entity bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent key) {
+                switch (key.getCode()) {
+                    case UP -> ((Bomber) bomberman).moveUp();
+                    case DOWN -> ((Bomber) bomberman).moveDown();
+                    case RIGHT -> ((Bomber) bomberman).moveRight();
+                    case LEFT -> ((Bomber) bomberman).moveLeft();
+                }
+            }
+        });
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent key) {
+                switch (key.getCode()) {
+                    case UP -> ((Bomber) bomberman).stopY();
+                    case DOWN -> ((Bomber) bomberman).stopY();
+                    case RIGHT -> ((Bomber) bomberman).stopX();
+                    case LEFT -> ((Bomber) bomberman).stopX();
+                }
+            }
+        });
         entities.add(bomberman);
 
     }
