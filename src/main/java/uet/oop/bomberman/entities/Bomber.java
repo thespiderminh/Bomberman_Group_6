@@ -14,6 +14,18 @@ public class Bomber extends Entity {
         super( x, y, img);
     }
 
+    public int getVelo() {
+        return velo;
+    }
+
+    public int getVelocityX() {
+        return velocityX;
+    }
+
+    public int getVelocityY() {
+        return velocityY;
+    }
+
     @Override
     public void update() {
         x += velocityX;

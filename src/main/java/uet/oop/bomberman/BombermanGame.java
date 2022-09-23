@@ -76,6 +76,7 @@ public class BombermanGame extends Application {
         createMap(map);
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
+        Entity bomb = new Bomb(-1,-1,Sprite.bomb.getFxImage());
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
             public void handle(KeyEvent key) {
@@ -84,6 +85,9 @@ public class BombermanGame extends Application {
                     case DOWN -> ((Bomber) bomberman).moveDown();
                     case RIGHT -> ((Bomber) bomberman).moveRight();
                     case LEFT -> ((Bomber) bomberman).moveLeft();
+                    case SPACE ->  {bomb.setX(bomberman.getX()) ;
+                                    bomb.setY(bomberman.getY());}
+
                 }
             }
         });
@@ -99,6 +103,7 @@ public class BombermanGame extends Application {
             }
         });
         entities.add(bomberman);
+        entities.add(bomb);
 
     }
     public void backgroundMap() {
