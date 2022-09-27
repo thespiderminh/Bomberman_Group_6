@@ -16,15 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    
+
+    private static final int FRAME_PER_SECOND = 30;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
-
+    private static List<Entity> stillObjects = new ArrayList<>();
 
     public static char[][] map = {
             {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
@@ -64,16 +64,22 @@ public class BombermanGame extends Application {
         stage.show();
 
         AnimationTimer timer = new AnimationTimer() {
+            private long prevTime = 0;
             @Override
-            public void handle(long l) {
+            public void handle(long now) {
+                long dt = now - prevTime;
+
+                if(dt > 1000000000/FRAME_PER_SECOND) {
+                    prevTime = now;
+                    update();
+                }
                 render();
-                update();
             }
         };
         timer.start();
 
 
-        backgroundMap();
+//        backgroundMap();
         createMap(map);
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
@@ -86,8 +92,8 @@ public class BombermanGame extends Application {
                     case DOWN -> ((Bomber) bomberman).moveDown();
                     case RIGHT -> ((Bomber) bomberman).moveRight();
                     case LEFT -> ((Bomber) bomberman).moveLeft();
-                    case SPACE ->  {bomb.setX(bomberman.getX()) ;
-                                    bomb.setY(bomberman.getY());}
+                    case SPACE ->  {bomb.setX((int)(bomberman.getCenterX() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE) ;
+                                    bomb.setY((int)(bomberman.getCenterY() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE);}
 
                 }
             }
@@ -181,5 +187,9 @@ public class BombermanGame extends Application {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+    }
+
+    public List<Entity> getStillObjects() {
+        return stillObjects;
     }
 }

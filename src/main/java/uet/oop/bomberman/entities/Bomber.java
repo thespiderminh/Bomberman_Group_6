@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
-//import static uet.oop.bomberman.graphics.Sprite.wall;
 
 public class Bomber extends Entity {
 
@@ -28,40 +27,24 @@ public class Bomber extends Entity {
 
     @Override
     public void update() {
-        x += velocityX;
-        y += velocityY;
-
-//        if (y < Sprite.wall.getY() + Sprite.SCALED_SIZE) {
-//            y += velo;}
-//        } else if (y + Sprite.SCALED_SIZE > Sprite.wall.getY()) {
-//            y -= velo;
-//        }
-
-//        if (x < Sprite.wall.getX() + Sprite.SCALED_SIZE) {
-//            x += velo;
-//        } else if (x + Sprite.SCALED_SIZE > Sprite.wall.getX()) {
-//            x -= velo;
-//        }
+        move();
+        changeTheAnimation();
     }
 
     public void moveUp() {
         velocityY = -velo;
-        this.img = Sprite.player_up_0.getFxImage();
     }
 
     public void moveDown() {
         velocityY = velo;
-        this.img = Sprite.player_down_0.getFxImage();
     }
 
     public void moveRight() {
         velocityX = velo;
-        this.img = Sprite.player_right_0.getFxImage();
     }
 
     public void moveLeft() {
         velocityX = -velo;
-        this.img = Sprite.player_left_0.getFxImage();
     }
 
     public void stopX() {
@@ -72,4 +55,72 @@ public class Bomber extends Entity {
         velocityY = 0;
     }
 
+    private void move() {
+        x += velocityX;
+        y += velocityY;
+
+        if (x <= Sprite.SCALED_SIZE) {
+            x = Sprite.SCALED_SIZE;
+            stopX();
+        }
+
+        if (x >= (WIDTH - 1) * Sprite.SCALED_SIZE) {
+            x = (WIDTH - 1) * Sprite.SCALED_SIZE;
+            stopX();
+        }
+
+        if (y <= Sprite.SCALED_SIZE) {
+            y = Sprite.SCALED_SIZE;
+            stopY();
+        }
+
+        if (y >= (HEIGHT - 1) * Sprite.SCALED_SIZE) {
+            y = (HEIGHT - 1) * Sprite.SCALED_SIZE;
+            stopY();
+        }
+
+        for(Entity w : getStillObjects()) {
+            if (w instanceof Wall || w instanceof Brick) {
+                if (velocityY != 0) {
+                    if (x + Sprite.SCALED_SIZE > w.getX() && x < w.getX() + Sprite.SCALED_SIZE) {
+                        if (y + Sprite.SCALED_SIZE > w.getY() && y < w.getY() + Sprite.SCALED_SIZE) {
+                            y -= velocityY;
+                            if (x + Sprite.SCALED_SIZE / 3 < w.getX()) {
+                                x -= velo;
+                            } else if (x > w.getX() + Sprite.SCALED_SIZE / 3){
+                                x += velo;
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                if (velocityX != 0) {
+                    if (y + Sprite.SCALED_SIZE > w.getY() && y < w.getY() + Sprite.SCALED_SIZE){
+                        if (x < w.getX() + Sprite.SCALED_SIZE && x + Sprite.SCALED_SIZE > w.getX()){
+                            x -= velocityX;
+                            if (y + Sprite.SCALED_SIZE / 3 < w.getY()) {
+                                y -= velo;
+                            } else if (y > w.getY() + Sprite.SCALED_SIZE / 3){
+                                y += velo;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void changeTheAnimation() {
+        if (velocityY > 0) {
+            this.img = Sprite.player_down_0.getFxImage();
+        } else if (velocityY < 0) {
+            this.img = Sprite.player_up_0.getFxImage();
+        } else if (velocityX > 0) {
+            this.img = Sprite.player_right_0.getFxImage();
+        } else if (velocityX < 0) {
+            this.img = Sprite.player_left_0.getFxImage();
+        }
+    }
 }

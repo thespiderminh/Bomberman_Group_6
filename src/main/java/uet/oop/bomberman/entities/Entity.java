@@ -2,9 +2,10 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
-public abstract class Entity {
+public abstract class Entity extends BombermanGame {
     //Tọa độ X tính từ góc trái trên trong Canvas
     protected int x;
 
@@ -19,6 +20,14 @@ public abstract class Entity {
 
     public int getY() {
         return y;
+    }
+
+    public int getCenterX() {
+        return x + Sprite.SCALED_SIZE / 2;
+    }
+
+    public int getCenterY() {
+        return y + Sprite.SCALED_SIZE / 2;
     }
 
     public void setX(int x) {
