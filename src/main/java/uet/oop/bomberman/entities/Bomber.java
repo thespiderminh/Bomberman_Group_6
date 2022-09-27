@@ -2,7 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
-//import static uet.oop.bomberman.graphics.Sprite.wall;
+import uet.oop.bomberman.BombermanGame;
 
 public class Bomber extends Entity {
 
@@ -32,7 +32,7 @@ public class Bomber extends Entity {
         y += velocityY;
 
 //        if (y < Sprite.wall.getY() + Sprite.SCALED_SIZE) {
-//            y += velo;}
+//            y += velo;
 //        } else if (y + Sprite.SCALED_SIZE > Sprite.wall.getY()) {
 //            y -= velo;
 //        }

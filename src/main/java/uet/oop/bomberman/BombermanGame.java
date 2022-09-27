@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    
+
+    private  double opacity = 1;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     
@@ -48,10 +49,17 @@ public class BombermanGame extends Application {
         stage.show();
 
         AnimationTimer timer = new AnimationTimer() {
+            private long now = 0;
             @Override
             public void handle(long l) {
+                long dt = l - now;
+
+//                System.out.println(l);
+                if(dt > 1000000000/90) {
+                    now = l;
+                    update();
+                }
                 render();
-                update();
             }
         };
         timer.start();
