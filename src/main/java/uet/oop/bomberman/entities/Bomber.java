@@ -80,7 +80,7 @@ public class Bomber extends Entity {
         }
 
         for(Entity w : getStillObjects()) {
-            if (w instanceof Wall) {
+            if (w instanceof Wall || w instanceof Brick) {
                 if (velocityY != 0) {
                     if (x + Sprite.SCALED_SIZE > w.getX() && x < w.getX() + Sprite.SCALED_SIZE) {
                         if (y + Sprite.SCALED_SIZE > w.getY() && y < w.getY() + Sprite.SCALED_SIZE) {

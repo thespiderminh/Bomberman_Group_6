@@ -22,6 +22,14 @@ public abstract class Entity extends BombermanGame {
         return y;
     }
 
+    public int getCenterX() {
+        return x + Sprite.SCALED_SIZE / 2;
+    }
+
+    public int getCenterY() {
+        return y + Sprite.SCALED_SIZE / 2;
+    }
+
     public void setX(int x) {
         this.x = x;
     }

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class BombermanGame extends Application {
 
-    private static final int FRAME_PER_SECOND = 90;
+    private static final int FRAME_PER_SECOND = 30;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     
@@ -91,8 +91,8 @@ public class BombermanGame extends Application {
                     case DOWN -> ((Bomber) bomberman).moveDown();
                     case RIGHT -> ((Bomber) bomberman).moveRight();
                     case LEFT -> ((Bomber) bomberman).moveLeft();
-                    case SPACE ->  {bomb.setX(bomberman.getX()) ;
-                                    bomb.setY(bomberman.getY());}
+                    case SPACE ->  {bomb.setX((int)(bomberman.getCenterX() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE) ;
+                                    bomb.setY((int)(bomberman.getCenterY() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE);}
 
                 }
             }
@@ -134,9 +134,9 @@ public class BombermanGame extends Application {
                 if (a[i][j] == '#') {
                     object = new Wall(j, i, Sprite.wall.getFxImage());
                 }
-//                else if (a[i][j] == '*') {
-//                    object = new Brick(j, i, Sprite.brick.getFxImage());
-//                }
+                else if (a[i][j] == '*') {
+                    object = new Brick(j, i, Sprite.brick.getFxImage());
+                }
 //                else if (a[i][j] == 'x') {
 //                    object = new Portal(j, i, Sprite.portal.getFxImage());
 //                }
