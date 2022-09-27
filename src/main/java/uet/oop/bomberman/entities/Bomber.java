@@ -5,7 +5,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends Entity {
 
-    private final int velo = 3;
+    private final int velo = 1;
     private int velocityX = 0;
     private int velocityY = 0;
 

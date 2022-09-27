@@ -13,9 +13,15 @@ public class Balloon extends Enemy {
     private int velocity_y = 0;
 
     private int step = Sprite.SCALED_SIZE;
+    /**
+     * Destination x,y.
+     */
     private int des_x = x + step;
     private int des_y = y + step;
 
+    /**
+     * Right,Left,Up,Down.
+     */
     private String state = null;
 
     public void update_des_x() {
@@ -60,14 +66,6 @@ public class Balloon extends Enemy {
     public void move_left_to(int d_x) {
         velocity_x = -velo;
         if (x > d_x) {
-            x += velocity_x;
-        }
-    }
-
-    public void move_right() {
-        velocity_x = velo;
-
-        if (x < des_x) {
             x += velocity_x;
         }
     }
