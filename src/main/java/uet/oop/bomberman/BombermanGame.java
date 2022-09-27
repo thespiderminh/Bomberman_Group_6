@@ -17,15 +17,14 @@ import java.util.List;
 
 public class BombermanGame extends Application {
 
-    private  double opacity = 1;
+    private static final int FRAME_PER_SECOND = 90;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
-
+    private static List<Entity> stillObjects = new ArrayList<>();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -49,14 +48,13 @@ public class BombermanGame extends Application {
         stage.show();
 
         AnimationTimer timer = new AnimationTimer() {
-            private long now = 0;
+            private long prevTime = 0;
             @Override
-            public void handle(long l) {
-                long dt = l - now;
+            public void handle(long now) {
+                long dt = now - prevTime;
 
-//                System.out.println(l);
-                if(dt > 1000000000/90) {
-                    now = l;
+                if(dt > 1000000000/FRAME_PER_SECOND) {
+                    prevTime = now;
                     update();
                 }
                 render();
@@ -80,7 +78,7 @@ public class BombermanGame extends Application {
                 {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
         };
 
-        backgroundMap();
+//        backgroundMap();
         createMap(map);
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
@@ -136,9 +134,9 @@ public class BombermanGame extends Application {
                 if (a[i][j] == '#') {
                     object = new Wall(j, i, Sprite.wall.getFxImage());
                 }
-                else if (a[i][j] == '*') {
-                    object = new Brick(j, i, Sprite.brick.getFxImage());
-                }
+//                else if (a[i][j] == '*') {
+//                    object = new Brick(j, i, Sprite.brick.getFxImage());
+//                }
 //                else if (a[i][j] == 'x') {
 //                    object = new Portal(j, i, Sprite.portal.getFxImage());
 //                }
@@ -173,5 +171,9 @@ public class BombermanGame extends Application {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+    }
+
+    public List<Entity> getStillObjects() {
+        return stillObjects;
     }
 }

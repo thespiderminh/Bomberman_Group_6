@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
-public abstract class Entity {
+public abstract class Entity extends BombermanGame {
     //Tọa độ X tính từ góc trái trên trong Canvas
     protected int x;
 
