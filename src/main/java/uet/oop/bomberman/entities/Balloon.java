@@ -70,6 +70,14 @@ public class Balloon extends Enemy {
         }
     }
 
+    public void change_animation() {
+        if (Objects.equals(state, "Right")) {
+            this.img = Sprite.balloom_right1.getFxImage();
+        } else if (Objects.equals(state, "Left")) {
+            this.img = Sprite.balloom_left1.getFxImage();
+        }
+    }
+
     @Override
     public void update() {
 
@@ -103,5 +111,7 @@ public class Balloon extends Enemy {
                 update_des_x();
             }
         }
+
+        change_animation();
     }
 }
