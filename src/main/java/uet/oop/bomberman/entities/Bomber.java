@@ -87,14 +87,19 @@ public class Bomber extends Bomb {
 
         for(Entity w : getStillObjects()) {
             if (w instanceof Wall || w instanceof Brick) {
+                int index = getStillObjects().indexOf(w);
                 if (velocityY != 0) {
                     if (x + Sprite.SCALED_SIZE > w.getX() && x < w.getX() + Sprite.SCALED_SIZE) {
                         if (y + Sprite.SCALED_SIZE > w.getY() && y < w.getY() + Sprite.SCALED_SIZE) {
                             y -= velocityY;
                             if (x + Sprite.SCALED_SIZE / 3 < w.getX()) {
-                                x -= velo;
+                                if (getStillObjects().get(index - 1) instanceof Grass) {
+                                    x -= velo;
+                                }
                             } else if (x > w.getX() + Sprite.SCALED_SIZE / 3){
-                                x += velo;
+                                if (getStillObjects().get(index + 1) instanceof Grass) {
+                                    x += velo;
+                                }
                             }
                             break;
                         }
@@ -106,9 +111,13 @@ public class Bomber extends Bomb {
                         if (x < w.getX() + Sprite.SCALED_SIZE && x + Sprite.SCALED_SIZE > w.getX()){
                             x -= velocityX;
                             if (y + Sprite.SCALED_SIZE / 3 < w.getY()) {
-                                y -= velo;
+                                if (getStillObjects().get(index - WIDTH) instanceof Grass) {
+                                    y -= velo;
+                                }
                             } else if (y > w.getY() + Sprite.SCALED_SIZE / 3){
-                                y += velo;
+                                if (getStillObjects().get(index + WIDTH) instanceof Grass) {
+                                    y += velo;
+                                }
                             }
                             break;
                         }
