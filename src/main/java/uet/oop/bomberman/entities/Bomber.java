@@ -123,4 +123,8 @@ public class Bomber extends Entity {
             this.img = Sprite.player_left_0.getFxImage();
         }
     }
+
+    public void getBomb(Bomber bomberman) {
+        Bomb.getBombs(bomberman);
+    }
 }

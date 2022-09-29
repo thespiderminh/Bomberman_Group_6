@@ -23,7 +23,7 @@ public class BombermanGame extends Application {
     
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
+    private static List<Entity> entities = new ArrayList<>();
     private static List<Entity> stillObjects = new ArrayList<>();
 
     public static char[][] map = {
@@ -79,11 +79,10 @@ public class BombermanGame extends Application {
         timer.start();
 
 
-        backgroundMap();
+//        backgroundMap();
         createMap(map);
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
-        Entity bomb = new Bomb(-1,-1,Sprite.bomb.getFxImage());
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
             public void handle(KeyEvent key) {
@@ -92,8 +91,7 @@ public class BombermanGame extends Application {
                     case DOWN -> ((Bomber) bomberman).moveDown();
                     case RIGHT -> ((Bomber) bomberman).moveRight();
                     case LEFT -> ((Bomber) bomberman).moveLeft();
-                    case SPACE ->  {bomb.setX((int)(bomberman.getCenterX() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE) ;
-                                    bomb.setY((int)(bomberman.getCenterY() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE);}
+                    case SPACE ->  {((Bomber) bomberman).getBomb((Bomber) bomberman);}
 
                 }
             }
@@ -110,7 +108,7 @@ public class BombermanGame extends Application {
             }
         });
         entities.add(bomberman);
-        entities.add(bomb);
+//        entities.add(bomb);
 
 
 
@@ -189,7 +187,11 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
     }
 
-    public List<Entity> getStillObjects() {
+    public static List<Entity> getStillObjects() {
         return stillObjects;
+    }
+
+    public static List<Entity> getEntities() {
+        return entities;
     }
 }
