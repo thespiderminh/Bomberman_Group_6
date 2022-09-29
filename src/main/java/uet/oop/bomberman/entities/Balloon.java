@@ -72,9 +72,21 @@ public class Balloon extends Enemy {
 
     public void change_animation() {
         if (Objects.equals(state, "Right")) {
-            this.img = Sprite.balloom_right1.getFxImage();
+            if(Math.abs(x - des_x) < Sprite.SCALED_SIZE/3) {
+                this.img = Sprite.balloom_right1.getFxImage();
+            } else if (Math.abs(x - des_x) < (2*Sprite.SCALED_SIZE)/3) {
+                this.img = Sprite.balloom_right2.getFxImage();
+            } else {
+                this.img = Sprite.balloom_right3.getFxImage();
+            }
         } else if (Objects.equals(state, "Left")) {
-            this.img = Sprite.balloom_left1.getFxImage();
+            if(Math.abs(x - des_x) < Sprite.SCALED_SIZE/3) {
+                this.img = Sprite.balloom_left1.getFxImage();
+            } else if (Math.abs(x - des_x) < (2*Sprite.SCALED_SIZE)/3) {
+                this.img = Sprite.balloom_left2.getFxImage();
+            } else {
+                this.img = Sprite.balloom_right3.getFxImage();
+            }
         }
     }
 
