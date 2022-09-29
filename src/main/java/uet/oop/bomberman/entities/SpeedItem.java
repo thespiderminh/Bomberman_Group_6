@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
 public class SpeedItem extends Brick {
@@ -8,7 +9,7 @@ public class SpeedItem extends Brick {
     }
 
     @Override
-    public void update() {
+    public void update(Scene scene, long now) {
 
     }
 }
