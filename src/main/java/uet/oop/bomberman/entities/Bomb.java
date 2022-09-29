@@ -1,11 +1,14 @@
 package uet.oop.bomberman.entities;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static uet.oop.bomberman.BombermanGame.getEntities;
 
 public class Bomb extends Entity {
     private static int numberOfBombs = 1;
@@ -40,7 +43,7 @@ public class Bomb extends Entity {
     }
 
     @Override
-    public void update() {
+    public void update(Scene scene, long now) {
 
     }
 

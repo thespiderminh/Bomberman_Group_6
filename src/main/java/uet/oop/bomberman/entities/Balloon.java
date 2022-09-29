@@ -79,7 +79,7 @@ public class Balloon extends Enemy {
     }
 
     @Override
-    public void update() {
+    public void update(Scene scene, long now) {
 
         if (checkGrass(y/Sprite.SCALED_SIZE, des_x/Sprite.SCALED_SIZE)) {
             if (des_x > x) {

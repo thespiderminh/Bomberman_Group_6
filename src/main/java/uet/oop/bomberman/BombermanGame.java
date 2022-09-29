@@ -2,12 +2,10 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
@@ -46,6 +44,8 @@ public class BombermanGame extends Application {
         Application.launch(BombermanGame.class);
     }
 
+    private Scene scene;
+
     @Override
     public void start(Stage stage) {
         // Tao Canvas
@@ -57,7 +57,7 @@ public class BombermanGame extends Application {
         root.getChildren().add(canvas);
 
         // Tao scene
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
 
         // Them scene vao stage
         stage.setScene(scene);
@@ -71,47 +71,19 @@ public class BombermanGame extends Application {
 
                 if(dt > 1000000000/FRAME_PER_SECOND) {
                     prevTime = now;
-                    update();
+                    update(now);
                 }
                 render();
             }
         };
         timer.start();
-
-
+        
 //        backgroundMap();
         createMap(map);
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-            @Override
-            public void handle(KeyEvent key) {
-                switch (key.getCode()) {
-                    case UP -> ((Bomber) bomberman).moveUp();
-                    case DOWN -> ((Bomber) bomberman).moveDown();
-                    case RIGHT -> ((Bomber) bomberman).moveRight();
-                    case LEFT -> ((Bomber) bomberman).moveLeft();
-                    case SPACE ->  {((Bomber) bomberman).getBomb((Bomber) bomberman);}
 
-                }
-            }
-        });
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent key) {
-                switch (key.getCode()) {
-                    case UP -> ((Bomber) bomberman).stopY();
-                    case DOWN -> ((Bomber) bomberman).stopY();
-                    case RIGHT -> ((Bomber) bomberman).stopX();
-                    case LEFT -> ((Bomber) bomberman).stopX();
-                }
-            }
-        });
         entities.add(bomberman);
-//        entities.add(bomb);
-
-
-
     }
 
     public void backgroundMap() {
@@ -177,8 +149,10 @@ public class BombermanGame extends Application {
 
     }
 
-    public void update() {
-        entities.forEach(Entity::update);
+    public void update(long now) {
+        for(Entity w : entities) {
+            w.update(scene, now);
+        }
     }
 
     public void render() {

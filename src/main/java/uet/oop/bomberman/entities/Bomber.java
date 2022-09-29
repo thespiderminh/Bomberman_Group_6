@@ -1,7 +1,12 @@
 package uet.oop.bomberman.entities;
 
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.graphics.Sprite;
+
+import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomber extends Entity {
 
@@ -26,9 +31,10 @@ public class Bomber extends Entity {
     }
 
     @Override
-    public void update() {
-        move();
+    public void update(Scene scene, long now) {
+        move(scene);
         changeTheAnimation();
+        control(scene);
     }
 
     public void moveUp() {
@@ -55,7 +61,7 @@ public class Bomber extends Entity {
         velocityY = 0;
     }
 
-    private void move() {
+    private void move(Scene scene) {
         x += velocityX;
         y += velocityY;
 
@@ -124,7 +130,34 @@ public class Bomber extends Entity {
         }
     }
 
-    public void getBomb(Bomber bomberman) {
-        Bomb.getBombs(bomberman);
+    public void control(Scene scene) {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent key) {
+                switch (key.getCode()) {
+                    case UP -> moveUp();
+                    case DOWN -> moveDown();
+                    case RIGHT -> moveRight();
+                    case LEFT -> moveLeft();
+                    case SPACE ->  getBomb();
+
+                }
+            }
+        });
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent key) {
+                switch (key.getCode()) {
+                    case UP -> stopY();
+                    case DOWN -> stopY();
+                    case RIGHT -> stopX();
+                    case LEFT -> stopX();
+                }
+            }
+        });
+    }
+
+    public void getBomb() {
+        Bomb.getBombs(this);
     }
 }
