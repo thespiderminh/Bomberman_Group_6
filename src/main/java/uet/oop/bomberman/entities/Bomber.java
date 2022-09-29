@@ -8,7 +8,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
-public class Bomber extends Entity {
+public class Bomber extends Bomb {
 
     private final int velo = 1;
     private int velocityX = 0;
@@ -34,7 +34,7 @@ public class Bomber extends Entity {
     public void update(Scene scene, long now) {
         move(scene);
         changeTheAnimation();
-        control(scene);
+        control(scene, now);
     }
 
     public void moveUp() {
@@ -130,7 +130,7 @@ public class Bomber extends Entity {
         }
     }
 
-    public void control(Scene scene) {
+    public void control(Scene scene, long now) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
             public void handle(KeyEvent key) {
@@ -139,7 +139,7 @@ public class Bomber extends Entity {
                     case DOWN -> moveDown();
                     case RIGHT -> moveRight();
                     case LEFT -> moveLeft();
-                    case SPACE ->  getBomb();
+                    case SPACE -> getBombs(Bomber.this, now);
                 }
             }
         });
@@ -154,9 +154,5 @@ public class Bomber extends Entity {
                 }
             }
         });
-    }
-
-    public void getBomb() {
-        Bomb.getBombs(this);
     }
 }
