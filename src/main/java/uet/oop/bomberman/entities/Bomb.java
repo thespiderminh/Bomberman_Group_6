@@ -39,7 +39,13 @@ public class Bomb extends Entity {
         }
 
         if (firstUpdate) {
-            if (now - BOMB_TIME > startTime) {
+            if( now-startTime <= 500000000L) {
+                this.img = Sprite.bomb.getFxImage();
+            }else if( now-startTime <= 1000000000L) {
+                this.img = Sprite.bomb_1.getFxImage();
+            }else if (now-startTime <= 1500000000L) {
+                this.img = Sprite.bomb_2.getFxImage();
+            }else if (now-startTime>=BOMB_TIME) {
                 exploid();
                 firstUpdate = false;
             }
