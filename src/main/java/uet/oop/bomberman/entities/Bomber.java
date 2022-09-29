@@ -140,7 +140,6 @@ public class Bomber extends Entity {
                     case RIGHT -> moveRight();
                     case LEFT -> moveLeft();
                     case SPACE ->  getBomb();
-
                 }
             }
         });
