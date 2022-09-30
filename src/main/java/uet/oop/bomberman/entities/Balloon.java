@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Balloon extends Enemy {
@@ -13,6 +15,7 @@ public class Balloon extends Enemy {
     private int velocity_y = 0;
 
     private int step = Sprite.SCALED_SIZE;
+
     /**
      * Destination x,y.
      */
@@ -22,7 +25,10 @@ public class Balloon extends Enemy {
     /**
      * Right,Left,Up,Down.
      */
-    private String state = null;
+    String [] states = { "Stop", "Right", "Left", "Up", "Down"};
+    private String current_state = null;
+
+    private long startTime;
 
     public void update_des_x() {
         des_x = x + step;
@@ -52,11 +58,17 @@ public class Balloon extends Enemy {
         super( x, y, img);
     }
 
+    void generate_direction() {
+        int i = (int)(Math.random()*10) % 4 + 1;
+        current_state = states[i];
+    }
+
     public boolean checkGrass(int m_x, int m_y) {
         return BombermanGame.map[m_x][m_y] == ' ';
     }
 
     public void move_right_to(int d_x) {
+        current_state = "Right";
         velocity_x = velo;
         if (x < d_x) {
             x += velocity_x;
@@ -64,47 +76,75 @@ public class Balloon extends Enemy {
     }
 
     public void move_left_to(int d_x) {
+        current_state = "Left";
         velocity_x = -velo;
         if (x > d_x) {
             x += velocity_x;
         }
     }
 
-    public void change_animation() {
-        if (Objects.equals(state, "Right")) {
-            if(Math.abs(x - des_x) < Sprite.SCALED_SIZE/3) {
+    public void move_up_to(int d_y) {
+        current_state = "Up";
+        velocity_y = -velo;
+        if (y > d_y) {
+            y += velocity_y;
+        }
+    }
+
+    public void move_down_to(int d_y) {
+        current_state = "Down";
+        velocity_y = velo;
+        if (y < d_y) {
+            y += velocity_y;
+        }
+    }
+
+    public void reset(long now) {
+        if (now - startTime > 450000000L) {
+            startTime = now;
+        }
+    }
+
+    public void change_animation(long now) {
+        reset(now);
+
+        System.out.println(now);
+
+        if (Objects.equals(current_state, "Right")) {
+            if(now - startTime < 150000000L) {
                 this.img = Sprite.balloom_right1.getFxImage();
-            } else if (Math.abs(x - des_x) < (2*Sprite.SCALED_SIZE)/3) {
+            } else if (now - startTime < 300000000L) {
                 this.img = Sprite.balloom_right2.getFxImage();
             } else {
                 this.img = Sprite.balloom_right3.getFxImage();
             }
-        } else if (Objects.equals(state, "Left")) {
-            if(Math.abs(x - des_x) < Sprite.SCALED_SIZE/3) {
+        } else if (Objects.equals(current_state, "Left")) {
+            if(now - startTime < 150000000L) {
                 this.img = Sprite.balloom_left1.getFxImage();
-            } else if (Math.abs(x - des_x) < (2*Sprite.SCALED_SIZE)/3) {
+            } else if (now - startTime < 300000000L) {
                 this.img = Sprite.balloom_left2.getFxImage();
             } else {
-                this.img = Sprite.balloom_right3.getFxImage();
+                this.img = Sprite.balloom_left3.getFxImage();
             }
         }
     }
 
     @Override
     public void update(Scene scene, long now) {
+        if (current_state == "Stop") {
+            generate_direction();
+        }
 
         if (checkGrass(y/Sprite.SCALED_SIZE, des_x/Sprite.SCALED_SIZE)) {
             if (des_x > x) {
-                state = "Right";
                 move_right_to(des_x);
             }
             else {
-                state = "Left";
                 move_left_to(des_x);
             }
         }
         else {
-            if (Objects.equals(state, "Right")) {
+            if (Objects.equals(current_state, "Right")) {
                 step = -Sprite.SCALED_SIZE;
                 update_des_x();
             }
@@ -114,7 +154,7 @@ public class Balloon extends Enemy {
             }
         }
         if (x == des_x) {
-            if (Objects.equals(state, "Right")) {
+            if (Objects.equals(current_state, "Right")) {
                 step = Sprite.SCALED_SIZE;
                 update_des_x();
             }
@@ -124,6 +164,6 @@ public class Balloon extends Enemy {
             }
         }
 
-        change_animation();
+        change_animation(now);
     }
 }
