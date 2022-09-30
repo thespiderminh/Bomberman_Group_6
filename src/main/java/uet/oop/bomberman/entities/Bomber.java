@@ -13,7 +13,7 @@ import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomber extends Bomb {
 
-    private final int velo = 1;
+    private final int velo = 2;
     private int velocityX = 0;
     private int velocityY = 0;
     private long timePress = 0;
@@ -163,7 +163,7 @@ public class Bomber extends Bomb {
                     case DOWN -> moveDown();
                     case RIGHT -> moveRight();
                     case LEFT -> moveLeft();
-                    case SPACE -> getBombs(Bomber.this, now);
+                    case SPACE -> getBombs(now);
                 }
             }
         });
@@ -178,4 +178,13 @@ public class Bomber extends Bomb {
         });
     }
 
+    private void getBombs(long now) {
+        if (numberOfBombsOnScreen < numberOfBombs) {
+            Bomb bomb = new Bomb((int)(getCenterX() / Sprite.SCALED_SIZE),
+                    (int)(getCenterY() / Sprite.SCALED_SIZE),
+                    Sprite.bomb.getFxImage());
+            getEntities().add(bomb);
+            numberOfBombsOnScreen++;
+        }
+    }
 }
