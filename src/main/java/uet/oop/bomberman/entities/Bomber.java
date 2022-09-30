@@ -8,7 +8,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
-public class Bomber extends Entity {
+public class Bomber extends Bomb {
 
     private final int velo = 1;
     private int velocityX = 0;
@@ -34,7 +34,7 @@ public class Bomber extends Entity {
     public void update(Scene scene, long now) {
         move(scene);
         changeTheAnimation();
-        control(scene);
+        control(scene, now);
     }
 
     public void moveUp() {
@@ -87,14 +87,19 @@ public class Bomber extends Entity {
 
         for(Entity w : getStillObjects()) {
             if (w instanceof Wall || w instanceof Brick) {
+                int index = getStillObjects().indexOf(w);
                 if (velocityY != 0) {
                     if (x + Sprite.SCALED_SIZE > w.getX() && x < w.getX() + Sprite.SCALED_SIZE) {
                         if (y + Sprite.SCALED_SIZE > w.getY() && y < w.getY() + Sprite.SCALED_SIZE) {
                             y -= velocityY;
                             if (x + Sprite.SCALED_SIZE / 3 < w.getX()) {
-                                x -= velo;
+                                if (getStillObjects().get(index - 1) instanceof Grass) {
+                                    x -= velo;
+                                }
                             } else if (x > w.getX() + Sprite.SCALED_SIZE / 3){
-                                x += velo;
+                                if (getStillObjects().get(index + 1) instanceof Grass) {
+                                    x += velo;
+                                }
                             }
                             break;
                         }
@@ -106,9 +111,13 @@ public class Bomber extends Entity {
                         if (x < w.getX() + Sprite.SCALED_SIZE && x + Sprite.SCALED_SIZE > w.getX()){
                             x -= velocityX;
                             if (y + Sprite.SCALED_SIZE / 3 < w.getY()) {
-                                y -= velo;
+                                if (getStillObjects().get(index - WIDTH) instanceof Grass) {
+                                    y -= velo;
+                                }
                             } else if (y > w.getY() + Sprite.SCALED_SIZE / 3){
-                                y += velo;
+                                if (getStillObjects().get(index + WIDTH) instanceof Grass) {
+                                    y += velo;
+                                }
                             }
                             break;
                         }
@@ -130,7 +139,7 @@ public class Bomber extends Entity {
         }
     }
 
-    public void control(Scene scene) {
+    public void control(Scene scene, long now) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             @Override
             public void handle(KeyEvent key) {
@@ -139,7 +148,7 @@ public class Bomber extends Entity {
                     case DOWN -> moveDown();
                     case RIGHT -> moveRight();
                     case LEFT -> moveLeft();
-                    case SPACE ->  getBomb();
+                    case SPACE -> getBombs(Bomber.this, now);
                 }
             }
         });
@@ -154,9 +163,5 @@ public class Bomber extends Entity {
                 }
             }
         });
-    }
-
-    public void getBomb() {
-        Bomb.getBombs(this);
     }
 }

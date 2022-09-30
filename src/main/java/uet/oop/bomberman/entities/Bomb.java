@@ -4,15 +4,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static uet.oop.bomberman.BombermanGame.getEntities;
 
 public class Bomb extends Entity {
-    private static int numberOfBombs = 1;
+    private static int numberOfBombs = 3;
     private static int numberOfBombsOnScreen = 0;
-    private static List<Bomb> allBombs = new ArrayList<>();
     private static final long	BOMB_TIME	= 2000000000L;
     private long startTime	= 0;
     private boolean	firstUpdate	= false;
@@ -21,13 +17,13 @@ public class Bomb extends Entity {
         super(x, y, img);
     }
 
-    public static void getBombs(Bomber bomberman) {
+    public void getBombs(Bomber bomberman, long now) {
         if (numberOfBombsOnScreen < numberOfBombs) {
             Bomb bomb = new Bomb((int)(bomberman.getCenterX() / Sprite.SCALED_SIZE),
                     (int)(bomberman.getCenterY() / Sprite.SCALED_SIZE),
-                        Sprite.bomb.getFxImage());
-            allBombs.add(bomb);
+                    Sprite.bomb.getFxImage());
             getEntities().add(bomb);
+            numberOfBombsOnScreen++;
         }
     }
 
@@ -47,12 +43,12 @@ public class Bomb extends Entity {
                 this.img = Sprite.bomb_2.getFxImage();
             }else if (now-startTime>=BOMB_TIME) {
                 exploid();
-                firstUpdate = false;
             }
         }
     }
 
     private void exploid() {
-        getEntities().remove(getEntities().indexOf(this));
+        img = null;
+        numberOfBombsOnScreen--;
     }
 }
