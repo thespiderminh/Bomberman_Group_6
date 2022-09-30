@@ -23,9 +23,11 @@ public class Balloon extends Enemy {
     private int des_y = y + step;
 
     /**
-     * Right,Left,Up,Down.
+     * Stop,Right,Left,Up,Down.
      */
     String [] states = { "Stop", "Right", "Left", "Up", "Down"};
+
+    boolean [] stop_ratio = {false,false,false,false,false,false,false,true,true,true};
     private String current_state = null;
 
     private long startTime;
