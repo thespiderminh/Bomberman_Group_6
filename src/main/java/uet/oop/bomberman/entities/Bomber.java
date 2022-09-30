@@ -6,14 +6,22 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomber extends Bomb {
 
-    private final int velo = 1;
+    private final int velo = 2;
     private int velocityX = 0;
     private int velocityY = 0;
-
+    private long timePress = 0;
+    private int type = 0;
+    private List<Image> playerDown = Arrays.asList(Sprite.player_down_0.getFxImage(),Sprite.player_down_1.getFxImage(), Sprite.player_down_2.getFxImage());
+    private List<Image> playerUp = Arrays.asList(Sprite.player_up_0.getFxImage(),Sprite.player_up_1.getFxImage(), Sprite.player_up_2.getFxImage());
+    private List<Image> playerLeft = Arrays.asList(Sprite.player_left_0.getFxImage(),Sprite.player_left_1.getFxImage(), Sprite.player_left_2.getFxImage());
+    private List<Image> playerRight = Arrays.asList(Sprite.player_right_0.getFxImage(),Sprite.player_right_1.getFxImage(), Sprite.player_right_2.getFxImage());
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
     }
@@ -33,7 +41,7 @@ public class Bomber extends Bomb {
     @Override
     public void update(Scene scene, long now) {
         move(scene);
-        changeTheAnimation();
+        changeTheAnimation(now);
         control(scene, now);
     }
 
@@ -67,22 +75,18 @@ public class Bomber extends Bomb {
 
         if (x <= Sprite.SCALED_SIZE) {
             x = Sprite.SCALED_SIZE;
-            stopX();
         }
 
         if (x >= (WIDTH - 1) * Sprite.SCALED_SIZE) {
             x = (WIDTH - 1) * Sprite.SCALED_SIZE;
-            stopX();
         }
 
         if (y <= Sprite.SCALED_SIZE) {
             y = Sprite.SCALED_SIZE;
-            stopY();
         }
 
         if (y >= (HEIGHT - 1) * Sprite.SCALED_SIZE) {
             y = (HEIGHT - 1) * Sprite.SCALED_SIZE;
-            stopY();
         }
 
         for(Entity w : getStillObjects()) {
@@ -127,15 +131,26 @@ public class Bomber extends Bomb {
         }
     }
 
-    public void changeTheAnimation() {
+    public void changeTheAnimation(long now) {
         if (velocityY > 0) {
-            this.img = Sprite.player_down_0.getFxImage();
+            this.img = playerDown.get(type);
         } else if (velocityY < 0) {
-            this.img = Sprite.player_up_0.getFxImage();
-        } else if (velocityX > 0) {
-            this.img = Sprite.player_right_0.getFxImage();
+            this.img = playerUp.get(type);
+        }
+        if (velocityX > 0) {
+            this.img = playerRight.get(type);
         } else if (velocityX < 0) {
-            this.img = Sprite.player_left_0.getFxImage();
+            this.img = playerLeft.get(type);
+        }
+
+        if(velocityX != 0 || velocityY != 0) {
+            if (now - timePress > 100000000L) {
+                timePress = now;
+                type = (type + 1) % 3;
+            }
+        } else {
+            timePress = 0;
+            type = 0;
         }
     }
 
@@ -148,7 +163,7 @@ public class Bomber extends Bomb {
                     case DOWN -> moveDown();
                     case RIGHT -> moveRight();
                     case LEFT -> moveLeft();
-                    case SPACE -> getBombs(Bomber.this, now);
+                    case SPACE -> getBombs(now);
                 }
             }
         });
@@ -156,12 +171,20 @@ public class Bomber extends Bomb {
             @Override
             public void handle(KeyEvent key) {
                 switch (key.getCode()) {
-                    case UP -> stopY();
-                    case DOWN -> stopY();
-                    case RIGHT -> stopX();
-                    case LEFT -> stopX();
+                    case UP, DOWN -> stopY();
+                    case RIGHT, LEFT -> stopX();
                 }
             }
         });
+    }
+
+    private void getBombs(long now) {
+        if (numberOfBombsOnScreen < numberOfBombs) {
+            Bomb bomb = new Bomb((int)(getCenterX() / Sprite.SCALED_SIZE),
+                    (int)(getCenterY() / Sprite.SCALED_SIZE),
+                    Sprite.bomb.getFxImage());
+            getEntities().add(bomb);
+            numberOfBombsOnScreen++;
+        }
     }
 }

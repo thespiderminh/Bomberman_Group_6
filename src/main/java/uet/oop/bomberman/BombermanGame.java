@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BombermanGame extends Application {
 
-    private static final int FRAME_PER_SECOND = 120;
+    private static final int FRAME_PER_SECOND = 90;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     
