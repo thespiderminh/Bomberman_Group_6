@@ -5,8 +5,6 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Balloon extends Enemy {
