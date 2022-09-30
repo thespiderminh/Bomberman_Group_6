@@ -108,8 +108,6 @@ public class Balloon extends Enemy {
     public void change_animation(long now) {
         reset(now);
 
-        System.out.println(now);
-
         if (Objects.equals(current_state, "Right")) {
             if(now - startTime < 150000000L) {
                 this.img = Sprite.balloom_right1.getFxImage();
