@@ -17,25 +17,31 @@ public class Balloon extends Enemy {
     /**
      * Destination x,y.
      */
-    private int des_x = x + step;
-    private int des_y = y + step;
+    private int des_x = x;
+    private int des_y = y;
 
     /**
      * Stop,Right,Left,Up,Down.
      */
-    String [] states = { "Stop", "Right", "Left", "Up", "Down"};
+    String [] states = { "Stop", "Right", "Left"};
 
     boolean [] stop_ratio = {false,false,false,false,false,false,false,true,true,true};
-    private String current_state = null;
+    private String current_state = "Stop";
 
     private long startTime;
+    private static long start_delay = 0;
+    private boolean delay_mode = true;
 
     public void update_des_x() {
-        des_x = x + step;
+        if (des_x == x) {
+            des_x = x + step;
+        }
     }
 
     public void update_des_y() {
-        des_y = y + step;
+        if (des_y == y) {
+            des_y = y + step;
+        }
     }
 
     public int getVelocity_x() {
@@ -59,11 +65,12 @@ public class Balloon extends Enemy {
     }
 
     void generate_direction() {
-        int i = (int)(Math.random()*10) % 4 + 1;
+        int i = (int)(Math.random()*10) % 2 + 1;
         current_state = states[i];
     }
 
-    public boolean checkGrass(int m_x, int m_y) {
+    public boolean movable(int m_x, int m_y) {
+        //follow the grass
         return BombermanGame.map[m_x][m_y] == ' ';
     }
 
@@ -99,6 +106,13 @@ public class Balloon extends Enemy {
         }
     }
 
+    public void unexpected_stop() {
+        int i = (int)(Math.random()*10) % 10 ;
+        if (stop_ratio[i] == true) {
+            current_state = "Stop";
+        }
+    }
+
     public void reset(long now) {
         if (now - startTime > 450000000L) {
             startTime = now;
@@ -127,40 +141,58 @@ public class Balloon extends Enemy {
         }
     }
 
+    public void lock_delay_mode(long now) {
+        if (delay_mode) {
+            start_delay = now;
+            delay_mode = false;
+        }
+    }
+
     @Override
     public void update(Scene scene, long now) {
-        if (current_state == "Stop") {
-            generate_direction();
+
+        if (Objects.equals(current_state, "Stop")) {
+            lock_delay_mode(now);
+            if (now - start_delay >= 300000000L) {  // Delay 0.3s or more
+                generate_direction();
+                delay_mode = true;
+            }
         }
 
-        if (checkGrass(y/Sprite.SCALED_SIZE, des_x/Sprite.SCALED_SIZE)) {
-            if (des_x > x) {
+        if (Objects.equals(current_state, "Right")) {
+            step = Sprite.SCALED_SIZE;
+            update_des_x();
+            if (movable(des_y/Sprite.SCALED_SIZE, des_x/Sprite.SCALED_SIZE)) {
                 move_right_to(des_x);
             }
             else {
+                des_x = x;
+                current_state = "Stop";
+            }
+        }
+        else if (Objects.equals(current_state, "Left")) {
+            step = -Sprite.SCALED_SIZE;
+            update_des_x();
+            if (movable(des_y/Sprite.SCALED_SIZE, des_x/Sprite.SCALED_SIZE)) {
                 move_left_to(des_x);
             }
-        }
-        else {
-            if (Objects.equals(current_state, "Right")) {
-                step = -Sprite.SCALED_SIZE;
-                update_des_x();
-            }
             else {
-                step = Sprite.SCALED_SIZE;
-                update_des_x();
+                des_x = x;
+                current_state = "Stop";
             }
         }
-        if (x == des_x) {
-            if (Objects.equals(current_state, "Right")) {
-                step = Sprite.SCALED_SIZE;
-                update_des_x();
-            }
-            else {
-                step = -Sprite.SCALED_SIZE;
-                update_des_x();
-            }
-        }
+
+        /*  di chuyển tiếp */
+//        if (x == des_x) {
+//            if (Objects.equals(current_state, "Right")) {
+//                step = Sprite.SCALED_SIZE;
+//                update_des_x();
+//            }
+//            else {
+//                step = -Sprite.SCALED_SIZE;
+//                update_des_x();
+//            }
+//        }
 
         change_animation(now);
     }
