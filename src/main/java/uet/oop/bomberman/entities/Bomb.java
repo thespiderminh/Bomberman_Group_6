@@ -7,8 +7,6 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.Arrays;
 import java.util.List;
 
-import static uet.oop.bomberman.BombermanGame.getEntities;
-
 public class Bomb extends Entity {
     protected static int numberOfBombs = 3;
     protected static int numberOfBombsOnScreen = 0;
@@ -27,6 +25,7 @@ public class Bomb extends Entity {
     
     @Override
     public void update(Scene scene, long now) {
+        if(this.img == null) return;
         if (!onScreen) {
             onScreen = true;
             startTime = now;
@@ -52,16 +51,16 @@ public class Bomb extends Entity {
     }
 
     private void explode(long now) {
-        if( now - explodeTime >= 150000000L) {
+        if( now - explodeTime >= 100000000L) {
             if(typeOfBomb < 2) {
                 typeOfBomb++;
                 img = bombExplosionAnimation.get(typeOfBomb);
                 explodeTime = now;
-            } else {
-                getEntities().remove(this);
+            } else if(typeOfBomb == 2) {
+                this.img = null;
+                numberOfBombsOnScreen--;
             }
         }
-        numberOfBombsOnScreen--;
     }
 
     public boolean isOnScreen() {
