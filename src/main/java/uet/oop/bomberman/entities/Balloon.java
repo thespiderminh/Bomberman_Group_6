@@ -23,14 +23,28 @@ public class Balloon extends Enemy {
     /**
      * Stop,Right,Left,Up,Down.
      */
-    String [] states = { "Stop", "Right", "Left"};
+    String [] states = { "Stop", "Right", "Left", "Up", "Down"};
 
-    boolean [] stop_ratio = {false,false,false,false,false,false,false,true,true,true};
+    boolean [] stop_ratio = {false,false,false,false,false,false,false,true,true,true}; // 70%
+
     private String current_state = "Stop";
 
+    /**
+    * Thời điểm bắt đầu 1 chu kì changeAnimation.
+    */
     private long startTime;
-    private static long start_delay = 0;
-    private boolean delay_mode = true;
+
+    /**
+     * Thời điểm bắt đầu delay sau mỗi lần stop.
+     */
+    private long start_delay = 0;
+
+    /**
+     * Thời điểm bắt đầu move sau quãng stop.  (start_move - start_delay = stop interval)
+     */
+    private long start_move = 0;
+
+    private boolean delay_latch = true;
 
     public void update_des_x() {
         if (des_x == x) {
@@ -65,7 +79,7 @@ public class Balloon extends Enemy {
     }
 
     void generate_direction() {
-        int i = (int)(Math.random()*10) % 2 + 1;
+        int i = (int)(Math.random()*10) % 4 + 1;
         current_state = states[i];
     }
 
@@ -106,10 +120,11 @@ public class Balloon extends Enemy {
         }
     }
 
-    public void unexpected_stop() {
+    public void sudden_stop(long interval) {
         int i = (int)(Math.random()*10) % 10 ;
         if (stop_ratio[i] == true) {
             current_state = "Stop";
+            System.out.println(interval);
         }
     }
 
@@ -122,7 +137,7 @@ public class Balloon extends Enemy {
     public void change_animation(long now) {
         reset(now);
 
-        if (Objects.equals(current_state, "Right")) {
+        if (Objects.equals(current_state, "Right") || Objects.equals(current_state, "Up")) {
             if(now - startTime < 150000000L) {
                 this.img = Sprite.balloom_right1.getFxImage();
             } else if (now - startTime < 300000000L) {
@@ -130,7 +145,7 @@ public class Balloon extends Enemy {
             } else {
                 this.img = Sprite.balloom_right3.getFxImage();
             }
-        } else if (Objects.equals(current_state, "Left")) {
+        } else if (Objects.equals(current_state, "Left") || Objects.equals(current_state, "Down")) {
             if(now - startTime < 150000000L) {
                 this.img = Sprite.balloom_left1.getFxImage();
             } else if (now - startTime < 300000000L) {
@@ -139,12 +154,16 @@ public class Balloon extends Enemy {
                 this.img = Sprite.balloom_left3.getFxImage();
             }
         }
+
     }
 
+    /**
+     * Đảm bảo start_delay ko đổi trong khoảng thời gian state == "Stop".
+     */
     public void lock_delay_mode(long now) {
-        if (delay_mode) {
+        if (delay_latch) {
             start_delay = now;
-            delay_mode = false;
+            delay_latch = false;
         }
     }
 
@@ -154,8 +173,9 @@ public class Balloon extends Enemy {
         if (Objects.equals(current_state, "Stop")) {
             lock_delay_mode(now);
             if (now - start_delay >= 300000000L) {  // Delay 0.3s or more
+                start_move = now;
                 generate_direction();
-                delay_mode = true;
+                delay_latch = true;
             }
         }
 
@@ -181,6 +201,28 @@ public class Balloon extends Enemy {
                 current_state = "Stop";
             }
         }
+        else if (Objects.equals(current_state, "Up")) {
+            step = -Sprite.SCALED_SIZE;
+            update_des_y();
+            if (movable(des_y/Sprite.SCALED_SIZE, des_x/Sprite.SCALED_SIZE)) {
+                move_up_to(des_y);
+            }
+            else {
+                des_y = y;
+                current_state = "Stop";
+            }
+        }
+        else if (Objects.equals(current_state, "Down")) {
+            step = Sprite.SCALED_SIZE;
+            update_des_y();
+            if (movable(des_y/Sprite.SCALED_SIZE, des_x/Sprite.SCALED_SIZE)) {
+                move_down_to(des_y);
+            }
+            else {
+                des_y = y;
+                current_state = "Stop";
+            }
+        }
 
         /*  di chuyển tiếp */
 //        if (x == des_x) {
@@ -195,5 +237,10 @@ public class Balloon extends Enemy {
 //        }
 
         change_animation(now);
+
+        long interval = now - start_move;
+        if (interval >= 1000000000L && ((interval/100000000)%3 == 0) && x == des_x && y == des_y) {
+            sudden_stop(interval);
+        }
     }
 }
