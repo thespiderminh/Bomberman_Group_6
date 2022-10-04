@@ -10,8 +10,10 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BombermanGame extends Application {
 
@@ -23,22 +25,46 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private static List<Entity> entities = new ArrayList<>();
     private static List<Entity> stillObjects = new ArrayList<>();
+    
+    public static char[][] load_map(String absolute_path) {
+        File file = new File(absolute_path);
+        Scanner sc = null;
+        try {
+             sc = new Scanner(file);
+        } catch (Exception e)  {
+            System.out.println(e.getMessage());
+        }
 
-    public static char[][] map = {
-            {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
-            {'#', 'p', 'b', ' ', ' ', ' ', ' ', '*', '*', ' ', '*', ' ', ' ', '1', ' ', '*', ' ', '2', ' ', '*', ' ', ' ', '*', ' ', '*', ' ', '*', ' ', ' ', ' ', '#'},
-            {'#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', '*', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', '*', '#', '*', '#', ' ', '#'},
-            {'#', ' ', ' ', 'x', '*', ' ', ' ', ' ', ' ', ' ', '*', '*', '*', ' ', ' ', '*', ' ', ' ', '1', ' ', ' ', ' ', '*', ' ', '2', ' ', '*', ' ', '*', ' ', '#'},
-            {'#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', '*', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#'},
-            {'#', 'f', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x', ' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' ', '1', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#'},
-            {'#', '*', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'},
-            {'#', '*', ' ', ' ', ' ', ' ', '*', '*', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', ' ', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', '*', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#'},
-            {'#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'},
-            {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'}
-    };
+        int level = sc.nextInt();
+        int row = sc.nextInt();
+        int col = sc.nextInt();
+        char[][] a = new char[row][col];
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e)  {
+            System.out.println(e.getMessage());
+        }
+
+        String temp = null;
+        for (int i = -1; i <row; ++i) {
+            try {
+                temp = br.readLine();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            if (i != -1) {
+                for (int j = 0; j < col; ++j) {
+                    a[i][j] = temp.charAt(j);
+                }
+            }
+        }
+        return a;
+    }
+
+    public static char[][] map = load_map("D:\\IntelliJ\\Bomberman_Group_6\\res\\levels\\Level1.txt");
+
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);

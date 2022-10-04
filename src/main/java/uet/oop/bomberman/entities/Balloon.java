@@ -172,7 +172,7 @@ public class Balloon extends Enemy {
 
         if (Objects.equals(current_state, "Stop")) {
             lock_delay_mode(now);
-            if (now - start_delay >= 300000000L) {  // Delay 0.3s or more
+            if (now - start_delay >= 200000000L) {  // Delay 0.2s or more
                 start_move = now;
                 generate_direction();
                 delay_latch = true;
