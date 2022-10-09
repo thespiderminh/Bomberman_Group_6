@@ -92,37 +92,40 @@ public class Bomb extends Entity {
     }
 
     private void explode(long now) {
-        Flame rightHorizontal = new Flame((int) (getX()) + 32, getY(), getRightHorizontalFlame().get(0));
-        Flame leftHorizontal = new Flame((int) (getX()) - 32, getY(), getLeftHorizontalFlame().get(0));
-        Flame downVertical = new Flame(getX() , (int)getY()+32, getDownVerticalFlame().get(0));
-        Flame topVertical = new Flame(getX(), (int)getY()-32, getTopVerticalFlame().get(0));
-        if (isEqual(Sprite.grass.getFxImage(),getImage(getX()+32,getY()))) {
+        Flame rightHorizontal = new Flame((int) (getX()/Sprite.SCALED_SIZE) + 1, getY()/Sprite.SCALED_SIZE, getRightHorizontalFlame().get(0));
+//        Flame leftHorizontal = new Flame((int) (getX()) - 32, getY(), getLeftHorizontalFlame().get(0));
+//        Flame downVertical = new Flame(getX() , (int)getY()+32, getDownVerticalFlame().get(0));
+//        Flame topVertical = new Flame(getX(), (int)getY()-32, getTopVerticalFlame().get(0));
+        if (rightHorizontal.flammable()) {
             getEntities().add(rightHorizontal);
         }
-        if (isEqual(Sprite.grass.getFxImage(),getImage(getX()-32,getY()))) {
-            getEntities().add(leftHorizontal);
-        }
-        if (isEqual(Sprite.grass.getFxImage(),getImage(getX(),getY()+32))) {
-            getEntities().add(downVertical);
-        }
-        if (isEqual(Sprite.grass.getFxImage(),getImage(getX(),getY()-32))) {
-            getEntities().add(topVertical);
-        }
+//        if (isEqual(Sprite.grass.getFxImage(),getImage(getX()+32,getY()))) {
+//            getEntities().add(rightHorizontal);
+//        }
+//        if (isEqual(Sprite.grass.getFxImage(),getImage(getX()-32,getY()))) {
+//            getEntities().add(leftHorizontal);
+//        }
+//        if (isEqual(Sprite.grass.getFxImage(),getImage(getX(),getY()+32))) {
+//            getEntities().add(downVertical);
+//        }
+//        if (isEqual(Sprite.grass.getFxImage(),getImage(getX(),getY()-32))) {
+//            getEntities().add(topVertical);
+//        }
         if (now - explodeTime >= 100000000L) {
             if (typeOfBomb < 2) {
                 typeOfBomb++;
                 img = bombExplosionAnimation.get(typeOfBomb);
                 rightHorizontal.setImg(getRightHorizontalFlame().get(typeOfBomb));
-                leftHorizontal.setImg(getLeftHorizontalFlame().get(typeOfBomb));
-                downVertical.setImg(getDownVerticalFlame().get(typeOfBomb));
-                topVertical.setImg(getTopVerticalFlame().get(typeOfBomb));
+//                leftHorizontal.setImg(getLeftHorizontalFlame().get(typeOfBomb));
+//                downVertical.setImg(getDownVerticalFlame().get(typeOfBomb));
+//                topVertical.setImg(getTopVerticalFlame().get(typeOfBomb));
                 explodeTime = now;
             } else if (typeOfBomb == 2) {
                 this.img = null;
                 rightHorizontal.img = null;
-                leftHorizontal.img = null;
-                downVertical.img = null;
-                topVertical.img = null;
+//                leftHorizontal.img = null;
+//                downVertical.img = null;
+//                topVertical.img = null;
                 numberOfBombsOnScreen--;
             }
         }
