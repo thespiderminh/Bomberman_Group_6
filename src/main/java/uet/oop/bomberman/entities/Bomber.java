@@ -18,12 +18,13 @@ public class Bomber extends Bomb {
     private int velocityY = 0;
     private long timePress = 0;
     private int type = 0;
-    private List<Image> playerDown = Arrays.asList(Sprite.player_down_0.getFxImage(),Sprite.player_down_1.getFxImage(), Sprite.player_down_2.getFxImage());
-    private List<Image> playerUp = Arrays.asList(Sprite.player_up_0.getFxImage(),Sprite.player_up_1.getFxImage(), Sprite.player_up_2.getFxImage());
-    private List<Image> playerLeft = Arrays.asList(Sprite.player_left_0.getFxImage(),Sprite.player_left_1.getFxImage(), Sprite.player_left_2.getFxImage());
-    private List<Image> playerRight = Arrays.asList(Sprite.player_right_0.getFxImage(),Sprite.player_right_1.getFxImage(), Sprite.player_right_2.getFxImage());
+    private List<Image> playerDown = Arrays.asList(Sprite.player_down_0.getFxImage(), Sprite.player_down_1.getFxImage(), Sprite.player_down_2.getFxImage());
+    private List<Image> playerUp = Arrays.asList(Sprite.player_up_0.getFxImage(), Sprite.player_up_1.getFxImage(), Sprite.player_up_2.getFxImage());
+    private List<Image> playerLeft = Arrays.asList(Sprite.player_left_0.getFxImage(), Sprite.player_left_1.getFxImage(), Sprite.player_left_2.getFxImage());
+    private List<Image> playerRight = Arrays.asList(Sprite.player_right_0.getFxImage(), Sprite.player_right_1.getFxImage(), Sprite.player_right_2.getFxImage());
+
     public Bomber(int x, int y, Image img) {
-        super( x, y, img);
+        super(x, y, img);
     }
 
     public int getVelo() {
@@ -89,7 +90,7 @@ public class Bomber extends Bomb {
             y = (HEIGHT - 1) * Sprite.SCALED_SIZE;
         }
 
-        for(Entity w : getStillObjects()) {
+        for (Entity w : getStillObjects()) {
             if (w instanceof Wall || w instanceof Brick) {
                 int index = getStillObjects().indexOf(w);
                 if (velocityY != 0) {
@@ -100,7 +101,7 @@ public class Bomber extends Bomb {
                                 if (getStillObjects().get(index - 1) instanceof Grass) {
                                     x -= velo;
                                 }
-                            } else if (x > w.getX() + Sprite.SCALED_SIZE / 3){
+                            } else if (x > w.getX() + Sprite.SCALED_SIZE / 3) {
                                 if (getStillObjects().get(index + 1) instanceof Grass) {
                                     x += velo;
                                 }
@@ -111,14 +112,14 @@ public class Bomber extends Bomb {
                 }
 
                 if (velocityX != 0) {
-                    if (y + Sprite.SCALED_SIZE > w.getY() && y < w.getY() + Sprite.SCALED_SIZE){
-                        if (x < w.getX() + Sprite.SCALED_SIZE && x + Sprite.SCALED_SIZE > w.getX()){
+                    if (y + Sprite.SCALED_SIZE > w.getY() && y < w.getY() + Sprite.SCALED_SIZE) {
+                        if (x < w.getX() + Sprite.SCALED_SIZE && x + Sprite.SCALED_SIZE > w.getX()) {
                             x -= velocityX;
                             if (y + Sprite.SCALED_SIZE / 3 < w.getY()) {
                                 if (getStillObjects().get(index - WIDTH) instanceof Grass) {
                                     y -= velo;
                                 }
-                            } else if (y > w.getY() + Sprite.SCALED_SIZE / 3){
+                            } else if (y > w.getY() + Sprite.SCALED_SIZE / 3) {
                                 if (getStillObjects().get(index + WIDTH) instanceof Grass) {
                                     y += velo;
                                 }
@@ -143,7 +144,7 @@ public class Bomber extends Bomb {
             this.img = playerLeft.get(type);
         }
 
-        if(velocityX != 0 || velocityY != 0) {
+        if (velocityX != 0 || velocityY != 0) {
             if (now - timePress > 100000000L) {
                 timePress = now;
                 type = (type + 1) % 3;
@@ -155,7 +156,7 @@ public class Bomber extends Bomb {
     }
 
     public void control(Scene scene, long now) {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent key) {
                 switch (key.getCode()) {
@@ -180,11 +181,12 @@ public class Bomber extends Bomb {
 
     private void getBombs(long now) {
         if (numberOfBombsOnScreen < numberOfBombs) {
-            Bomb bomb = new Bomb((int)(getCenterX() / Sprite.SCALED_SIZE),
-                    (int)(getCenterY() / Sprite.SCALED_SIZE),
+            Bomb bomb = new Bomb((int) (getCenterX() / Sprite.SCALED_SIZE),
+                    (int) (getCenterY() / Sprite.SCALED_SIZE),
                     Sprite.bomb.getFxImage());
             getEntities().add(bomb);
             numberOfBombsOnScreen++;
+            System.out.println(bomb.getX() + " " + bomb.getY());
         }
     }
 }
