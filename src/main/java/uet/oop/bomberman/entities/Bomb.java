@@ -92,40 +92,52 @@ public class Bomb extends Entity {
     }
 
     private void explode(long now) {
-        Flame rightHorizontal = new Flame((int) (getX()/Sprite.SCALED_SIZE) + 1, getY()/Sprite.SCALED_SIZE, getRightHorizontalFlame().get(0));
-//        Flame leftHorizontal = new Flame((int) (getX()) - 32, getY(), getLeftHorizontalFlame().get(0));
-//        Flame downVertical = new Flame(getX() , (int)getY()+32, getDownVerticalFlame().get(0));
-//        Flame topVertical = new Flame(getX(), (int)getY()-32, getTopVerticalFlame().get(0));
+        Flame horizontal = new Flame((int) (getX() / Sprite.SCALED_SIZE), getY() / Sprite.SCALED_SIZE, getHorizontalFlame().get(0));
+        Flame vertical = new Flame((int) (getX() / Sprite.SCALED_SIZE), getY() / Sprite.SCALED_SIZE, getVerticalFlame().get(0));
+        Flame rightHorizontal = new Flame((int) (getX() / Sprite.SCALED_SIZE) + 1, getY() / Sprite.SCALED_SIZE, getRightHorizontalFlame().get(0));
+        Flame leftHorizontal = new Flame((int) (getX() / Sprite.SCALED_SIZE) - 1, getY() / Sprite.SCALED_SIZE, getLeftHorizontalFlame().get(0));
+        Flame downVertical = new Flame(getX() / Sprite.SCALED_SIZE, (int) (getY() / Sprite.SCALED_SIZE) + 1, getDownVerticalFlame().get(0));
+        Flame topVertical = new Flame(getX() / Sprite.SCALED_SIZE, (int) (getY() / Sprite.SCALED_SIZE) - 1, getTopVerticalFlame().get(0));
+        getEntities().add(horizontal);
+        getEntities().add(vertical);
         if (rightHorizontal.flammable()) {
             getEntities().add(rightHorizontal);
         }
-//        if (isEqual(Sprite.grass.getFxImage(),getImage(getX()+32,getY()))) {
-//            getEntities().add(rightHorizontal);
-//        }
-//        if (isEqual(Sprite.grass.getFxImage(),getImage(getX()-32,getY()))) {
-//            getEntities().add(leftHorizontal);
-//        }
-//        if (isEqual(Sprite.grass.getFxImage(),getImage(getX(),getY()+32))) {
-//            getEntities().add(downVertical);
-//        }
-//        if (isEqual(Sprite.grass.getFxImage(),getImage(getX(),getY()-32))) {
-//            getEntities().add(topVertical);
-//        }
+        if (leftHorizontal.flammable()) {
+            getEntities().add(leftHorizontal);
+        }
+        if (downVertical.flammable()) {
+            getEntities().add(downVertical);
+        }
+        if (topVertical.flammable()) {
+            getEntities().add(topVertical);
+        }
         if (now - explodeTime >= 100000000L) {
             if (typeOfBomb < 2) {
                 typeOfBomb++;
                 img = bombExplosionAnimation.get(typeOfBomb);
+                horizontal.setImg(getHorizontalFlame().get(typeOfBomb));
+                vertical.setImg(getVerticalFlame().get(typeOfBomb));
                 rightHorizontal.setImg(getRightHorizontalFlame().get(typeOfBomb));
-//                leftHorizontal.setImg(getLeftHorizontalFlame().get(typeOfBomb));
-//                downVertical.setImg(getDownVerticalFlame().get(typeOfBomb));
-//                topVertical.setImg(getTopVerticalFlame().get(typeOfBomb));
+                leftHorizontal.setImg(getLeftHorizontalFlame().get(typeOfBomb));
+                downVertical.setImg(getDownVerticalFlame().get(typeOfBomb));
+                topVertical.setImg(getTopVerticalFlame().get(typeOfBomb));
                 explodeTime = now;
             } else if (typeOfBomb == 2) {
                 this.img = null;
-                rightHorizontal.img = null;
-//                leftHorizontal.img = null;
-//                downVertical.img = null;
-//                topVertical.img = null;
+                horizontal.setImg(null);
+                vertical.setImg(null);
+                rightHorizontal.setImg(null);
+                leftHorizontal.setImg(null);
+                downVertical.setImg(null);
+                topVertical.setImg(null);
+//                getEntities().remove(horizontal);
+//                getEntities().remove(vertical);
+//                getEntities().remove(rightHorizontal);
+//                getEntities().remove(leftHorizontal);
+//                getEntities().remove(downVertical);
+//                getEntities().remove(topVertical);
+
                 numberOfBombsOnScreen--;
             }
         }
