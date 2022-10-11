@@ -186,7 +186,6 @@ public class Bomber extends Bomb {
                     Sprite.bomb.getFxImage());
             getEntities().add(bomb);
             numberOfBombsOnScreen++;
-            System.out.println(bomb.getX() + " " + bomb.getY());
         }
     }
 }

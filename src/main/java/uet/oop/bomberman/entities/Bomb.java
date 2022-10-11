@@ -19,30 +19,16 @@ public class Bomb extends Entity {
     private boolean onScreen = false;
     private boolean exploding = false;
     private int typeOfBomb = 0;
+    private int typeOfFlame = 0;
+    private boolean createdFlame = false;
     private final List<Image> bombAnimation = Arrays.asList(Sprite.bomb.getFxImage(), Sprite.bomb_1.getFxImage(), Sprite.bomb_2.getFxImage());
     private final List<Image> bombExplosionAnimation = Arrays.asList(Sprite.bomb_exploded.getFxImage(), Sprite.bomb_exploded1.getFxImage(), Sprite.bomb_exploded2.getFxImage());
     private List<Image> horizontalFlame = Arrays.asList(Sprite.explosion_horizontal.getFxImage(), Sprite.explosion_horizontal1.getFxImage(), Sprite.explosion_horizontal2.getFxImage());
-    private List<Image> leftHorizontalFlame = Arrays.asList(Sprite.explosion_horizontal_left_last.getFxImage(), Sprite.explosion_horizontal_left_last1.getFxImage(), Sprite.explosion_horizontal_left_last2.getFxImage());
-    private List<Image> rightHorizontalFlame = Arrays.asList(Sprite.explosion_horizontal_right_last.getFxImage(), Sprite.explosion_horizontal_right_last1.getFxImage(), Sprite.explosion_horizontal_right_last2.getFxImage());
+    private List<Image> leftHorizontalFlame = Arrays.asList(null, Sprite.explosion_horizontal_left_last.getFxImage(), Sprite.explosion_horizontal_left_last1.getFxImage(), Sprite.explosion_horizontal_left_last2.getFxImage());
+    private List<Image> rightHorizontalFlame = Arrays.asList(null, Sprite.explosion_horizontal_right_last.getFxImage(), Sprite.explosion_horizontal_right_last1.getFxImage(), Sprite.explosion_horizontal_right_last2.getFxImage());
     private List<Image> verticalFlame = Arrays.asList(Sprite.explosion_vertical.getFxImage(), Sprite.explosion_vertical1.getFxImage(), Sprite.explosion_vertical2.getFxImage());
-    private List<Image> topVerticalFlame = Arrays.asList(Sprite.explosion_vertical_top_last.getFxImage(), Sprite.explosion_vertical_top_last1.getFxImage(), Sprite.explosion_vertical_top_last2.getFxImage());
-    private List<Image> downVerticalFlame = Arrays.asList(Sprite.explosion_vertical_down_last.getFxImage(), Sprite.explosion_vertical_down_last1.getFxImage(), Sprite.explosion_vertical_down_last2.getFxImage());
-
-    public Bomb(int x, int y, Image img) {
-        super(x, y, img);
-    }
-
-    public int getTypeOfBomb() {
-        return typeOfBomb;
-    }
-
-    public static int getNumberOfBombs() {
-        return numberOfBombs;
-    }
-
-    public List<Image> getHorizontalFlame() {
-        return horizontalFlame;
-    }
+    private List<Image> topVerticalFlame = Arrays.asList(null, Sprite.explosion_vertical_top_last.getFxImage(), Sprite.explosion_vertical_top_last1.getFxImage(), Sprite.explosion_vertical_top_last2.getFxImage());
+    private List<Image> downVerticalFlame = Arrays.asList(null, Sprite.explosion_vertical_down_last.getFxImage(), Sprite.explosion_vertical_down_last1.getFxImage(), Sprite.explosion_vertical_down_last2.getFxImage());
 
     public List<Image> getLeftHorizontalFlame() {
         return leftHorizontalFlame;
@@ -52,10 +38,6 @@ public class Bomb extends Entity {
         return rightHorizontalFlame;
     }
 
-    public List<Image> getVerticalFlame() {
-        return verticalFlame;
-    }
-
     public List<Image> getTopVerticalFlame() {
         return topVerticalFlame;
     }
@@ -63,6 +45,57 @@ public class Bomb extends Entity {
     public List<Image> getDownVerticalFlame() {
         return downVerticalFlame;
     }
+
+    public int getTypeOfFlame() {
+        return typeOfFlame;
+    }
+
+    public void setTypeOfFlame(int typeOfFlame) {
+        this.typeOfFlame = typeOfFlame;
+    }
+
+    public static int getNumberOfBombsOnScreen() {
+        return numberOfBombsOnScreen;
+    }
+
+
+    public Bomb(int x, int y, Image img) {
+        super(x, y, img);
+    }
+
+    public int getTypeOfBomb() {
+        return typeOfBomb;
+    }
+
+    public boolean isExploding() {
+        return exploding;
+    }
+
+    public void setExploding(boolean exploding) {
+        this.exploding = exploding;
+    }
+
+    public long getExplodeTime() {
+        return explodeTime;
+    }
+
+    public static void setNumberOfBombs(int numberOfBombs) {
+        Bomb.numberOfBombs = numberOfBombs;
+    }
+
+    public void setExplodeTime(long explodeTime) {
+        this.explodeTime = explodeTime;
+    }
+
+    public void setTypeOfBomb(int typeOfBomb) {
+        this.typeOfBomb = typeOfBomb;
+    }
+
+    public static int getNumberOfBombs() {
+        return numberOfBombs;
+    }
+
+    public boolean setTypeOfFlameEqual1 = false;
 
     @Override
     public void update(Scene scene, long now) {
@@ -87,57 +120,49 @@ public class Bomb extends Entity {
             }
         }
         if (exploding == true) {
-            explode(now);
+            Flame leftHorizontal = null;
+            Flame downVertical = null;
+            Flame topVertical = null;
+            Flame rightHorizontal = null;
+            if (!createdFlame) {
+                createdFlame = true;
+                rightHorizontal = new Flame((int) (getX() / Sprite.SCALED_SIZE) + 1, getY() / Sprite.SCALED_SIZE, getRightHorizontalFlame().get(1));
+                leftHorizontal = new Flame((int) (getX() / Sprite.SCALED_SIZE) - 1, getY() / Sprite.SCALED_SIZE, getLeftHorizontalFlame().get(1));
+                downVertical = new Flame(getX() / Sprite.SCALED_SIZE, (int) (getY() / Sprite.SCALED_SIZE) + 1, getDownVerticalFlame().get(1));
+                topVertical = new Flame(getX() / Sprite.SCALED_SIZE, (int) (getY() / Sprite.SCALED_SIZE) - 1, getTopVerticalFlame().get(1));
+                if (rightHorizontal.flammable()) {
+                    getEntities().add(rightHorizontal);
+                }
+                if (leftHorizontal.flammable()) {
+                    getEntities().add(leftHorizontal);
+                }
+                if (downVertical.flammable()) {
+                    getEntities().add(downVertical);
+                }
+                if (topVertical.flammable()) {
+                    getEntities().add(topVertical);
+                }
+            }
+            explode(now, leftHorizontal, rightHorizontal, downVertical, topVertical);
         }
     }
 
-    private void explode(long now) {
-        Flame horizontal = new Flame((int) (getX() / Sprite.SCALED_SIZE), getY() / Sprite.SCALED_SIZE, getHorizontalFlame().get(0));
-        Flame vertical = new Flame((int) (getX() / Sprite.SCALED_SIZE), getY() / Sprite.SCALED_SIZE, getVerticalFlame().get(0));
-        Flame rightHorizontal = new Flame((int) (getX() / Sprite.SCALED_SIZE) + 1, getY() / Sprite.SCALED_SIZE, getRightHorizontalFlame().get(0));
-        Flame leftHorizontal = new Flame((int) (getX() / Sprite.SCALED_SIZE) - 1, getY() / Sprite.SCALED_SIZE, getLeftHorizontalFlame().get(0));
-        Flame downVertical = new Flame(getX() / Sprite.SCALED_SIZE, (int) (getY() / Sprite.SCALED_SIZE) + 1, getDownVerticalFlame().get(0));
-        Flame topVertical = new Flame(getX() / Sprite.SCALED_SIZE, (int) (getY() / Sprite.SCALED_SIZE) - 1, getTopVerticalFlame().get(0));
-        getEntities().add(horizontal);
-        getEntities().add(vertical);
-        if (rightHorizontal.flammable()) {
-            getEntities().add(rightHorizontal);
-        }
-        if (leftHorizontal.flammable()) {
-            getEntities().add(leftHorizontal);
-        }
-        if (downVertical.flammable()) {
-            getEntities().add(downVertical);
-        }
-        if (topVertical.flammable()) {
-            getEntities().add(topVertical);
-        }
+    private void explode(long now,Flame left,Flame right,Flame top, Flame down) {
         if (now - explodeTime >= 100000000L) {
             if (typeOfBomb < 2) {
                 typeOfBomb++;
                 img = bombExplosionAnimation.get(typeOfBomb);
-                horizontal.setImg(getHorizontalFlame().get(typeOfBomb));
-                vertical.setImg(getVerticalFlame().get(typeOfBomb));
-                rightHorizontal.setImg(getRightHorizontalFlame().get(typeOfBomb));
-                leftHorizontal.setImg(getLeftHorizontalFlame().get(typeOfBomb));
-                downVertical.setImg(getDownVerticalFlame().get(typeOfBomb));
-                topVertical.setImg(getTopVerticalFlame().get(typeOfBomb));
+                left.setImg(getLeftHorizontalFlame().get(typeOfBomb));
+                right.setImg(getRightHorizontalFlame().get(typeOfBomb));
+                top.setImg(getTopVerticalFlame().get(typeOfBomb));
+                down.setImg(getDownVerticalFlame().get(typeOfBomb));
                 explodeTime = now;
             } else if (typeOfBomb == 2) {
                 this.img = null;
-                horizontal.setImg(null);
-                vertical.setImg(null);
-                rightHorizontal.setImg(null);
-                leftHorizontal.setImg(null);
-                downVertical.setImg(null);
-                topVertical.setImg(null);
-//                getEntities().remove(horizontal);
-//                getEntities().remove(vertical);
-//                getEntities().remove(rightHorizontal);
-//                getEntities().remove(leftHorizontal);
-//                getEntities().remove(downVertical);
-//                getEntities().remove(topVertical);
-
+                left.setImg(null);
+                right.setImg(null);
+                top.setImg(null);
+                down.setImg(null);
                 numberOfBombsOnScreen--;
             }
         }
