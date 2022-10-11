@@ -18,7 +18,6 @@ public class Flame extends Bomb {
         return !(BombermanGame.map[this.x / Sprite.SCALED_SIZE][this.y / Sprite.SCALED_SIZE] == '#');
     }
 
-
     @Override
     public void update(Scene scene, long now) {
 

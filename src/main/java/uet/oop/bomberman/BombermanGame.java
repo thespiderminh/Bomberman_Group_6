@@ -179,12 +179,6 @@ public class BombermanGame extends Application {
         for(Entity w : entities) {
             w.update(scene, now);
         }
-
-        for(int i = 0 ; i< getEntities().size();i++){
-            if(getEntities().get(i) instanceof Bomb && ((Bomb) getEntities().get(i)).getImg() == null){
-                getEntities().remove(i);
-            }
-        }
     }
 
     public void render() {
