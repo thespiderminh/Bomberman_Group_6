@@ -5,10 +5,8 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class Flame extends Bomb {
+
 
     public Flame(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
