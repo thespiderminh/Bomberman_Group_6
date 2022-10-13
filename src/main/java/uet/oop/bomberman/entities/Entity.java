@@ -5,8 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
-import javax.imageio.ImageTranscoder;
-
 public abstract class Entity {
     //Tọa độ X tính từ góc trái trên trong Canvas
     protected int x;
@@ -16,7 +14,11 @@ public abstract class Entity {
 
     protected Image img;
 
-    public int getX() {
+	public Entity() {
+
+	}
+
+	public int getX() {
         return x;
     }
 
