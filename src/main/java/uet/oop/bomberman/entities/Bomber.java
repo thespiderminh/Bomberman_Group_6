@@ -164,7 +164,9 @@ public class Bomber extends Bomb {
                     case DOWN -> moveDown();
                     case RIGHT -> moveRight();
                     case LEFT -> moveLeft();
-                    case SPACE -> getBombs(now);
+                    case SPACE -> {
+                        getBombs(now);
+                    }
                 }
             }
         });
@@ -185,6 +187,7 @@ public class Bomber extends Bomb {
                     (int) (getCenterY() / Sprite.SCALED_SIZE),
                     Sprite.bomb.getFxImage());
             getEntities().add(bomb);
+            System.out.println(bomb.getX()+" "+ bomb.getY());
             numberOfBombsOnScreen++;
         }
     }

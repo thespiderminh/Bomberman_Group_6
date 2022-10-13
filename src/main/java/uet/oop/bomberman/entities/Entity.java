@@ -58,7 +58,7 @@ public abstract class Entity {
     }
 
     public Image getImage(int a, int b) {
-        if (a == this.x && b == this.y) {
+        if (a * Sprite.SCALED_SIZE == this.x && b * Sprite.SCALED_SIZE == this.y) {
             return this.img;
         }
         return null;
