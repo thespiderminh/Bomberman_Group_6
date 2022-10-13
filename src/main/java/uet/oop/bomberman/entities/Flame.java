@@ -7,11 +7,14 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import static uet.oop.bomberman.BombermanGame.getEntities;
 import static uet.oop.bomberman.BombermanGame.getStillObjects;
 
 public class Flame extends Entity {
+    // Phạm vi nổ
+    private int scope = Sprite.SCALED_SIZE;
     private boolean inited = false;
     private Flame leftHorizontal = null;
     private Flame downVertical = null;
@@ -29,13 +32,31 @@ public class Flame extends Entity {
     private static List<Image> downVerticalFlame = Arrays.asList(Sprite.explosion_vertical_down_last.getFxImage(), Sprite.explosion_vertical_down_last1.getFxImage(), Sprite.explosion_vertical_down_last2.getFxImage());
     private static List<Image> brokenBrick = Arrays.asList(Sprite.brick_exploded.getFxImage(), Sprite.brick_exploded1.getFxImage(), Sprite.brick_exploded2.getFxImage());
 
+    public Flame() {
+
+    }
+
     public Flame(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 
-    public Flame() {
-
-    }
+//    public boolean inDeadZone(int d_x, int d_y) {
+//        if (d_y == y) {
+//            if ( x <= d_x && d_x <= x + scope) {  // Đi từ phải vào
+//                return true;
+//            } else if ( d_x <= x && x < d_x + Sprite.SCALED_SIZE ) {  // Đi từ trái vào
+//                return true;
+//            }
+//            return false;
+//        } else if (d_x == x) {
+//            if ( d_y <= y && y < d_y + Sprite.SCALED_SIZE) {  // Đi từ trên xuống
+//                return true;
+//            } else if ( y <= d_y && d_y < ) {  // Đi từ dưới lên
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public boolean isInited() {
         return inited;

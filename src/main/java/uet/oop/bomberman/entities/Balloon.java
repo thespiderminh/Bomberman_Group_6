@@ -4,7 +4,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
+import static uet.oop.bomberman.BombermanGame.getEntities;
 
+import java.nio.channels.spi.SelectorProvider;
+import java.nio.charset.IllegalCharsetNameException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +21,7 @@ public class Balloon extends Enemy {
     private List<Image> right_images = Arrays.asList(Sprite.balloom_right1.getFxImage(), Sprite.balloom_right2.getFxImage(), Sprite.balloom_right3.getFxImage());
     private List<Image> left_images = Arrays.asList(Sprite.balloom_left1.getFxImage(), Sprite.balloom_left2.getFxImage(), Sprite.balloom_left3.getFxImage());
 
+    private List<Image> dead_image = Arrays.asList(Sprite.balloom_dead.getFxImage(), Sprite.mob_dead1.getFxImage(), Sprite.mob_dead2.getFxImage(), Sprite.mob_dead3.getFxImage());
 
     private int step = Sprite.SCALED_SIZE;
 
@@ -27,9 +32,15 @@ public class Balloon extends Enemy {
     private int des_y = y;
 
     /**
+     * Footprint.
+     */
+    private int old_x = x;
+    private int old_y = y;
+
+    /**
      * Stop,Right,Left,Up,Down.
      */
-    String [] states = { "Stop", "Right", "Left", "Up", "Down"};
+    String [] states = { "Stop", "Right", "Left", "Up", "Down", "Dead"};
 
     boolean [] stop_ratio = {false,false,false,false,false,false,false,true,true,true}; // 70%
 
@@ -52,15 +63,21 @@ public class Balloon extends Enemy {
 
     private boolean delay_latch = true;
 
+    private long start_dead;
+
     public void update_des_x() {
         if (des_x == x) {
             des_x = x + step;
+            old_x = x;
+            //System.out.println("Old_x: " + old_x);
         }
     }
 
     public void update_des_y() {
         if (des_y == y) {
             des_y = y + step;
+            old_y = y;
+            //System.out.println("Old_y: " + old_y);
         }
     }
 
@@ -89,9 +106,38 @@ public class Balloon extends Enemy {
         current_state = states[i];
     }
 
-    public boolean movable(int m_x, int m_y) {
+    public boolean has_bomb(int b_x, int b_y) {
+        for (int i = 0; i < getEntities().size(); ++i) {
+            Entity e = getEntities().get(i);
+            if (e.getX() / Sprite.SCALED_SIZE == b_x
+                    && e.getY() / Sprite.SCALED_SIZE == b_y ) {
+                if (e instanceof Bomb) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Tọa độ dạng thường
+     */
+    public boolean has_flame(int f_x, int f_y) {
+        for (int i = 0; i < getEntities().size(); ++i) {
+            Entity e = getEntities().get(i);
+            if (e.getX() / Sprite.SCALED_SIZE == f_x
+                    && e.getY() / Sprite.SCALED_SIZE == f_y ) {
+                if (e instanceof Flame) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean movable(int m_y, int m_x) {
         //follow the grass
-        return BombermanGame.map[m_x][m_y] == ' ';
+        return (BombermanGame.map[m_y][m_x] == ' ') && (!has_bomb(m_x,m_y));
     }
 
     public void move_right_to(int d_x) {
@@ -163,6 +209,33 @@ public class Balloon extends Enemy {
     }
 
     /**
+     * Kiểm tra xem có bị dính lửa ko.
+     */
+    public boolean get_burned() {
+        return has_flame(des_x / Sprite.SCALED_SIZE, des_y / Sprite.SCALED_SIZE)
+                || has_flame(old_x / Sprite.SCALED_SIZE, old_y / Sprite.SCALED_SIZE);
+    }
+
+    public void fade(long now) {
+        if (Objects.equals(current_state, "Dead")) {
+            System.out.println("Once");
+            start_dead = now;
+            current_state = "NULL";
+        }
+        if (now - start_dead < 1000000000L ) {   // 1s delay
+            this.img = dead_image.get(0);
+        } else if (now - start_dead < 1500000000L) {
+            this.img = dead_image.get(1);
+        } else if (now - start_dead < 2000000000L) {
+            this.img = dead_image.get(2);
+        } else if (now - start_dead < 2500000000L) {
+            this.img = dead_image.get(3);
+        } else {
+            this.img = null;
+        }
+    }
+
+    /**
      * Đảm bảo start_delay ko đổi trong khoảng thời gian state == "Stop".
      */
     public void lock_delay_mode(long now) {
@@ -174,6 +247,14 @@ public class Balloon extends Enemy {
 
     @Override
     public void update(Scene scene, long now) {
+
+        if (get_burned() && !Objects.equals(current_state, "Dead") && !Objects.equals(current_state, "NULL")) {
+            current_state = "Dead";   // Dead
+        }
+
+        if (Objects.equals(current_state, "Dead") || Objects.equals(current_state, "NULL")) {
+            fade(now);
+        }
 
         if (Objects.equals(current_state, "Stop")) {
             lock_delay_mode(now);
@@ -244,7 +325,8 @@ public class Balloon extends Enemy {
         change_animation(now);
 
         long interval = now - start_move;
-        if (interval >= 1000000000L && ((interval/100000000)%3 == 0) && x == des_x && y == des_y) {
+        if (interval >= 1000000000L && ((interval/100000000)%3 == 0) && x == des_x && y == des_y
+        && !Objects.equals(current_state, "Dead") && !Objects.equals(current_state, "NULL")) {
             sudden_stop(interval);
         }
     }

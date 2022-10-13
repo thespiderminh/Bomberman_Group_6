@@ -128,7 +128,6 @@ public class BombermanGame extends Application {
     }
 
     public void createMap(char [][] a) {
-        System.out.println("Create Map");
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 Entity object = null;
@@ -183,7 +182,7 @@ public class BombermanGame extends Application {
                 entities.remove(i);
             }
         }
-        for(int i = 0;i<stillObjects.size();i++){
+        for(int i = 0; i < stillObjects.size();i++){
             stillObjects.get(i).update(scene,now);
         }
     }
