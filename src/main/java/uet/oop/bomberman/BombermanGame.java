@@ -128,6 +128,7 @@ public class BombermanGame extends Application {
     }
 
     public void createMap(char [][] a) {
+        System.out.println("Create Map");
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 Entity object = null;

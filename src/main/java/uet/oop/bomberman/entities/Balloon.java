@@ -5,12 +5,18 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Balloon extends Enemy {
     private final int velo = 1;
     private int velocity_x = 0;
     private int velocity_y = 0;
+
+    private List<Image> right_images = Arrays.asList(Sprite.balloom_right1.getFxImage(), Sprite.balloom_right2.getFxImage(), Sprite.balloom_right3.getFxImage());
+    private List<Image> left_images = Arrays.asList(Sprite.balloom_left1.getFxImage(), Sprite.balloom_left2.getFxImage(), Sprite.balloom_left3.getFxImage());
+
 
     private int step = Sprite.SCALED_SIZE;
 
@@ -138,19 +144,19 @@ public class Balloon extends Enemy {
 
         if (Objects.equals(current_state, "Right") || Objects.equals(current_state, "Up")) {
             if(now - startTime < 150000000L) {
-                this.img = Sprite.balloom_right1.getFxImage();
+                this.img = right_images.get(0);
             } else if (now - startTime < 300000000L) {
-                this.img = Sprite.balloom_right2.getFxImage();
+                this.img = right_images.get(1);
             } else {
-                this.img = Sprite.balloom_right3.getFxImage();
+                this.img = right_images.get(2);
             }
         } else if (Objects.equals(current_state, "Left") || Objects.equals(current_state, "Down")) {
             if(now - startTime < 150000000L) {
-                this.img = Sprite.balloom_left1.getFxImage();
+                this.img = left_images.get(0);
             } else if (now - startTime < 300000000L) {
-                this.img = Sprite.balloom_left2.getFxImage();
+                this.img = left_images.get(1);
             } else {
-                this.img = Sprite.balloom_left3.getFxImage();
+                this.img = left_images.get(2);
             }
         }
 
