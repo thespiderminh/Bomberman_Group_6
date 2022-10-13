@@ -36,7 +36,7 @@ public class Flame extends Entity {
     }
 
     public boolean flammable() {
-        return !(BombermanGame.map[this.x / Sprite.SCALED_SIZE][this.y / Sprite.SCALED_SIZE] == '#');
+        return !(BombermanGame.map[this.y / Sprite.SCALED_SIZE][this.x / Sprite.SCALED_SIZE] == '#');
     }
 
     public void initFlame(Bomb bomb) {
@@ -53,22 +53,24 @@ public class Flame extends Entity {
         rightHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
                 (int) (bomb.getY() / Sprite.SCALED_SIZE),
                 rightHorizontalFlame.get(0));
-//        if (rightHorizontal.flammable()) {
-            getEntities().add(rightHorizontal);
-//        }
-//        if (leftHorizontal.flammable()) {
-            getEntities().add(leftHorizontal);
-//        }
-//        if (downVertical.flammable()) {
-            getEntities().add(downVertical);
-//        }
-//        if (topVertical.flammable()) {
-            getEntities().add(topVertical);
-//        }
+        if (rightHorizontal.flammable()) {
+        getEntities().add(rightHorizontal);
+        }
+        if (leftHorizontal.flammable()) {
+        getEntities().add(leftHorizontal);
+        }
+        if (downVertical.flammable()) {
+        getEntities().add(downVertical);
+        }
+        if (topVertical.flammable()) {
+        getEntities().add(topVertical);
+        }
     }
 
     public void renderFlame(int type) {
         inited = false;
+
+
         leftHorizontal.setImg(leftHorizontalFlame.get(type));
         rightHorizontal.setImg(rightHorizontalFlame.get(type));
         topVertical.setImg(topVerticalFlame.get(type));

@@ -14,11 +14,11 @@ public abstract class Entity {
 
     protected Image img;
 
-	public Entity() {
+    public Entity() {
 
-	}
+    }
 
-	public int getX() {
+    public int getX() {
         return x;
     }
 
