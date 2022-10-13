@@ -17,18 +17,8 @@ public class Bomb extends Entity {
     private boolean onScreen = false;
     private boolean exploding = false;
     private int typeOfBomb = 0;
-    private int typeOfFlame = 0;
-    private boolean createdFlame = false;
     private final List<Image> bombAnimation = Arrays.asList(Sprite.bomb.getFxImage(), Sprite.bomb_1.getFxImage(), Sprite.bomb_2.getFxImage());
     private final List<Image> bombExplosionAnimation = Arrays.asList(Sprite.bomb_exploded.getFxImage(), Sprite.bomb_exploded1.getFxImage(), Sprite.bomb_exploded2.getFxImage());
-
-    public int getTypeOfFlame() {
-        return typeOfFlame;
-    }
-
-    public void setTypeOfFlame(int typeOfFlame) {
-        this.typeOfFlame = typeOfFlame;
-    }
 
     public static int getNumberOfBombsOnScreen() {
         return numberOfBombsOnScreen;

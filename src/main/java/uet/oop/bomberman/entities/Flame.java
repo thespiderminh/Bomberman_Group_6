@@ -84,6 +84,7 @@ public class Flame extends Entity {
 //                        getStillObjects().remove(i);
 //                        getStillObjects().add(grass);
                         getStillObjects().set(i, grass);
+                        BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] =' ';
                     }
                 }
             } else {
@@ -99,6 +100,7 @@ public class Flame extends Entity {
 //                        getStillObjects().remove(i);
 //                        getStillObjects().add(grass);
                         getStillObjects().set(i, grass);
+                        BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] =' ';
                     }
                 }
             } else {
@@ -114,6 +116,7 @@ public class Flame extends Entity {
 //                        getStillObjects().remove(i);
 //                        getStillObjects().add(grass);
                         getStillObjects().set(i, grass);
+                        BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
                     }
                 }
             } else {
@@ -129,6 +132,7 @@ public class Flame extends Entity {
 //                        getStillObjects().remove(i);
 //                        getStillObjects().add(grass);
                         getStillObjects().set(i, grass);
+                        BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] =' ';
                     }
                 }
             } else {
