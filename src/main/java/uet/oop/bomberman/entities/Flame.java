@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static uet.oop.bomberman.BombermanGame.getEntities;
+import static uet.oop.bomberman.BombermanGame.getStillObjects;
 
 public class Flame extends Entity {
     private boolean inited = false;
@@ -41,7 +42,7 @@ public class Flame extends Entity {
     }
 
     public boolean flammable() {
-        return !(BombermanGame.map[this.x / Sprite.SCALED_SIZE][this.y / Sprite.SCALED_SIZE] == '#');
+        return !(BombermanGame.map[this.y / Sprite.SCALED_SIZE][this.x / Sprite.SCALED_SIZE] == '#');
     }
 
     public boolean brickCollision() {
@@ -77,12 +78,12 @@ public class Flame extends Entity {
         if (rightHorizontal.flammable()) {
             if (rightHorizontal.brickCollision()) {
                 getEntities().add(deleteBrick1);
-                Entity grass = new Grass(deleteBrick1.getX(), deleteBrick1.getY(), Sprite.grass.getFxImage());
-                for (int i = 0; i < BombermanGame.getStillObjects().size(); i++) {
-                    if (BombermanGame.getStillObjects().get(i).getX() == deleteBrick1.getX() && BombermanGame.getStillObjects().get(i).getY() == deleteBrick1.getY()) {
+                Entity grass = new Grass(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                for (int i = 0; i < getStillObjects().size(); i++) {
+                    if (getStillObjects().get(i).getX() == deleteBrick1.getX() && getStillObjects().get(i).getY() == deleteBrick1.getY()) {
 //                        getStillObjects().remove(i);
 //                        getStillObjects().add(grass);
-                        BombermanGame.getStillObjects().set(i, grass);
+                        getStillObjects().set(i, grass);
                     }
                 }
             } else {
@@ -92,12 +93,12 @@ public class Flame extends Entity {
         if (leftHorizontal.flammable()) {
             if (leftHorizontal.brickCollision()) {
                 getEntities().add(deleteBrick2);
-                Entity grass = new Grass(deleteBrick2.getX(), deleteBrick2.getY(), Sprite.grass.getFxImage());
-                for (int i = 0; i < BombermanGame.getStillObjects().size(); i++) {
-                    if (BombermanGame.getStillObjects().get(i).getX() == deleteBrick2.getX() && BombermanGame.getStillObjects().get(i).getY() == deleteBrick2.getY()) {
+                Entity grass = new Grass(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                for (int i = 0; i < getStillObjects().size(); i++) {
+                    if (getStillObjects().get(i).getX() == deleteBrick2.getX() && getStillObjects().get(i).getY() == deleteBrick2.getY()) {
 //                        getStillObjects().remove(i);
 //                        getStillObjects().add(grass);
-                        BombermanGame.getStillObjects().set(i, grass);
+                        getStillObjects().set(i, grass);
                     }
                 }
             } else {
@@ -107,12 +108,12 @@ public class Flame extends Entity {
         if (downVertical.flammable()) {
             if (downVertical.brickCollision()) {
                 getEntities().add(deleteBrick3);
-                Entity grass = new Grass(deleteBrick3.getX(), deleteBrick3.getY(), Sprite.grass.getFxImage());
-                for (int i = 0; i < BombermanGame.getStillObjects().size(); i++) {
-                    if (BombermanGame.getStillObjects().get(i).getX() == deleteBrick3.getX() && BombermanGame.getStillObjects().get(i).getY() == deleteBrick3.getY()) {
+                Entity grass = new Grass(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                for (int i = 0; i < getStillObjects().size(); i++) {
+                    if (getStillObjects().get(i).getX() == deleteBrick3.getX() && getStillObjects().get(i).getY() == deleteBrick3.getY()) {
 //                        getStillObjects().remove(i);
 //                        getStillObjects().add(grass);
-                        BombermanGame.getStillObjects().set(i, grass);
+                        getStillObjects().set(i, grass);
                     }
                 }
             } else {
@@ -122,12 +123,12 @@ public class Flame extends Entity {
         if (topVertical.flammable()) {
             if (topVertical.brickCollision()) {
                 getEntities().add(deleteBrick4);
-                Entity grass = new Grass(deleteBrick4.getX(), deleteBrick4.getY(), Sprite.grass.getFxImage());
-                for (int i = 0; i < BombermanGame.getStillObjects().size(); i++) {
-                    if (BombermanGame.getStillObjects().get(i).getX() == deleteBrick4.getX() && BombermanGame.getStillObjects().get(i).getY() == deleteBrick4.getY()) {
+                Entity grass = new Grass(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                for (int i = 0; i < getStillObjects().size(); i++) {
+                    if (getStillObjects().get(i).getX() == deleteBrick4.getX() && getStillObjects().get(i).getY() == deleteBrick4.getY()) {
 //                        getStillObjects().remove(i);
 //                        getStillObjects().add(grass);
-                        BombermanGame.getStillObjects().set(i, grass);
+                        getStillObjects().set(i, grass);
                     }
                 }
             } else {
