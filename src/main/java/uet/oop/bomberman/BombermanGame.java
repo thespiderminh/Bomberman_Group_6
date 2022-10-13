@@ -182,6 +182,9 @@ public class BombermanGame extends Application {
                 entities.remove(i);
             }
         }
+        for(int i = 0;i<stillObjects.size();i++){
+            stillObjects.get(i).update(scene,now);
+        }
     }
 
     public void render() {
@@ -194,7 +197,16 @@ public class BombermanGame extends Application {
         return stillObjects;
     }
 
+    public static void setEntities(List<Entity> entities) {
+        BombermanGame.entities = entities;
+    }
+
+    public static void setStillObjects(List<Entity> stillObjects) {
+        BombermanGame.stillObjects = stillObjects;
+    }
+
     public static List<Entity> getEntities() {
         return entities;
     }
+
 }

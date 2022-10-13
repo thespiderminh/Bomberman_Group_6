@@ -124,7 +124,6 @@ public class Balloon extends Enemy {
         int i = (int)(Math.random()*10) % 10 ;
         if (stop_ratio[i] == true) {
             current_state = "Stop";
-            System.out.println(interval);
         }
     }
 

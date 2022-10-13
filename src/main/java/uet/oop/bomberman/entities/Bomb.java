@@ -105,7 +105,7 @@ public class Bomb extends Entity {
     }
 
     private void explode(long now) {
-        if (now - explodeTime >= 1000000000L) {
+        if (now - explodeTime >= 100000000L) {
             if (typeOfBomb < 2) {
                 typeOfBomb++;
                 img = bombExplosionAnimation.get(typeOfBomb);
