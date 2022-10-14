@@ -10,8 +10,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static uet.oop.bomberman.BombermanGame.*;
+import static uet.oop.bomberman.entities.Bomb.numberOfBombs;
+import static uet.oop.bomberman.entities.Bomb.numberOfBombsOnScreen;
 
-public class Bomber extends Bomb {
+public class Bomber extends Entity {
 
     private final int velo = 2;
     private int velocityX = 0;
