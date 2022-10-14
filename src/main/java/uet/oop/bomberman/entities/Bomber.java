@@ -183,11 +183,23 @@ public class Bomber extends Bomb {
 
     private void getBombs(long now) {
         if (numberOfBombsOnScreen < numberOfBombs) {
-            Bomb bomb = new Bomb((int) (getCenterX() / Sprite.SCALED_SIZE),
-                    (int) (getCenterY() / Sprite.SCALED_SIZE),
-                    Sprite.bomb.getFxImage());
+            int length = Sprite.SCALED_SIZE;
+            int x = getCenterX() / length;
+            int y = getCenterY() / length;
+            for (int i = 0; i < getEntities().size(); i++) {
+                if (getEntities().get(i) instanceof Balloon) {
+                    int balloonX = getEntities().get(i).getX();
+                    int balloonY = getEntities().get(i).getY();
+                    if (x < balloonX && x + length > balloonX && y < balloonY && y + length > balloonY) {
+                        if (x > getX() / length) x--;
+                        else if (x < (getX() / length + 1)) x++;
+                        else if (y > getY() / length) x--;
+                        else if (y < (getY() / length + 1)) y++;
+                    }
+                }
+            }
+            Bomb bomb = new Bomb(x, y, Sprite.bomb.getFxImage());
             getEntities().add(bomb);
-            System.out.println(bomb.getX()+" "+ bomb.getY());
             numberOfBombsOnScreen++;
         }
     }
