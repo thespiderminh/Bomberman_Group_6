@@ -17,6 +17,17 @@ public class Bomb extends Entity {
     private boolean onScreen = false;
     private boolean exploding = false;
     private int typeOfBomb = 0;
+    private int bombUp = 0;
+
+    public boolean isInBomber() {
+        return inBomber;
+    }
+
+    public void setInBomber(boolean inBomber) {
+        this.inBomber = inBomber;
+    }
+
+    private boolean inBomber = true;
     private final List<Image> bombAnimation = Arrays.asList(Sprite.bomb.getFxImage(), Sprite.bomb_1.getFxImage(), Sprite.bomb_2.getFxImage());
     private final List<Image> bombExplosionAnimation = Arrays.asList(Sprite.bomb_exploded.getFxImage(), Sprite.bomb_exploded1.getFxImage(), Sprite.bomb_exploded2.getFxImage());
 
@@ -71,7 +82,7 @@ public class Bomb extends Entity {
             existTime = now;
         }
 
-        if (onScreen && !exploding) {
+        if (!exploding) {
             if (now - startTime >= 300000000L) {
                 img = bombAnimation.get(typeOfBomb);
                 typeOfBomb = (typeOfBomb + 1) % 3;
@@ -95,15 +106,23 @@ public class Bomb extends Entity {
     }
 
     private void explode(long now) {
-        if (now - explodeTime >= 100000000L) {
-            if (typeOfBomb < 2) {
+        if (now - explodeTime >= 70000000L) {
+            if (typeOfBomb < 2 && bombUp == 0) {
                 typeOfBomb++;
                 img = bombExplosionAnimation.get(typeOfBomb);
-                flame.renderFlame(typeOfBomb);
+                flame.renderFlame(typeOfBomb, bombUp);
                 explodeTime = now;
-            } else {
-                this.img = null;
+            } else if (typeOfBomb == 2 && bombUp == 0){
+                bombUp = 1;
+            }
+            if (typeOfBomb > 0 && bombUp == 1) {
+                typeOfBomb--;
+                img = bombExplosionAnimation.get(typeOfBomb);
+                flame.renderFlame(typeOfBomb, bombUp);
+                explodeTime = now;
+            } else if (typeOfBomb == 0 && bombUp == 1){
                 flame.deleteFlame();
+                this.img = null;
                 numberOfBombsOnScreen--;
                 exploding = false;
                 onScreen = false;

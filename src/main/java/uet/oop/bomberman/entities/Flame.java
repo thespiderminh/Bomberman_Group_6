@@ -7,7 +7,6 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import static uet.oop.bomberman.BombermanGame.getEntities;
 import static uet.oop.bomberman.BombermanGame.getStillObjects;
@@ -162,16 +161,23 @@ public class Flame extends Entity {
         }
     }
 
-    public void renderFlame(int type) {
+    public void renderFlame(int type, int bombUp) {
         inited = false;
         leftHorizontal.setImg(leftHorizontalFlame.get(type));
         rightHorizontal.setImg(rightHorizontalFlame.get(type));
         topVertical.setImg(topVerticalFlame.get(type));
         downVertical.setImg(downVerticalFlame.get(type));
-        deleteBrick1.setImg(brokenBrick.get(type));
-        deleteBrick2.setImg(brokenBrick.get(type));
-        deleteBrick3.setImg(brokenBrick.get(type));
-        deleteBrick4.setImg(brokenBrick.get(type));
+        if (bombUp == 0) {
+            deleteBrick1.setImg(brokenBrick.get(type));
+            deleteBrick2.setImg(brokenBrick.get(type));
+            deleteBrick3.setImg(brokenBrick.get(type));
+            deleteBrick4.setImg(brokenBrick.get(type));
+        } else if (bombUp == 1) {
+            deleteBrick1.img = null;
+            deleteBrick2.img = null;
+            deleteBrick3.img = null;
+            deleteBrick4.img = null;
+        }
     }
 
     public void deleteFlame() {
