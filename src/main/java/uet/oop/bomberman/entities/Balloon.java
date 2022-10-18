@@ -4,14 +4,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
-import static uet.oop.bomberman.BombermanGame.getEntities;
 
-import java.nio.channels.spi.SelectorProvider;
-import java.nio.charset.IllegalCharsetNameException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import static uet.oop.bomberman.BombermanGame.getEntities;
 
 public class Balloon extends Enemy {
     private final int velo = 1;
@@ -258,7 +256,7 @@ public class Balloon extends Enemy {
 
         if (Objects.equals(current_state, "Stop")) {
             lock_delay_mode(now);
-            if (now - start_delay >= 200000000L) {  // Delay 0.2s or more
+            if (now - start_delay >= 5000000L) {  // Delay 0.2s or more
                 start_move = now;
                 generate_direction();
                 delay_latch = true;

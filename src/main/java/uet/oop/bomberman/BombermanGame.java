@@ -104,7 +104,7 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        backgroundMap();
+//        backgroundMap();
         createMap(map);
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
@@ -209,4 +209,12 @@ public class BombermanGame extends Application {
         return entities;
     }
 
+    public static Entity getAt(int x, int y) {
+        for (int i = 0; i <stillObjects.size(); i++) {
+            if (stillObjects.get(i).getY() == y && stillObjects.get(i).getX() == x) {
+                return stillObjects.get(i);
+            }
+        }
+        return null;
+    }
 }

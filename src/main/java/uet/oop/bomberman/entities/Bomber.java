@@ -1,9 +1,7 @@
 package uet.oop.bomberman.entities;
 
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Arrays;
@@ -14,38 +12,30 @@ import static uet.oop.bomberman.entities.Bomb.numberOfBombs;
 import static uet.oop.bomberman.entities.Bomb.numberOfBombsOnScreen;
 
 public class Bomber extends Entity {
-
+    private boolean alive = true;
     private final int velo = 2;
     private int velocityX = 0;
     private int velocityY = 0;
     private long timePress = 0;
+    private long deadTime = 0;
     private int type = 0;
-    private List<Image> playerDown = Arrays.asList(Sprite.player_down_0.getFxImage(), Sprite.player_down_1.getFxImage(), Sprite.player_down_2.getFxImage());
-    private List<Image> playerUp = Arrays.asList(Sprite.player_up_0.getFxImage(), Sprite.player_up_1.getFxImage(), Sprite.player_up_2.getFxImage());
-    private List<Image> playerLeft = Arrays.asList(Sprite.player_left_0.getFxImage(), Sprite.player_left_1.getFxImage(), Sprite.player_left_2.getFxImage());
-    private List<Image> playerRight = Arrays.asList(Sprite.player_right_0.getFxImage(), Sprite.player_right_1.getFxImage(), Sprite.player_right_2.getFxImage());
-
+    private int deadType = 0;
+    private final List<Image> playerDown = Arrays.asList(Sprite.player_down_0.getFxImage(), Sprite.player_down_1.getFxImage(), Sprite.player_down_2.getFxImage());
+    private final List<Image> playerUp = Arrays.asList(Sprite.player_up_0.getFxImage(), Sprite.player_up_1.getFxImage(), Sprite.player_up_2.getFxImage());
+    private final List<Image> playerLeft = Arrays.asList(Sprite.player_left_0.getFxImage(), Sprite.player_left_1.getFxImage(), Sprite.player_left_2.getFxImage());
+    private final List<Image> playerRight = Arrays.asList(Sprite.player_right_0.getFxImage(), Sprite.player_right_1.getFxImage(), Sprite.player_right_2.getFxImage());
+    private final List<Image> deadPlayer = Arrays.asList(Sprite.player_dead1.getFxImage(), Sprite.player_dead2.getFxImage(), Sprite.player_dead3.getFxImage());
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
     }
 
-    public int getVelo() {
-        return velo;
-    }
-
-    public int getVelocityX() {
-        return velocityX;
-    }
-
-    public int getVelocityY() {
-        return velocityY;
-    }
-
     @Override
     public void update(Scene scene, long now) {
-        move(scene);
         changeTheAnimation(now);
-        control(scene, now);
+        if (alive) {
+            move(now);
+            control(scene);
+        }
     }
 
     public void moveUp() {
@@ -72,7 +62,7 @@ public class Bomber extends Entity {
         velocityY = 0;
     }
 
-    private void move(Scene scene) {
+    private void move(long now) {
         x += velocityX;
         y += velocityY;
 
@@ -92,20 +82,29 @@ public class Bomber extends Entity {
             y = (HEIGHT - 1) * Sprite.SCALED_SIZE;
         }
 
-        for (Entity w : getStillObjects()) {
-            if (w instanceof Wall || w instanceof Brick) {
-                int index = getStillObjects().indexOf(w);
+        for (int i = 0; i < getStillObjects().size(); i++) {
+            if (getStillObjects().get(i) instanceof Wall || getStillObjects().get(i) instanceof Brick) {
                 if (velocityY != 0) {
-                    if (x + Sprite.SCALED_SIZE > w.getX() && x < w.getX() + Sprite.SCALED_SIZE) {
-                        if (y + Sprite.SCALED_SIZE > w.getY() && y < w.getY() + Sprite.SCALED_SIZE) {
+                    if (x + Sprite.SCALED_SIZE > getStillObjects().get(i).getX() &&
+                            x < getStillObjects().get(i).getX() + Sprite.SCALED_SIZE) {
+                        if (y + Sprite.SCALED_SIZE > getStillObjects().get(i).getY() &&
+                                y < getStillObjects().get(i).getY() + Sprite.SCALED_SIZE) {
                             y -= velocityY;
-                            if (x + Sprite.SCALED_SIZE / 3 < w.getX()) {
-                                if (getStillObjects().get(index - 1) instanceof Grass) {
-                                    x -= velo;
+                            if (x + Sprite.SCALED_SIZE / 2 < getStillObjects().get(i).getX()) {
+                                if (getStillObjects().get(i - 1) instanceof Grass) {
+                                    if (velocityY > 0 && getStillObjects().get(i - 1 + WIDTH) instanceof Grass) {
+                                        x -= velo;
+                                    } else if (velocityY < 0 && getStillObjects().get(i - 1 - WIDTH) instanceof Grass) {
+                                        x -= velo;
+                                    }
                                 }
-                            } else if (x > w.getX() + Sprite.SCALED_SIZE / 3) {
-                                if (getStillObjects().get(index + 1) instanceof Grass) {
-                                    x += velo;
+                            } else if (x > getStillObjects().get(i).getX() + Sprite.SCALED_SIZE / 2) {
+                                if (getStillObjects().get(i + 1) instanceof Grass) {
+                                    if (velocityY > 0 && getStillObjects().get(i + 1 + WIDTH) instanceof Grass) {
+                                        x += velo;
+                                    } else if (velocityY < 0 && getStillObjects().get(i + 1 - WIDTH) instanceof Grass) {
+                                        x += velo;
+                                    }
                                 }
                             }
                             break;
@@ -114,15 +113,17 @@ public class Bomber extends Entity {
                 }
 
                 if (velocityX != 0) {
-                    if (y + Sprite.SCALED_SIZE > w.getY() && y < w.getY() + Sprite.SCALED_SIZE) {
-                        if (x < w.getX() + Sprite.SCALED_SIZE && x + Sprite.SCALED_SIZE > w.getX()) {
+                    if (y + Sprite.SCALED_SIZE > getStillObjects().get(i).getY() &&
+                            y < getStillObjects().get(i).getY() + Sprite.SCALED_SIZE) {
+                        if (x < getStillObjects().get(i).getX() + Sprite.SCALED_SIZE &&
+                                x + Sprite.SCALED_SIZE > getStillObjects().get(i).getX()) {
                             x -= velocityX;
-                            if (y + Sprite.SCALED_SIZE / 3 < w.getY()) {
-                                if (getStillObjects().get(index - WIDTH) instanceof Grass) {
+                            if (y + Sprite.SCALED_SIZE / 2 < getStillObjects().get(i).getY()) {
+                                if (getStillObjects().get(i - WIDTH) instanceof Grass) {
                                     y -= velo;
                                 }
-                            } else if (y > w.getY() + Sprite.SCALED_SIZE / 3) {
-                                if (getStillObjects().get(index + WIDTH) instanceof Grass) {
+                            } else if (y > getStillObjects().get(i).getY() + Sprite.SCALED_SIZE / 2) {
+                                if (getStillObjects().get(i + WIDTH) instanceof Grass) {
                                     y += velo;
                                 }
                             }
@@ -132,58 +133,101 @@ public class Bomber extends Entity {
                 }
             }
         }
-    }
 
-    public void changeTheAnimation(long now) {
-        if (velocityY > 0) {
-            this.img = playerDown.get(type);
-        } else if (velocityY < 0) {
-            this.img = playerUp.get(type);
-        }
-        if (velocityX > 0) {
-            this.img = playerRight.get(type);
-        } else if (velocityX < 0) {
-            this.img = playerLeft.get(type);
-        }
+        for (int i = 0; i < getEntities().size(); i++) {
+            if (getEntities().get(i) instanceof Bomb) {
+                if (x + Sprite.SCALED_SIZE < getEntities().get(i).getX() ||
+                        getEntities().get(i).getX() + Sprite.SCALED_SIZE < x ||
+                        y + Sprite.SCALED_SIZE < getEntities().get(i).getY() ||
+                        getEntities().get(i).getY() + Sprite.SCALED_SIZE < y) {
+                    ((Bomb) getEntities().get(i)).setInBomber(false);
+                }
 
-        if (velocityX != 0 || velocityY != 0) {
-            if (now - timePress > 100000000L) {
-                timePress = now;
-                type = (type + 1) % 3;
-            }
-        } else {
-            timePress = 0;
-            type = 0;
-        }
-    }
-
-    public void control(Scene scene, long now) {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent key) {
-                switch (key.getCode()) {
-                    case UP -> moveUp();
-                    case DOWN -> moveDown();
-                    case RIGHT -> moveRight();
-                    case LEFT -> moveLeft();
-                    case SPACE -> {
-                        getBombs(now);
+                if (!((Bomb) getEntities().get(i)).isInBomber()) {
+                    if (x + Sprite.SCALED_SIZE > getEntities().get(i).getX() &&
+                            x < getEntities().get(i).getX() + Sprite.SCALED_SIZE) {
+                        if (y + Sprite.SCALED_SIZE > getEntities().get(i).getY() &&
+                                y < getEntities().get(i).getY() + Sprite.SCALED_SIZE) {
+                            if (velocityY != 0) {
+                                y -= velocityY;
+                            }
+                            if (velocityX != 0) {
+                                x -= velocityX;
+                            }
+                        }
+                    }
+                }
+            } else if (getEntities().get(i) instanceof Flame ||
+                    getEntities().get(i) instanceof Balloon) {
+                if (x + Sprite.SCALED_SIZE > getEntities().get(i).getX() &&
+                        x < getEntities().get(i).getX() + Sprite.SCALED_SIZE) {
+                    if (y + Sprite.SCALED_SIZE > getEntities().get(i).getY() &&
+                            y < getEntities().get(i).getY() + Sprite.SCALED_SIZE) {
+                        alive = false;
+                        deadTime = now;
                     }
                 }
             }
-        });
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent key) {
-                switch (key.getCode()) {
-                    case UP, DOWN -> stopY();
-                    case RIGHT, LEFT -> stopX();
+        }
+    }
+
+    public void changeTheAnimation(long now) {
+        if (alive) {
+            if (velocityY > 0) {
+                this.img = playerDown.get(type);
+            } else if (velocityY < 0) {
+                this.img = playerUp.get(type);
+            }
+            if (velocityX > 0) {
+                this.img = playerRight.get(type);
+            } else if (velocityX < 0) {
+                this.img = playerLeft.get(type);
+            }
+
+            if (velocityX != 0 || velocityY != 0) {
+                if (now - timePress > 100000000L) {
+                    timePress = now;
+                    type = (type + 1) % 3;
                 }
+            } else {
+                timePress = 0;
+                type = 0;
+            }
+        } else {
+            this.img = deadPlayer.get(deadType);
+
+            if (now - deadTime >= 500000000L) {
+                if (deadType < 2) {
+                    deadTime = now;
+                    deadType++;
+                } else {
+                    this.img = null;
+                }
+            }
+        }
+    }
+
+    public void control(Scene scene) {
+        scene.setOnKeyPressed(key -> {
+            switch (key.getCode()) {
+                case UP -> moveUp();
+                case DOWN -> moveDown();
+                case RIGHT -> moveRight();
+                case LEFT -> moveLeft();
+                case SPACE -> {
+                    getBombs();
+                }
+            }
+        });
+        scene.setOnKeyReleased(key -> {
+            switch (key.getCode()) {
+                case UP, DOWN -> stopY();
+                case RIGHT, LEFT -> stopX();
             }
         });
     }
 
-    private void getBombs(long now) {
+    private void getBombs() {
         if (numberOfBombsOnScreen < numberOfBombs) {
             int length = Sprite.SCALED_SIZE;
             int x = getCenterX() / length;
