@@ -18,10 +18,10 @@ public class Balloon extends Enemy {
     private int velocity_x = 0;
     private int velocity_y = 0;
 
-    private List<Image> right_images = Arrays.asList(Sprite.balloom_right1.getFxImage(), Sprite.balloom_right2.getFxImage(), Sprite.balloom_right3.getFxImage());
-    private List<Image> left_images = Arrays.asList(Sprite.balloom_left1.getFxImage(), Sprite.balloom_left2.getFxImage(), Sprite.balloom_left3.getFxImage());
+    private final List<Image> right_images = Arrays.asList(Sprite.balloom_right1.getFxImage(), Sprite.balloom_right2.getFxImage(), Sprite.balloom_right3.getFxImage());
+    private final List<Image> left_images = Arrays.asList(Sprite.balloom_left1.getFxImage(), Sprite.balloom_left2.getFxImage(), Sprite.balloom_left3.getFxImage());
 
-    private List<Image> dead_image = Arrays.asList(Sprite.balloom_dead.getFxImage(), Sprite.mob_dead1.getFxImage(), Sprite.mob_dead2.getFxImage(), Sprite.mob_dead3.getFxImage());
+    private final List<Image> dead_image = Arrays.asList(Sprite.balloom_dead.getFxImage(), Sprite.mob_dead1.getFxImage(), Sprite.mob_dead2.getFxImage(), Sprite.mob_dead3.getFxImage());
 
     private int step = Sprite.SCALED_SIZE;
 
@@ -174,7 +174,7 @@ public class Balloon extends Enemy {
 
     public void sudden_stop(long interval) {
         int i = (int)(Math.random()*10) % 10 ;
-        if (stop_ratio[i] == true) {
+        if (stop_ratio[i]) {
             current_state = "Stop";
         }
     }
@@ -258,7 +258,7 @@ public class Balloon extends Enemy {
 
         if (Objects.equals(current_state, "Stop")) {
             lock_delay_mode(now);
-            if (now - start_delay >= 200000000L) {  // Delay 0.2s or more
+            if (now - start_delay >= 50000000L) {  // Delay 0.05s or more
                 start_move = now;
                 generate_direction();
                 delay_latch = true;
