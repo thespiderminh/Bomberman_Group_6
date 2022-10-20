@@ -25,9 +25,12 @@ public class Bomber extends Entity {
     private final List<Image> playerLeft = Arrays.asList(Sprite.player_left_0.getFxImage(), Sprite.player_left_1.getFxImage(), Sprite.player_left_2.getFxImage());
     private final List<Image> playerRight = Arrays.asList(Sprite.player_right_0.getFxImage(), Sprite.player_right_1.getFxImage(), Sprite.player_right_2.getFxImage());
     private final List<Image> deadPlayer = Arrays.asList(Sprite.player_dead1.getFxImage(), Sprite.player_dead2.getFxImage(), Sprite.player_dead3.getFxImage());
+
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
     }
+
+    public Audio sound = new Audio();
 
     @Override
     public void update(Scene scene, long now) {
@@ -247,6 +250,7 @@ public class Bomber extends Entity {
             Bomb bomb = new Bomb(x, y, Sprite.bomb.getFxImage());
             getEntities().add(bomb);
             numberOfBombsOnScreen++;
+            sound.placedBomb();
         }
     }
 }

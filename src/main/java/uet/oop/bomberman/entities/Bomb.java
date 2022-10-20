@@ -30,10 +30,12 @@ public class Bomb extends Entity {
     private boolean inBomber = true;
     private final List<Image> bombAnimation = Arrays.asList(Sprite.bomb.getFxImage(), Sprite.bomb_1.getFxImage(), Sprite.bomb_2.getFxImage());
     private final List<Image> bombExplosionAnimation = Arrays.asList(Sprite.bomb_exploded.getFxImage(), Sprite.bomb_exploded1.getFxImage(), Sprite.bomb_exploded2.getFxImage());
+    Audio soundBomb = new Audio();
 
     public static int getNumberOfBombsOnScreen() {
         return numberOfBombsOnScreen;
     }
+
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
     }
@@ -98,6 +100,7 @@ public class Bomb extends Entity {
                     flame.initFlame(this);
                 }
                 img = bombExplosionAnimation.get(typeOfBomb);
+                soundBomb.bombExplore();
             }
         }
         if (exploding) {
@@ -112,7 +115,7 @@ public class Bomb extends Entity {
                 img = bombExplosionAnimation.get(typeOfBomb);
                 flame.renderFlame(typeOfBomb, bombUp);
                 explodeTime = now;
-            } else if (typeOfBomb == 2 && bombUp == 0){
+            } else if (typeOfBomb == 2 && bombUp == 0) {
                 bombUp = 1;
             }
             if (typeOfBomb > 0 && bombUp == 1) {
@@ -120,7 +123,7 @@ public class Bomb extends Entity {
                 img = bombExplosionAnimation.get(typeOfBomb);
                 flame.renderFlame(typeOfBomb, bombUp);
                 explodeTime = now;
-            } else if (typeOfBomb == 0 && bombUp == 1){
+            } else if (typeOfBomb == 0 && bombUp == 1) {
                 flame.deleteFlame();
                 this.img = null;
                 numberOfBombsOnScreen--;

@@ -20,18 +20,18 @@ public class BombermanGame extends Application {
     private static final int FRAME_PER_SECOND = 90;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
-    
+
     private GraphicsContext gc;
     private Canvas canvas;
     private static List<Entity> entities = new ArrayList<>();
     private static List<Entity> stillObjects = new ArrayList<>();
-    
+
     public static char[][] load_map(String absolute_path) {
         File file = new File(absolute_path);
         Scanner sc = null;
         try {
-             sc = new Scanner(file);
-        } catch (Exception e)  {
+            sc = new Scanner(file);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
@@ -43,12 +43,12 @@ public class BombermanGame extends Application {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(file));
-        } catch (FileNotFoundException e)  {
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
         String temp = null;
-        for (int i = -1; i <row; ++i) {
+        for (int i = -1; i < row; ++i) {
             try {
                 temp = br.readLine();
             } catch (IOException e) {
@@ -67,7 +67,9 @@ public class BombermanGame extends Application {
 
 
     public static void main(String[] args) {
+
         Application.launch(BombermanGame.class);
+
     }
 
     private Scene scene;
@@ -91,11 +93,12 @@ public class BombermanGame extends Application {
 
         AnimationTimer timer = new AnimationTimer() {
             private long prevTime = 0;
+
             @Override
             public void handle(long now) {
                 long dt = now - prevTime;
 
-                if(dt > 1000000000/FRAME_PER_SECOND) {
+                if (dt > 1000000000 / FRAME_PER_SECOND) {
                     prevTime = now;
                     update(now);
                 }
@@ -106,10 +109,12 @@ public class BombermanGame extends Application {
 
 //        backgroundMap();
         createMap(map);
-
+        Audio audio = new Audio();
+        audio.playStart();
+        audio.playBGM();
         Entity bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
-
         entities.add(bomberman);
+
     }
 
     public void backgroundMap() {
@@ -118,8 +123,7 @@ public class BombermanGame extends Application {
                 Entity object;
                 if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
+                } else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
                 }
                 stillObjects.add(object);
@@ -127,7 +131,7 @@ public class BombermanGame extends Application {
         }
     }
 
-    public void createMap(char [][] a) {
+    public void createMap(char[][] a) {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 Entity object = null;
@@ -135,8 +139,7 @@ public class BombermanGame extends Application {
                 if (a[i][j] == '#') {
                     object = new Wall(j, i, Sprite.wall.getFxImage());
                     stillObjects.add(object);
-                }
-                else if (a[i][j] == '*') {
+                } else if (a[i][j] == '*') {
                     object = new Brick(j, i, Sprite.brick.getFxImage());
                     stillObjects.add(object);
                 }
@@ -146,14 +149,13 @@ public class BombermanGame extends Application {
                 else if (a[i][j] == '1') {
                     movable = new Balloon(j, i, Sprite.balloom_right1.getFxImage());
                     entities.add(movable);
-                    object = new Grass(j,i,Sprite.grass.getFxImage());
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);
                     a[i][j] = ' ';
-                }
-                else if (a[i][j] == '2') {
+                } else if (a[i][j] == '2') {
                     movable = new Oneal(j, i, Sprite.oneal_right1.getFxImage());
                     entities.add(movable);
-                    object = new Grass(j,i,Sprite.grass.getFxImage());
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);
                     a[i][j] = ' ';
                 }
@@ -176,14 +178,14 @@ public class BombermanGame extends Application {
     }
 
     public void update(long now) {
-        for(int i = 0; i < entities.size(); i++) {
+        for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update(scene, now);
             if (entities.get(i).getImg() == null) {
                 entities.remove(i);
             }
         }
-        for(int i = 0; i < stillObjects.size();i++){
-            stillObjects.get(i).update(scene,now);
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.get(i).update(scene, now);
         }
     }
 
@@ -210,7 +212,7 @@ public class BombermanGame extends Application {
     }
 
     public static Entity getAt(int x, int y) {
-        for (int i = 0; i <stillObjects.size(); i++) {
+        for (int i = 0; i < stillObjects.size(); i++) {
             if (stillObjects.get(i).getY() == y && stillObjects.get(i).getX() == x) {
                 return stillObjects.get(i);
             }
