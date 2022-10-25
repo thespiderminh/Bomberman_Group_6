@@ -28,8 +28,8 @@ public class Balloon extends Enemy {
     }
 
     @Override
-    void generate_direction() {
-        int i = (int)(Math.random()*10) % 4 + 1;
+    void generate_direction(long now) {
+        int i = ((int)(Math.random() * 10) * 27) % 4 + 1;
         current_state = states[i];
     }
 
@@ -100,7 +100,7 @@ public class Balloon extends Enemy {
             lock_delay_mode(now);
             if (now - start_delay >= 200000000L) {  // Delay 0.2s or more
                 start_move = now;
-                generate_direction();
+                generate_direction(now);
                 delay_latch = true;
             }
         }
@@ -149,18 +149,6 @@ public class Balloon extends Enemy {
                 current_state = "Stop";
             }
         }
-
-        /*  di chuyển tiếp */
-//        if (x == des_x) {
-//            if (Objects.equals(current_state, "Right")) {
-//                step = Sprite.SCALED_SIZE;
-//                update_des_x();
-//            }
-//            else {
-//                step = -Sprite.SCALED_SIZE;
-//                update_des_x();
-//            }
-//        }
 
         change_animation(now);
 

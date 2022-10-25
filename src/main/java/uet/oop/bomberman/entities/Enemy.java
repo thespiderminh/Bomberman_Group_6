@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static uet.oop.bomberman.BombermanGame.getEntities;
@@ -76,7 +78,7 @@ public class Enemy extends Entity {
         }
     }
 
-    void generate_direction() {
+    void generate_direction(long now) {
 
     }
 

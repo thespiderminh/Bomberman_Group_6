@@ -73,6 +73,7 @@ public class BombermanGame extends Application {
     }
 
     private Scene scene;
+    public static Entity bomberman;
 
     @Override
     public void start(Stage stage) {
@@ -112,7 +113,7 @@ public class BombermanGame extends Application {
         Audio audio = new Audio();
         audio.playStart();
         audio.playBGM();
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
+        bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
         entities.add(bomberman);
 
     }
@@ -219,4 +220,6 @@ public class BombermanGame extends Application {
         }
         return null;
     }
+
+
 }

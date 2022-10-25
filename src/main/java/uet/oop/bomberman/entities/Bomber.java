@@ -161,7 +161,7 @@ public class Bomber extends Entity {
                     }
                 }
             } else if (getEntities().get(i) instanceof Flame ||
-                    getEntities().get(i) instanceof Balloon) {
+                    getEntities().get(i) instanceof Enemy) {
                 if (x + Sprite.SCALED_SIZE > getEntities().get(i).getX() &&
                         x < getEntities().get(i).getX() + Sprite.SCALED_SIZE) {
                     if (y + Sprite.SCALED_SIZE > getEntities().get(i).getY() &&
@@ -236,7 +236,7 @@ public class Bomber extends Entity {
             int x = getCenterX() / length;
             int y = getCenterY() / length;
             for (int i = 0; i < getEntities().size(); i++) {
-                if (getEntities().get(i) instanceof Balloon) {
+                if (getEntities().get(i) instanceof Enemy) {
                     int balloonX = getEntities().get(i).getX();
                     int balloonY = getEntities().get(i).getY();
                     if (x < balloonX && x + length > balloonX && y < balloonY && y + length > balloonY) {
