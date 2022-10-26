@@ -40,7 +40,7 @@ public class Bomb extends Entity {
         super(x, y, img);
     }
 
-    Flame flame;
+    Flame flame = new Flame();
 
     public int getTypeOfBomb() {
         return typeOfBomb;
