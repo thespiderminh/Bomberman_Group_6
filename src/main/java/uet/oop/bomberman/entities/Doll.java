@@ -20,12 +20,6 @@ public class Doll extends Oneal {
 
     private List<Image> dead_image = Arrays.asList(Sprite.doll_dead.getFxImage(), Sprite.mob_dead1.getFxImage(), Sprite.mob_dead2.getFxImage(), Sprite.mob_dead3.getFxImage());
 
-//    @Override
-//    public boolean movable(int m_y, int m_x) {
-//        //follow the grass
-//        return (BombermanGame.map[m_y][m_x] == ' ') && (!has_bomb(m_x,m_y));
-//    }
-
     @Override
     public int generate_vertical_direction() {
         if (BombermanGame.bomberman.getY() < this.y) {
