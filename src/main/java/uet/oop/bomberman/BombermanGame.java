@@ -110,9 +110,10 @@ public class BombermanGame extends Application {
 
 //        backgroundMap();
         createMap(map);
-        Audio audio = new Audio();
-        audio.playStart();
-        audio.playBGM();
+        Audio.setBackgroundMusic();
+        Audio.getBackgroundMusic().play();
+        Audio.setPlayStart();
+        Audio.getPlayStart().play();
         bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
         entities.add(bomberman);
 

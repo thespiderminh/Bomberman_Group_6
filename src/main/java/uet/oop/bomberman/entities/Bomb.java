@@ -100,7 +100,8 @@ public class Bomb extends Entity {
                     flame.initFlame(this);
                 }
                 img = bombExplosionAnimation.get(typeOfBomb);
-                soundBomb.bombExplore();
+                Audio.setBombExploring();
+                Audio.getBombExploring().play();
             }
         }
         if (exploding) {
