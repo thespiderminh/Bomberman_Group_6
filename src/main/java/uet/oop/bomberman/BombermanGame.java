@@ -159,6 +159,12 @@ public class BombermanGame extends Application {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);
                     a[i][j] = ' ';
+                } else if (a[i][j] == '3') {
+                    movable = new Doll(j, i, Sprite.doll_right1.getFxImage());
+                    entities.add(movable);
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
+                    stillObjects.add(object);
+                    a[i][j] = ' ';
                 }
 //                else if (a[i][j] == 'b') {
 //                    object = new Bomb(j, i, Sprite.bomb.getFxImage());
