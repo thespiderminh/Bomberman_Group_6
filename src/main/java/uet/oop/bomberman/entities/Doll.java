@@ -21,7 +21,16 @@ public class Doll extends Oneal {
     private List<Image> dead_image = Arrays.asList(Sprite.doll_dead.getFxImage(), Sprite.mob_dead1.getFxImage(), Sprite.mob_dead2.getFxImage(), Sprite.mob_dead3.getFxImage());
 
     @Override
+    public boolean movable(int m_y, int m_x) {
+        //follow the grass
+        return (BombermanGame.map[m_y][m_x] == ' ' || BombermanGame.map[m_y][m_x] == '*') && (!has_bomb(m_x,m_y));
+    }
+
+    @Override
     public int generate_vertical_direction() {
+        if (BombermanGame.bomberman == null) {
+            return ((int)(Math.random() * 10) * 27) % 4 + 1;
+        }
         if (BombermanGame.bomberman.getY() < this.y) {
             return 3; // Up
         } else if (BombermanGame.bomberman.getY() > this.y) {
@@ -32,6 +41,9 @@ public class Doll extends Oneal {
 
     @Override
     public int generate_horizontal_direction() {
+        if (BombermanGame.bomberman == null) {
+            return ((int)(Math.random() * 10) * 27) % 4 + 1;
+        }
         if (BombermanGame.bomberman.getX() < this.x) {
             return 2; // Left
         } else if (BombermanGame.bomberman.getX() > this.x) {
@@ -43,7 +55,6 @@ public class Doll extends Oneal {
     @Override
     public void generate_direction(long now) {
         int i = 0;
-
         if (BombermanGame.bomberman == null) {
             i = ((int)(Math.random() * 10) * 27) % 4 + 1; // 1-4
         } else {
@@ -54,7 +65,6 @@ public class Doll extends Oneal {
                 i = generate_horizontal_direction();
             }
         }
-
         current_state = states[i];
     }
 
@@ -110,6 +120,8 @@ public class Doll extends Oneal {
 
     @Override
     public void update(Scene scene, long now) {
+        //System.out.println(BombermanGame.map[][])
+
         if (get_burned() && !Objects.equals(current_state, "Dead") && !Objects.equals(current_state, "NULL")) {
             current_state = "Dead";   // Dead
             --life;

@@ -143,9 +143,18 @@ public class BombermanGame extends Application {
                 } else if (a[i][j] == '*') {
                     object = new Brick(j, i, Sprite.brick.getFxImage());
                     stillObjects.add(object);
+                } else if (a[i][j] == 'p') {
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
+                    stillObjects.add(object);
+                    a[i][j] = ' ';
                 }
 //                else if (a[i][j] == 'x') {
+//                    object = new Grass(j, i, Sprite.grass.getFxImage());
+//                    stillObjects.add(object);
 //                    object = new Portal(j, i, Sprite.portal.getFxImage());
+//                    entities.add(object);
+//                    object = new Brick(j, i, Sprite.brick.getFxImage());
+//                    stillObjects.add(object);
 //                }
                 else if (a[i][j] == '1') {
                     movable = new Balloon(j, i, Sprite.balloom_right1.getFxImage());
@@ -166,15 +175,27 @@ public class BombermanGame extends Application {
                     stillObjects.add(object);
                     a[i][j] = ' ';
                 }
-//                else if (a[i][j] == 'b') {
-//                    object = new Bomb(j, i, Sprite.bomb.getFxImage());
-//                }
-//                else if (a[i][j] == 'f') {
-//                    object = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
-//                }
-//                else if (a[i][j] == 's') {
-//                    object = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
-//                }
+                else if (a[i][j] == 'b') {
+                    object = new Bomb(j, i, Sprite.powerup_bombs.getFxImage());
+                    entities.add(object);
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
+                    stillObjects.add(object);
+                    a[i][j] = ' ';
+                }
+                else if (a[i][j] == 'f') {
+                    object = new SpeedItem(j, i, Sprite.powerup_flames.getFxImage());
+                    entities.add(object);
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
+                    stillObjects.add(object);
+                    a[i][j] = ' ';
+                }
+                else if (a[i][j] == 's') {
+                    object = new FlameItem(j, i, Sprite.powerup_speed.getFxImage());
+                    entities.add(object);
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
+                    stillObjects.add(object);
+                    a[i][j] = ' ';
+                }
                 else {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);

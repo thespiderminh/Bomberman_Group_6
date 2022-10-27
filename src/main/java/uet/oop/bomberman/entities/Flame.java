@@ -70,7 +70,8 @@ public class Flame extends Entity {
     }
 
     public boolean brickCollision() {
-        return (BombermanGame.map[this.y / Sprite.SCALED_SIZE][this.x / Sprite.SCALED_SIZE] == '*');
+        return (BombermanGame.map[this.y / Sprite.SCALED_SIZE][this.x / Sprite.SCALED_SIZE] == '*'
+            || BombermanGame.map[this.y / Sprite.SCALED_SIZE][this.x / Sprite.SCALED_SIZE] == 'x');
     }
 
     public void initFlame(Bomb bomb) {
