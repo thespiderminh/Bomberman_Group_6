@@ -30,8 +30,6 @@ public class Bomber extends Entity {
         super(x, y, img);
     }
 
-    public Audio sound = new Audio();
-
     @Override
     public void update(Scene scene, long now) {
         changeTheAnimation(now);
@@ -191,6 +189,16 @@ public class Bomber extends Entity {
                 if (now - timePress > 100000000L) {
                     timePress = now;
                     type = (type + 1) % 3;
+                    if(type == 1){
+                        Audio.setWalk1Sound();
+                        Audio.getWalk1Sound().play();
+                    } else if(type ==2){
+                        Audio.setWalk2Sound();
+                        Audio.getWalk2Sound().play();
+                    } else {
+                        Audio.setWalk3Sound();
+                        Audio.getWalk3Sound().play();
+                    }
                 }
             } else {
                 timePress = 0;
@@ -250,7 +258,8 @@ public class Bomber extends Entity {
             Bomb bomb = new Bomb(x, y, Sprite.bomb.getFxImage());
             getEntities().add(bomb);
             numberOfBombsOnScreen++;
-            sound.placedBomb();
+            Audio.setPlaceBomb();
+            Audio.getPlaceBomb().play();
         }
     }
 }

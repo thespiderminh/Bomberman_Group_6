@@ -11,8 +11,6 @@ public class Audio {
     private File[] files;
     private ArrayList<File> audio;
     private int audioNumber = 0;
-    private Media media;
-    private MediaPlayer mediaPlayer;
     private static final String bgm = "res/audio/bgm.mp3";
     private static final String walk1 = "res/audio/walk_1.wav";
     private static final String walk2 = "res/audio/walk_2.wav";
@@ -21,40 +19,79 @@ public class Audio {
     private static final String placedBomb = "res/audio/placed_bomb.wav";
     private static final String bombExplore = "res/audio/bomb_explored.wav";
 
-    public void playStart() {
-        media = new Media(new File(start).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(1);
-        mediaPlayer.play();
+    private static MediaPlayer playStart ;
+
+    public static MediaPlayer getPlayStart() {
+        return playStart;
     }
 
-    public void placedBomb() {
-        media = new Media(new File(placedBomb).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(1);
-        mediaPlayer.play();
+    public static void setPlayStart() {
+        playStart = null;
+        playStart = new MediaPlayer(new Media(new File(start).toURI().toString()));
+    }
+    private static MediaPlayer backgroundMusic;
+
+    public static MediaPlayer getBackgroundMusic() {
+        return backgroundMusic;
     }
 
-    public void bombExplore() {
-        media = new Media(new File(bombExplore).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(1);
-        mediaPlayer.play();
+    public static void setBackgroundMusic() {
+        backgroundMusic = null;
+        backgroundMusic = new MediaPlayer(new Media(new File(bgm).toURI().toString()));
+        backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
+    }
+    private static MediaPlayer placeBomb;
+
+    public static MediaPlayer getPlaceBomb() {
+        return placeBomb;
     }
 
-    public void playBGM() {
-        media = new Media(new File(bgm).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
+    public static void setPlaceBomb() {
+        placeBomb = null;
+        placeBomb = new MediaPlayer(new Media(new File(placedBomb).toURI().toString()));
+    }
+    private static MediaPlayer bombExploring;
+
+    public static MediaPlayer getBombExploring() {
+        return bombExploring;
     }
 
-    public void walk(int type) {
-        media = new Media(new File("res/audio/walk_" + type + ".wav").toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(1);
-        mediaPlayer.play();
+    public static void setBombExploring() {
+        bombExploring = null;
+        bombExploring = new MediaPlayer(new Media(new File(bombExplore).toURI().toString()));
+    }
+    private static MediaPlayer walk1Sound;
+
+    public static MediaPlayer getWalk1Sound() {
+        return walk1Sound;
     }
 
+    public static void setWalk1Sound() {
+        walk1Sound = null;
+        walk1Sound = new MediaPlayer(new Media(new File(walk1).toURI().toString()));
+        walk1Sound.setVolume(walk1Sound.getVolume() -0.4);
+    }
+    private static MediaPlayer walk2Sound;
+
+    public static MediaPlayer getWalk2Sound() {
+        return walk1Sound;
+    }
+
+    public static void setWalk2Sound() {
+        walk2Sound = null;
+        walk2Sound = new MediaPlayer(new Media(new File(walk2).toURI().toString()));
+        walk2Sound.setVolume(walk2Sound.getVolume() -0.4);
+    }
+    private static MediaPlayer walk3Sound;
+
+    public static MediaPlayer getWalk3Sound() {
+        return walk3Sound;
+    }
+
+    public static void setWalk3Sound() {
+        walk3Sound = null;
+        walk3Sound = new MediaPlayer(new Media(new File(walk3).toURI().toString()));
+        walk3Sound.setVolume(walk3Sound.getVolume() -0.4);
+    }
 }
 

@@ -2,15 +2,20 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -73,10 +78,15 @@ public class BombermanGame extends Application {
     }
 
     private Scene scene;
+    private Scene startScene;
+    Image image;
+    ImageView imageView;
+    File file;
+    String localUrl;
     public static Entity bomberman;
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws MalformedURLException {
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -85,11 +95,65 @@ public class BombermanGame extends Application {
         Group root = new Group();
         root.getChildren().add(canvas);
 
+        Group startGroup = new Group();
+        file = new File("res/sprites/PlayButton1.png");
+        localUrl = file.toURI().toURL().toString();
+        image = new Image(localUrl);
+        imageView = new ImageView(image);
+        Image image1 = new Image("https://bom.so/lilcLr");
+        ImageView imageView1 = new ImageView(image1);
+
+        imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                file = new File("res/sprites/PlayButton2.png");
+                try {
+                    localUrl = file.toURI().toURL().toString();
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+                image = new Image(localUrl);
+                imageView.setImage(image);
+            }
+        });
+
+        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                file = new File("res/sprites/PlayButton1.png");
+                try {
+                    localUrl = file.toURI().toURL().toString();
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+                image = new Image(localUrl);
+                imageView.setImage(image);
+
+            }
+        });
+
+        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                stage.setScene(scene);
+                Audio.setBackgroundMusic();
+                Audio.getBackgroundMusic().play();
+            }
+        });
+
+        imageView.setX(1000);
+        imageView.setY(400);
+        imageView1.setScaleX(0.7);
+        imageView1.setScaleY(0.7);
+        imageView1.setX(-130);
+        startGroup.getChildren().addAll(imageView1, imageView);
+
         // Tao scene
-        scene = new Scene(root);
+        scene = new Scene(root, 500, 600);
+        startScene = new Scene(startGroup, 10000, 10000);
 
         // Them scene vao stage
-        stage.setScene(scene);
+        stage.setScene(startScene);
         stage.show();
 
         AnimationTimer timer = new AnimationTimer() {
@@ -108,11 +172,11 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-//        backgroundMap();
+        Audio.setPlayStart();
+        Audio.getPlayStart().play();
+
         createMap(map);
-        Audio audio = new Audio();
-        audio.playStart();
-        audio.playBGM();
+
         bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
         entities.add(bomberman);
 
