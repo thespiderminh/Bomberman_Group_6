@@ -72,7 +72,6 @@ public class Flame extends Entity {
     public boolean brickCollision() {
     	return (BombermanGame.map[this.y / Sprite.SCALED_SIZE][this.x / Sprite.SCALED_SIZE] == '*'
             || BombermanGame.map[this.y / Sprite.SCALED_SIZE][this.x / Sprite.SCALED_SIZE] == 'x');
-        return (BombermanGame.map[this.y / Sprite.SCALED_SIZE][this.x / Sprite.SCALED_SIZE] == '*');
     }
 
     public void initFlame(Bomb bomb) {

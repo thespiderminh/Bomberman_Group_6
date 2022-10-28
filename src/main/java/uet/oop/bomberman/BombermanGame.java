@@ -139,6 +139,9 @@ public class BombermanGame extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 stage.setScene(scene);
+                Audio.getMenuSound().pause();
+                Audio.setPlayStart();
+                Audio.getPlayStart().play();
                 Audio.setBackgroundMusic();
                 Audio.getBackgroundMusic().play();
             }
@@ -178,8 +181,9 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        Audio.setPlayStart();
-        Audio.getPlayStart().play();
+        Audio.setMenuSound();
+        Audio.getMenuSound().play();
+
 
         createMap(map);
 

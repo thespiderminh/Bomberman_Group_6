@@ -18,8 +18,12 @@ public class Audio {
     private static final String start = "res/audio/stage_start.wav";
     private static final String placedBomb = "res/audio/placed_bomb.wav";
     private static final String bombExplore = "res/audio/bomb_explored.wav";
+    private static final String menu = "res/audio/title_screen.mp3";
 
-    private static MediaPlayer playStart ;
+    private static final String win = "res/audio/win.wav";
+
+    private static final String dead = "res/audio/dead.wav";
+    private static MediaPlayer playStart;
 
     public static MediaPlayer getPlayStart() {
         return playStart;
@@ -28,7 +32,9 @@ public class Audio {
     public static void setPlayStart() {
         playStart = null;
         playStart = new MediaPlayer(new Media(new File(start).toURI().toString()));
+        playStart.setVolume(playStart.getVolume() - 0.4);
     }
+
     private static MediaPlayer backgroundMusic;
 
     public static MediaPlayer getBackgroundMusic() {
@@ -40,6 +46,7 @@ public class Audio {
         backgroundMusic = new MediaPlayer(new Media(new File(bgm).toURI().toString()));
         backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
     }
+
     private static MediaPlayer placeBomb;
 
     public static MediaPlayer getPlaceBomb() {
@@ -50,6 +57,7 @@ public class Audio {
         placeBomb = null;
         placeBomb = new MediaPlayer(new Media(new File(placedBomb).toURI().toString()));
     }
+
     private static MediaPlayer bombExploring;
 
     public static MediaPlayer getBombExploring() {
@@ -60,6 +68,7 @@ public class Audio {
         bombExploring = null;
         bombExploring = new MediaPlayer(new Media(new File(bombExplore).toURI().toString()));
     }
+
     private static MediaPlayer walk1Sound;
 
     public static MediaPlayer getWalk1Sound() {
@@ -69,8 +78,9 @@ public class Audio {
     public static void setWalk1Sound() {
         walk1Sound = null;
         walk1Sound = new MediaPlayer(new Media(new File(walk1).toURI().toString()));
-        walk1Sound.setVolume(walk1Sound.getVolume() -0.4);
+        walk1Sound.setVolume(walk1Sound.getVolume() - 0.4);
     }
+
     private static MediaPlayer walk2Sound;
 
     public static MediaPlayer getWalk2Sound() {
@@ -80,8 +90,9 @@ public class Audio {
     public static void setWalk2Sound() {
         walk2Sound = null;
         walk2Sound = new MediaPlayer(new Media(new File(walk2).toURI().toString()));
-        walk2Sound.setVolume(walk2Sound.getVolume() -0.4);
+        walk2Sound.setVolume(walk2Sound.getVolume() - 0.4);
     }
+
     private static MediaPlayer walk3Sound;
 
     public static MediaPlayer getWalk3Sound() {
@@ -91,7 +102,41 @@ public class Audio {
     public static void setWalk3Sound() {
         walk3Sound = null;
         walk3Sound = new MediaPlayer(new Media(new File(walk3).toURI().toString()));
-        walk3Sound.setVolume(walk3Sound.getVolume() -0.4);
+        walk3Sound.setVolume(walk3Sound.getVolume() - 0.4);
+    }
+
+    private static MediaPlayer menuSound;
+
+    public static MediaPlayer getMenuSound() {
+        return menuSound;
+    }
+
+    public static void setMenuSound() {
+        menuSound = null;
+        menuSound = new MediaPlayer(new Media(new File(menu).toURI().toString()));
+        menuSound.setCycleCount(MediaPlayer.INDEFINITE);
+    }
+
+    private static MediaPlayer deadSound;
+
+    public static MediaPlayer getDeadSound() {
+        return deadSound;
+    }
+
+    public static void setDeadSound() {
+        deadSound = null;
+        deadSound =new MediaPlayer(new Media(new File(dead).toURI().toString()));
+    }
+
+    private static MediaPlayer winSound;
+
+    public static MediaPlayer getWinSound() {
+        return winSound;
+    }
+
+    public static void setWinSound() {
+        winSound = null;
+        winSound = new MediaPlayer(new Media(new File(win).toURI().toString()));
     }
 }
 

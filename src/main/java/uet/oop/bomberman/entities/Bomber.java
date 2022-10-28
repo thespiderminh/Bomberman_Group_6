@@ -165,6 +165,8 @@ public class Bomber extends Entity {
                     if (y + Sprite.SCALED_SIZE > getEntities().get(i).getY() &&
                             y < getEntities().get(i).getY() + Sprite.SCALED_SIZE) {
                         alive = false;
+                        Audio.setDeadSound();
+                        Audio.getDeadSound().play();
                         deadTime = now;
                     }
                 }
