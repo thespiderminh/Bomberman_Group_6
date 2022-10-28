@@ -23,7 +23,9 @@ public class Doll extends Oneal {
     @Override
     public boolean movable(int m_y, int m_x) {
         //follow the grass
-        return (BombermanGame.map[m_y][m_x] == ' ' || BombermanGame.map[m_y][m_x] == '*') && (!has_bomb(m_x,m_y));
+        return (BombermanGame.map[m_y][m_x] == ' ' || BombermanGame.map[m_y][m_x] == '*'
+            || BombermanGame.map[m_y][m_x] == 'b' || BombermanGame.map[m_y][m_x] == 'f'
+            || BombermanGame.map[m_y][m_x] == 's' || BombermanGame.map[m_y][m_x] == 'x') && (!has_bomb(m_x,m_y));
     }
 
     @Override

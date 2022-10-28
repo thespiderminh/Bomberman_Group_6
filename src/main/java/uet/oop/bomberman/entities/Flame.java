@@ -122,12 +122,17 @@ public class Flame extends Entity {
                         brokenBrick.get(0));
                 getEntities().add(deleteBrick1);
                 Entity grass = new Grass(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                Entity portal = new Portal(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
                 for (int i = 0; i < getStillObjects().size(); i++) {
-                    if (getStillObjects().get(i).getX() == deleteBrick1.getX() && getStillObjects().get(i).getY() == deleteBrick1.getY()) {
-//                        getStillObjects().remove(i);
-//                        getStillObjects().add(grass);
-                        getStillObjects().set(i, grass);
-                        BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] =' ';
+                    int x = getStillObjects().get(i).getX();
+                    int y = getStillObjects().get(i).getY();
+                    if (x == deleteBrick1.getX() && y == deleteBrick1.getY()) {
+                        if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                            getStillObjects().set(i, grass);
+                            BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] =' ';
+                        } else {
+                            if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                        }
                     }
                 }
             } else {
@@ -139,12 +144,17 @@ public class Flame extends Entity {
                                 brokenBrick.get(0));
                         getEntities().add(deleteBrick1);
                         Entity grass = new Grass(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                        Entity portal = new Portal(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
                         for (int i = 0; i < getStillObjects().size(); i++) {
-                            if (getStillObjects().get(i).getX() == deleteBrick1.getX() && getStillObjects().get(i).getY() == deleteBrick1.getY()) {
-//                        getStillObjects().remove(i);
-//                        getStillObjects().add(grass);
-                                getStillObjects().set(i, grass);
-                                BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] =' ';
+                            int x = getStillObjects().get(i).getX();
+                            int y = getStillObjects().get(i).getY();
+                            if (x == deleteBrick1.getX() && y == deleteBrick1.getY()) {
+                                if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                    getStillObjects().set(i, grass);
+                                    BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] =' ';
+                                } else {
+                                    if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                }
                             }
                         }
                     } else {
@@ -161,12 +171,17 @@ public class Flame extends Entity {
                         brokenBrick.get(0));
                 getEntities().add(deleteBrick2);
                 Entity grass = new Grass(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                Entity portal = new Portal(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
                 for (int i = 0; i < getStillObjects().size(); i++) {
-                    if (getStillObjects().get(i).getX() == deleteBrick2.getX() && getStillObjects().get(i).getY() == deleteBrick2.getY()) {
-//                        getStillObjects().remove(i);
-//                        getStillObjects().add(grass);
-                        getStillObjects().set(i, grass);
-                        BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] =' ';
+                    int x = getStillObjects().get(i).getX();
+                    int y = getStillObjects().get(i).getY();
+                    if (x == deleteBrick2.getX() && y == deleteBrick2.getY()) {
+                        if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                            getStillObjects().set(i, grass);
+                            BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] =' ';
+                        } else {
+                            if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                        }
                     }
                 }
             } else {
@@ -178,12 +193,17 @@ public class Flame extends Entity {
                                 brokenBrick.get(0));
                         getEntities().add(deleteBrick2);
                         Entity grass = new Grass(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                        Entity portal = new Portal(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
                         for (int i = 0; i < getStillObjects().size(); i++) {
-                            if (getStillObjects().get(i).getX() == deleteBrick2.getX() && getStillObjects().get(i).getY() == deleteBrick2.getY()) {
-//                        getStillObjects().remove(i);
-//                        getStillObjects().add(grass);
-                                getStillObjects().set(i, grass);
-                                BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] =' ';
+                            int x = getStillObjects().get(i).getX();
+                            int y = getStillObjects().get(i).getY();
+                            if (x == deleteBrick2.getX() && y == deleteBrick2.getY()) {
+                                if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                    getStillObjects().set(i, grass);
+                                    BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] =' ';
+                                } else {
+                                    if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                }
                             }
                         }
                     } else {
@@ -200,12 +220,17 @@ public class Flame extends Entity {
                         brokenBrick.get(0));
                 getEntities().add(deleteBrick3);
                 Entity grass = new Grass(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                Entity portal = new Portal(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
                 for (int i = 0; i < getStillObjects().size(); i++) {
-                    if (getStillObjects().get(i).getX() == deleteBrick3.getX() && getStillObjects().get(i).getY() == deleteBrick3.getY()) {
-//                        getStillObjects().remove(i);
-//                        getStillObjects().add(grass);
-                        getStillObjects().set(i, grass);
-                        BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
+                    int x = getStillObjects().get(i).getX();
+                    int y = getStillObjects().get(i).getY();
+                    if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
+                        if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                            getStillObjects().set(i, grass);
+                            BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
+                        } else {
+                            if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                        }
                     }
                 }
             } else {
@@ -217,12 +242,17 @@ public class Flame extends Entity {
                                 brokenBrick.get(0));
                         getEntities().add(deleteBrick3);
                         Entity grass = new Grass(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                        Entity portal = new Portal(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
                         for (int i = 0; i < getStillObjects().size(); i++) {
-                            if (getStillObjects().get(i).getX() == deleteBrick3.getX() && getStillObjects().get(i).getY() == deleteBrick3.getY()) {
-//                        getStillObjects().remove(i);
-//                        getStillObjects().add(grass);
-                                getStillObjects().set(i, grass);
-                                BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
+                            int x = getStillObjects().get(i).getX();
+                            int y = getStillObjects().get(i).getY();
+                            if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
+                                if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                    getStillObjects().set(i, grass);
+                                    BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
+                                } else {
+                                    if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                }
                             }
                         }
                     } else {
@@ -239,12 +269,17 @@ public class Flame extends Entity {
                         brokenBrick.get(0));
                 getEntities().add(deleteBrick4);
                 Entity grass = new Grass(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                Entity portal = new Portal(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
                 for (int i = 0; i < getStillObjects().size(); i++) {
-                    if (getStillObjects().get(i).getX() == deleteBrick4.getX() && getStillObjects().get(i).getY() == deleteBrick4.getY()) {
-//                        getStillObjects().remove(i);
-//                        getStillObjects().add(grass);
-                        getStillObjects().set(i, grass);
-                        BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] =' ';
+                    int x = getStillObjects().get(i).getX();
+                    int y = getStillObjects().get(i).getY();
+                    if (x == deleteBrick4.getX() && y == deleteBrick4.getY()) {
+                        if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                            getStillObjects().set(i, grass);
+                            BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] =' ';
+                        } else {
+                            if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                        }
                     }
                 }
             } else {
@@ -256,12 +291,17 @@ public class Flame extends Entity {
                                 brokenBrick.get(0));
                         getEntities().add(deleteBrick4);
                         Entity grass = new Grass(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                        Entity portal = new Portal(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
                         for (int i = 0; i < getStillObjects().size(); i++) {
-                            if (getStillObjects().get(i).getX() == deleteBrick4.getX() && getStillObjects().get(i).getY() == deleteBrick4.getY()) {
-//                        getStillObjects().remove(i);
-//                        getStillObjects().add(grass);
-                                getStillObjects().set(i, grass);
-                                BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] =' ';
+                            int x = getStillObjects().get(i).getX();
+                            int y = getStillObjects().get(i).getY();
+                            if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
+                                if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                    getStillObjects().set(i, grass);
+                                    BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
+                                } else {
+                                    if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                }
                             }
                         }
                     } else {
