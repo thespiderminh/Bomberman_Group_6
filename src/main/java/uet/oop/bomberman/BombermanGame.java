@@ -79,10 +79,10 @@ public class BombermanGame extends Application {
 
     private Scene scene;
     private Scene startScene;
-    Image image;
-    ImageView imageView;
-    File file;
-    String localUrl;
+    Image image, image1;
+    ImageView imageView, imageView1;
+    File file, file1;
+    String localUrl, localUrl1;
     public static Entity bomberman;
 
     @Override
@@ -100,8 +100,11 @@ public class BombermanGame extends Application {
         localUrl = file.toURI().toURL().toString();
         image = new Image(localUrl);
         imageView = new ImageView(image);
-        Image image1 = new Image("https://bom.so/lilcLr");
-        ImageView imageView1 = new ImageView(image1);
+
+        file1 = new File("res/sprites/bomberman_main.png");
+        localUrl1 = file1.toURI().toURL().toString();
+        image1 = new Image(localUrl1);
+        imageView1 = new ImageView(image1);
 
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -141,16 +144,19 @@ public class BombermanGame extends Application {
             }
         });
 
-        imageView.setX(1000);
-        imageView.setY(400);
-        imageView1.setScaleX(0.7);
-        imageView1.setScaleY(0.7);
-        imageView1.setX(-130);
+        imageView.setScaleX(0.7);
+        imageView.setScaleY(0.7);
+        imageView.setX(700);
+        imageView.setY(160);
+        imageView1.setScaleX(0.5);
+        imageView1.setScaleY(0.5);
+        imageView1.setX(-300);
+        imageView1.setY(-200);
         startGroup.getChildren().addAll(imageView1, imageView);
 
         // Tao scene
-        scene = new Scene(root, 500, 600);
-        startScene = new Scene(startGroup, 10000, 10000);
+        scene = new Scene(root);
+        startScene = new Scene(startGroup, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
 
         // Them scene vao stage
         stage.setScene(startScene);
@@ -207,18 +213,9 @@ public class BombermanGame extends Application {
                 } else if (a[i][j] == '*') {
                     object = new Brick(j, i, Sprite.brick.getFxImage());
                     stillObjects.add(object);
-                } else if (a[i][j] == 'p') {
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                    a[i][j] = ' ';
                 }
 //                else if (a[i][j] == 'x') {
-//                    object = new Grass(j, i, Sprite.grass.getFxImage());
-//                    stillObjects.add(object);
 //                    object = new Portal(j, i, Sprite.portal.getFxImage());
-//                    entities.add(object);
-//                    object = new Brick(j, i, Sprite.brick.getFxImage());
-//                    stillObjects.add(object);
 //                }
                 else if (a[i][j] == '1') {
                     movable = new Balloon(j, i, Sprite.balloom_right1.getFxImage());
@@ -239,27 +236,15 @@ public class BombermanGame extends Application {
                     stillObjects.add(object);
                     a[i][j] = ' ';
                 }
-                else if (a[i][j] == 'b') {
-                    object = new Bomb(j, i, Sprite.powerup_bombs.getFxImage());
-                    entities.add(object);
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                    a[i][j] = ' ';
-                }
-                else if (a[i][j] == 'f') {
-                    object = new SpeedItem(j, i, Sprite.powerup_flames.getFxImage());
-                    entities.add(object);
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                    a[i][j] = ' ';
-                }
-                else if (a[i][j] == 's') {
-                    object = new FlameItem(j, i, Sprite.powerup_speed.getFxImage());
-                    entities.add(object);
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                    a[i][j] = ' ';
-                }
+//                else if (a[i][j] == 'b') {
+//                    object = new Bomb(j, i, Sprite.bomb.getFxImage());
+//                }
+//                else if (a[i][j] == 'f') {
+//                    object = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
+//                }
+//                else if (a[i][j] == 's') {
+//                    object = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
+//                }
                 else {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);

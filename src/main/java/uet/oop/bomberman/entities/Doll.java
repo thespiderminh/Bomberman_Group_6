@@ -55,6 +55,7 @@ public class Doll extends Oneal {
     @Override
     public void generate_direction(long now) {
         int i = 0;
+
         if (BombermanGame.bomberman == null) {
             i = ((int)(Math.random() * 10) * 27) % 4 + 1; // 1-4
         } else {
@@ -65,6 +66,7 @@ public class Doll extends Oneal {
                 i = generate_horizontal_direction();
             }
         }
+
         current_state = states[i];
     }
 
@@ -120,8 +122,6 @@ public class Doll extends Oneal {
 
     @Override
     public void update(Scene scene, long now) {
-        //System.out.println(BombermanGame.map[][])
-
         if (get_burned() && !Objects.equals(current_state, "Dead") && !Objects.equals(current_state, "NULL")) {
             current_state = "Dead";   // Dead
             --life;
