@@ -12,6 +12,10 @@ import static uet.oop.bomberman.entities.Bomb.numberOfBombs;
 import static uet.oop.bomberman.entities.Bomb.numberOfBombsOnScreen;
 
 public class Bomber extends Entity {
+    public boolean isAlive() {
+        return alive;
+    }
+
     private boolean alive = true;
     private final int velo = 2;
     private int velocityX = 0;
