@@ -140,7 +140,7 @@ public class BombermanGame extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 stage.setScene(scene);
-                Audio.getMenuSound().pause();
+                Audio.getMenuSound().stop();
                 Audio.setPlayStart();
                 Audio.getPlayStart().play();
                 Audio.setBackgroundMusic();

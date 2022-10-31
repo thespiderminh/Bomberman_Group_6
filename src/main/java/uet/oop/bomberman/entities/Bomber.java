@@ -171,6 +171,7 @@ public class Bomber extends Entity {
                         alive = false;
                         Audio.setDeadSound();
                         Audio.getDeadSound().play();
+                        Audio.getBackgroundMusic().stop();
                         deadTime = now;
                     }
                 }
