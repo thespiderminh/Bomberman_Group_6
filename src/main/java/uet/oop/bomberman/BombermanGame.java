@@ -68,7 +68,7 @@ public class BombermanGame extends Application {
         return a;
     }
 
-    public static char[][] map = load_map("res/levels/Level2.txt");
+    public static char[][] map = load_map("res/levels/Level1.txt");
 
 
     public static void main(String[] args) {
