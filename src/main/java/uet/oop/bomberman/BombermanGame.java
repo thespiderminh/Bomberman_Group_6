@@ -68,7 +68,7 @@ public class BombermanGame extends Application {
         return a;
     }
 
-    public static char[][] map = load_map("res/levels/Level1.txt");
+    public static char[][] map = load_map("res/levels/Level2.txt");
 
 
     public static void main(String[] args) {
@@ -84,7 +84,7 @@ public class BombermanGame extends Application {
     ImageView imageView, imageView1;
     File file, file1;
     String localUrl, localUrl1;
-    public static Entity bomberman;
+    public static Bomber bomberman;
 
     @Override
     public void start(Stage stage) throws MalformedURLException {
