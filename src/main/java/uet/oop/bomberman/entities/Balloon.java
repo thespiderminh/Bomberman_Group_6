@@ -2,13 +2,8 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
-import static uet.oop.bomberman.BombermanGame.getEntities;
 
-import java.nio.channels.spi.SelectorProvider;
-import java.nio.charset.IllegalCharsetNameException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -68,7 +63,6 @@ public class Balloon extends Enemy {
     @Override
     public void fade(long now) {
         if (Objects.equals(current_state, "Dead")) {
-            System.out.println("Once");
             start_dead = now;
             current_state = "NULL";
         }
