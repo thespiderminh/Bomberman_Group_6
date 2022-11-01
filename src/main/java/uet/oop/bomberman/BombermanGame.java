@@ -184,12 +184,13 @@ public class BombermanGame extends Application {
                             }
                         }
                         if (!isAlive) {
+                            isAlive = true;
                             stage.setScene(startScene);
 
-                            canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-                            gc = canvas.getGraphicsContext2D();
-
+                            map = load_map("res/levels/Level1.txt");
                             createMap(map);
+                            entities.remove(bomberman);
+                            entities.removeIf(w -> w instanceof Bomb);
 
                             bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                             entities.add(bomberman);

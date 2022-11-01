@@ -23,10 +23,10 @@ public class Flame extends Entity {
     private Flame rightHorizontal = null;
     private Flame topVertical = null;
     private Flame downVertical = null;
-    private Flame deleteBrick1 = null;
-    private Flame deleteBrick2 = null;
-    private Flame deleteBrick3 = null;
-    private Flame deleteBrick4 = null;
+    private Brick deleteBrick1 = null;
+    private Brick deleteBrick2 = null;
+    private Brick deleteBrick3 = null;
+    private Brick deleteBrick4 = null;
     private static final List<Image> horizontalFlame = Arrays.asList(Sprite.explosion_horizontal.getFxImage(), Sprite.explosion_horizontal1.getFxImage(), Sprite.explosion_horizontal2.getFxImage());
     private static final List<Image> leftHorizontalFlame = Arrays.asList(Sprite.explosion_horizontal_left_last.getFxImage(), Sprite.explosion_horizontal_left_last1.getFxImage(), Sprite.explosion_horizontal_left_last2.getFxImage());
     private static final List<Image> rightHorizontalFlame = Arrays.asList(Sprite.explosion_horizontal_right_last.getFxImage(), Sprite.explosion_horizontal_right_last1.getFxImage(), Sprite.explosion_horizontal_right_last2.getFxImage());
@@ -102,22 +102,22 @@ public class Flame extends Entity {
                 (int) (bomb.getY() / Sprite.SCALED_SIZE),
                 horizontalFlame.get(0));
 
-        deleteBrick1 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+        deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
                 (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
                 brokenBrick.get(0));
-        deleteBrick2 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+        deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
                 (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
                 brokenBrick.get(0));
-        deleteBrick3 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+        deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
                 (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
                 brokenBrick.get(0));
-        deleteBrick4 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+        deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
                 (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
                 brokenBrick.get(0));
 
         if (rightHorizontal.flammable()) {
             if (rightHorizontal.brickCollision()) {
-                deleteBrick1 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
+                deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
                         (int) (bomb.getY() / Sprite.SCALED_SIZE),
                         brokenBrick.get(0));
                 getEntities().add(deleteBrick1);
@@ -139,7 +139,7 @@ public class Flame extends Entity {
                 getEntities().add(rightHorizontal);
                 if (rightLastHorizontal.flammable()) {
                     if (rightLastHorizontal.brickCollision()) {
-                        deleteBrick1 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 2,
+                        deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) + 2,
                                 (int) (bomb.getY() / Sprite.SCALED_SIZE),
                                 brokenBrick.get(0));
                         getEntities().add(deleteBrick1);
@@ -166,7 +166,7 @@ public class Flame extends Entity {
 
         if (leftHorizontal.flammable()) {
             if (leftHorizontal.brickCollision()) {
-                deleteBrick2 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) - 1,
+                deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) - 1,
                         (int) (bomb.getY() / Sprite.SCALED_SIZE),
                         brokenBrick.get(0));
                 getEntities().add(deleteBrick2);
@@ -188,7 +188,7 @@ public class Flame extends Entity {
                 getEntities().add(leftHorizontal);
                 if (leftLastHorizontal.flammable()) {
                     if (leftLastHorizontal.brickCollision()) {
-                        deleteBrick2 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) - 2,
+                        deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) - 2,
                                 (int) (bomb.getY() / Sprite.SCALED_SIZE),
                                 brokenBrick.get(0));
                         getEntities().add(deleteBrick2);
@@ -215,7 +215,7 @@ public class Flame extends Entity {
 
         if (downVertical.flammable()) {
             if (downVertical.brickCollision()) {
-                deleteBrick3 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
                         (int) (bomb.getY() / Sprite.SCALED_SIZE) + 1,
                         brokenBrick.get(0));
                 getEntities().add(deleteBrick3);
@@ -237,7 +237,7 @@ public class Flame extends Entity {
                 getEntities().add(downVertical);
                 if (downLastVertical.flammable()) {
                     if (downLastVertical.brickCollision()) {
-                        deleteBrick3 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                        deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
                                 (int) (bomb.getY() / Sprite.SCALED_SIZE) + 2,
                                 brokenBrick.get(0));
                         getEntities().add(deleteBrick3);
@@ -264,7 +264,7 @@ public class Flame extends Entity {
 
         if (topVertical.flammable()) {
             if (topVertical.brickCollision()) {
-                deleteBrick4 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
                         (int) (bomb.getY() / Sprite.SCALED_SIZE) - 1,
                         brokenBrick.get(0));
                 getEntities().add(deleteBrick4);
@@ -286,7 +286,7 @@ public class Flame extends Entity {
                 getEntities().add(topVertical);
                 if (topLastVertical.flammable()) {
                     if (topLastVertical.brickCollision()) {
-                        deleteBrick4 = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                        deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
                                 (int) (bomb.getY() / Sprite.SCALED_SIZE) - 2,
                                 brokenBrick.get(0));
                         getEntities().add(deleteBrick4);

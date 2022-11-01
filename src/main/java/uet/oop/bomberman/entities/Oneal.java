@@ -3,14 +3,10 @@ package uet.oop.bomberman.entities;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-
-import static uet.oop.bomberman.BombermanGame.getEntities;
 
 public class Oneal extends Enemy {
     /**
