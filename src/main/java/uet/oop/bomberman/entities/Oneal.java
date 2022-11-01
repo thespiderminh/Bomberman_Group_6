@@ -19,11 +19,6 @@ public class Oneal extends Enemy {
      */
 
     protected int life = 1;
-    private List<Image> right_images = Arrays.asList(Sprite.oneal_right1.getFxImage(), Sprite.oneal_right2.getFxImage(), Sprite.oneal_right3.getFxImage());
-    private List<Image> left_images = Arrays.asList(Sprite.oneal_left1.getFxImage(), Sprite.oneal_left2.getFxImage(), Sprite.oneal_left3.getFxImage());
-
-    private List<Image> dead_image = Arrays.asList(Sprite.oneal_dead.getFxImage(), Sprite.mob_dead1.getFxImage(), Sprite.mob_dead2.getFxImage(), Sprite.mob_dead3.getFxImage());
-
 
     /**
      * 1: 50%
@@ -50,6 +45,10 @@ public class Oneal extends Enemy {
 
     public Oneal(int x, int y, Image img) {
         super( x, y, img);
+        right_images = Arrays.asList(Sprite.oneal_right1.getFxImage(), Sprite.oneal_right2.getFxImage(), Sprite.oneal_right3.getFxImage());
+        left_images = Arrays.asList(Sprite.oneal_left1.getFxImage(), Sprite.oneal_left2.getFxImage(), Sprite.oneal_left3.getFxImage());
+        dead_image = Arrays.asList(Sprite.oneal_dead.getFxImage(), Sprite.mob_dead1.getFxImage(), Sprite.mob_dead2.getFxImage(), Sprite.mob_dead3.getFxImage());
+
     }
 
     public int generate_vertical_direction() {
@@ -109,30 +108,6 @@ public class Oneal extends Enemy {
         }
     }
 
-    @Override
-    public void change_animation(long now) {
-        reset(now);
-
-        if (Objects.equals(current_state, "Right") || Objects.equals(current_state, "Up")) {
-            if(now - startTime < 150000000L) {
-                this.img = right_images.get(0);
-            } else if (now - startTime < 300000000L) {
-                this.img = right_images.get(1);
-            } else {
-                this.img = right_images.get(2);
-            }
-        } else if (Objects.equals(current_state, "Left") || Objects.equals(current_state, "Down")) {
-            if(now - startTime < 150000000L) {
-                this.img = left_images.get(0);
-            } else if (now - startTime < 300000000L) {
-                this.img = left_images.get(1);
-            } else {
-                this.img = left_images.get(2);
-            }
-        }
-
-    }
-
     public void generate_coor() {
         int new_x = ((int)(Math.random() * 10) * 100) % 29 + 1; // 1-29
         int new_y = ((int)(Math.random() * 10) * 100) % 11 + 1; // 1-11
@@ -148,30 +123,6 @@ public class Oneal extends Enemy {
         this.img = right_images.get(0);
         current_state = "Stop";
         System.out.println(this.x/Sprite.SCALED_SIZE + " " + this.y/Sprite.SCALED_SIZE);
-    }
-
-    @Override
-    public void fade(long now) {
-        if (Objects.equals(current_state, "Dead")) {
-            System.out.println("Once");
-            start_dead = now;
-            current_state = "NULL";
-        }
-        if (now - start_dead < 1000000000L ) {   // 1s delay
-            this.img = dead_image.get(0);
-        } else if (now - start_dead < 1500000000L) {
-            this.img = dead_image.get(1);
-        } else if (now - start_dead < 2000000000L) {
-            this.img = dead_image.get(2);
-        } else if (now - start_dead < 2500000000L) {
-            this.img = dead_image.get(3);
-        } else {
-            if (life == 0) {
-                this.img = null;
-            } else {
-                respawn();
-            }
-        }
     }
 
     @Override

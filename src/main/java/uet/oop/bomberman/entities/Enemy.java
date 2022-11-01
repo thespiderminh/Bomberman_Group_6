@@ -6,6 +6,7 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +30,10 @@ public class Enemy extends Entity {
      */
     protected int old_x = x;
     protected int old_y = y;
+
+    protected List<Image> right_images;
+    protected List<Image> left_images;
+    protected List<Image> dead_image;
 
     /**
      * Stop,Right,Left,Up,Down.
@@ -159,6 +164,24 @@ public class Enemy extends Entity {
     }
 
     public void change_animation(long now) {
+        reset(now);
+        if (Objects.equals(current_state, "Right") || Objects.equals(current_state, "Up")) {
+            if(now - startTime < 150000000L) {
+                this.img = right_images.get(0);
+            } else if (now - startTime < 300000000L) {
+                this.img = right_images.get(1);
+            } else {
+                this.img = right_images.get(2);
+            }
+        } else if (Objects.equals(current_state, "Left") || Objects.equals(current_state, "Down")) {
+            if(now - startTime < 150000000L) {
+                this.img = left_images.get(0);
+            } else if (now - startTime < 300000000L) {
+                this.img = left_images.get(1);
+            } else {
+                this.img = left_images.get(2);
+            }
+        }
     }
 
     /**
@@ -170,7 +193,21 @@ public class Enemy extends Entity {
     }
 
     public void fade(long now) {
-
+        if (Objects.equals(current_state, "Dead")) {
+            start_dead = now;
+            current_state = "NULL";
+        }
+        if (now - start_dead < 1000000000L ) {   // 1s delay
+            this.img = dead_image.get(0);
+        } else if (now - start_dead < 1500000000L) {
+            this.img = dead_image.get(1);
+        } else if (now - start_dead < 2000000000L) {
+            this.img = dead_image.get(2);
+        } else if (now - start_dead < 2500000000L) {
+            this.img = dead_image.get(3);
+        } else {
+            this.img = null;
+        }
     }
 
     /**
