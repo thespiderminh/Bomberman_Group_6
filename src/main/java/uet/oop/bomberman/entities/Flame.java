@@ -102,18 +102,18 @@ public class Flame extends Entity {
                 (int) (bomb.getY() / Sprite.SCALED_SIZE),
                 horizontalFlame.get(0));
 
-        deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-                brokenBrick.get(0));
-        deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-                brokenBrick.get(0));
-        deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-                brokenBrick.get(0));
-        deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-                brokenBrick.get(0));
+//        deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
+//                brokenBrick.get(0));
+//        deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
+//                brokenBrick.get(0));
+//        deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
+//                brokenBrick.get(0));
+//        deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
+//                brokenBrick.get(0));
 
         if (rightHorizontal.flammable()) {
             if (rightHorizontal.brickCollision()) {
@@ -323,15 +323,19 @@ public class Flame extends Entity {
         topVertical.setImg(verticalFlame.get(type));
         downVertical.setImg(verticalFlame.get(type));
         if (bombUp == 0) {
-            deleteBrick1.setImg(brokenBrick.get(type));
-            deleteBrick2.setImg(brokenBrick.get(type));
-            deleteBrick3.setImg(brokenBrick.get(type));
-            deleteBrick4.setImg(brokenBrick.get(type));
+            List<Brick> deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
+            for (int i = 0; i < 4; i++) {
+                if (deleteBrick.get(i) != null) {
+                    deleteBrick.get(i).setImg(brokenBrick.get(type));
+                }
+            }
         } else if (bombUp == 1) {
-            deleteBrick1.img = null;
-            deleteBrick2.img = null;
-            deleteBrick3.img = null;
-            deleteBrick4.img = null;
+            List<Brick> deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
+            for (int i = 0; i < 4; i++) {
+                if (deleteBrick.get(i) != null) {
+                    deleteBrick.get(i).getItem();
+                }
+            }
         }
     }
 
@@ -344,10 +348,12 @@ public class Flame extends Entity {
         rightHorizontal.img = null;
         topVertical.img = null;
         downVertical.img = null;
-        deleteBrick1.img = null;
-        deleteBrick2.img = null;
-        deleteBrick3.img = null;
-        deleteBrick4.img = null;
+        for (int i = 0; i < 4; i++) {
+            List<Brick> deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
+            if (deleteBrick.get(i) != null) {
+                deleteBrick.get(i).setImg(null);
+            }
+        }
     }
 
     @Override

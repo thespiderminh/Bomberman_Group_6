@@ -17,11 +17,13 @@ public class Bomber extends Entity {
     }
 
     private boolean alive = true;
-    private final int velo = 2;
+    private int velo = 2;
     private int velocityX = 0;
     private int velocityY = 0;
     private long timePress = 0;
     private long deadTime = 0;
+    private long speedUpTime = 0;
+    private boolean isSpeedUp = false;
     private int type = 0;
     private int deadType = 0;
     private final List<Image> playerDown = Arrays.asList(Sprite.player_down_0.getFxImage(), Sprite.player_down_1.getFxImage(), Sprite.player_down_2.getFxImage());
@@ -40,6 +42,15 @@ public class Bomber extends Entity {
         if (alive) {
             move(now);
             control(scene);
+            if (isSpeedUp) {
+                if (now - speedUpTime <= 5000000000L) {
+                    velo = 3;
+                } else {
+                    velo = 2;
+                    isSpeedUp = false;
+                    speedUpTime = 0;
+                }
+            }
         }
     }
 
@@ -90,90 +101,75 @@ public class Bomber extends Entity {
         for (int i = 0; i < getStillObjects().size(); i++) {
             if (getStillObjects().get(i) instanceof Wall || getStillObjects().get(i) instanceof Brick) {
                 if (velocityY != 0) {
-                    if (x + Sprite.SCALED_SIZE > getStillObjects().get(i).getX() &&
-                            x < getStillObjects().get(i).getX() + Sprite.SCALED_SIZE) {
-                        if (y + Sprite.SCALED_SIZE > getStillObjects().get(i).getY() &&
-                                y < getStillObjects().get(i).getY() + Sprite.SCALED_SIZE) {
-                            y -= velocityY;
-                            if (x + Sprite.SCALED_SIZE / 2 < getStillObjects().get(i).getX()) {
-                                if (getStillObjects().get(i - 1) instanceof Grass) {
-                                    if (velocityY > 0 && getStillObjects().get(i - 1 + WIDTH) instanceof Grass) {
-                                        x -= velo;
-                                    } else if (velocityY < 0 && getStillObjects().get(i - 1 - WIDTH) instanceof Grass) {
-                                        x -= velo;
-                                    }
-                                }
-                            } else if (x > getStillObjects().get(i).getX() + Sprite.SCALED_SIZE / 2) {
-                                if (getStillObjects().get(i + 1) instanceof Grass) {
-                                    if (velocityY > 0 && getStillObjects().get(i + 1 + WIDTH) instanceof Grass) {
-                                        x += velo;
-                                    } else if (velocityY < 0 && getStillObjects().get(i + 1 - WIDTH) instanceof Grass) {
-                                        x += velo;
-                                    }
+                    if (this.checkCollision(getStillObjects().get(i))) {
+                        y -= velocityY;
+                        if (x + Sprite.SCALED_SIZE / 2 < getStillObjects().get(i).getX()) {
+                            if (getStillObjects().get(i - 1) instanceof Grass) {
+                                if (velocityY > 0 && getStillObjects().get(i - 1 + WIDTH) instanceof Grass) {
+                                    x -= velo;
+                                } else if (velocityY < 0 && getStillObjects().get(i - 1 - WIDTH) instanceof Grass) {
+                                    x -= velo;
                                 }
                             }
-                            break;
+                        } else if (x > getStillObjects().get(i).getX() + Sprite.SCALED_SIZE / 2) {
+                            if (getStillObjects().get(i + 1) instanceof Grass) {
+                                if (velocityY > 0 && getStillObjects().get(i + 1 + WIDTH) instanceof Grass) {
+                                    x += velo;
+                                } else if (velocityY < 0 && getStillObjects().get(i + 1 - WIDTH) instanceof Grass) {
+                                    x += velo;
+                                }
+                            }
                         }
                     }
                 }
-
                 if (velocityX != 0) {
-                    if (y + Sprite.SCALED_SIZE > getStillObjects().get(i).getY() &&
-                            y < getStillObjects().get(i).getY() + Sprite.SCALED_SIZE) {
-                        if (x < getStillObjects().get(i).getX() + Sprite.SCALED_SIZE &&
-                                x + Sprite.SCALED_SIZE > getStillObjects().get(i).getX()) {
-                            x -= velocityX;
-                            if (y + Sprite.SCALED_SIZE / 2 < getStillObjects().get(i).getY()) {
-                                if (getStillObjects().get(i - WIDTH) instanceof Grass) {
-                                    y -= velo;
-                                }
-                            } else if (y > getStillObjects().get(i).getY() + Sprite.SCALED_SIZE / 2) {
-                                if (getStillObjects().get(i + WIDTH) instanceof Grass) {
-                                    y += velo;
-                                }
+                    if (this.checkCollision(getStillObjects().get(i))) {
+                        x -= velocityX;
+                        if (y + Sprite.SCALED_SIZE / 2 < getStillObjects().get(i).getY()) {
+                            if (getStillObjects().get(i - WIDTH) instanceof Grass) {
+                                y -= velo;
                             }
-                            break;
+                        } else if (y > getStillObjects().get(i).getY() + Sprite.SCALED_SIZE / 2) {
+                            if (getStillObjects().get(i + WIDTH) instanceof Grass) {
+                                y += velo;
+                            }
                         }
+                        break;
                     }
+                }
+            } else if (getStillObjects().get(i) instanceof Item) {
+                if (this.checkCollision(getStillObjects().get(i)) && getStillObjects().get(i).img != null) {
+                    this.apply((Item) getStillObjects().get(i), now);
+                    break;
                 }
             }
         }
 
         for (int i = 0; i < getEntities().size(); i++) {
             if (getEntities().get(i) instanceof Bomb) {
-                if (x + Sprite.SCALED_SIZE < getEntities().get(i).getX() ||
-                        getEntities().get(i).getX() + Sprite.SCALED_SIZE < x ||
-                        y + Sprite.SCALED_SIZE < getEntities().get(i).getY() ||
-                        getEntities().get(i).getY() + Sprite.SCALED_SIZE < y) {
+                if (!this.checkCollision(getEntities().get(i))) {
                     ((Bomb) getEntities().get(i)).setInBomber(false);
                 }
 
                 if (!((Bomb) getEntities().get(i)).isInBomber()) {
-                    if (x + Sprite.SCALED_SIZE > getEntities().get(i).getX() &&
-                            x < getEntities().get(i).getX() + Sprite.SCALED_SIZE) {
-                        if (y + Sprite.SCALED_SIZE > getEntities().get(i).getY() &&
-                                y < getEntities().get(i).getY() + Sprite.SCALED_SIZE) {
-                            if (velocityY != 0) {
-                                y -= velocityY;
-                            }
-                            if (velocityX != 0) {
-                                x -= velocityX;
-                            }
+                    if (this.checkCollision(getEntities().get(i))) {
+                        if (velocityY != 0) {
+                            y -= velocityY;
                         }
+                        if (velocityX != 0) {
+                            x -= velocityX;
+                        }
+
                     }
                 }
             } else if (getEntities().get(i) instanceof Flame ||
                     getEntities().get(i) instanceof Enemy) {
-                if (x + Sprite.SCALED_SIZE > getEntities().get(i).getX() &&
-                        x < getEntities().get(i).getX() + Sprite.SCALED_SIZE) {
-                    if (y + Sprite.SCALED_SIZE > getEntities().get(i).getY() &&
-                            y < getEntities().get(i).getY() + Sprite.SCALED_SIZE) {
-                        alive = false;
-                        Audio.setDeadSound();
-                        Audio.getDeadSound().play();
-                        Audio.getBackgroundMusic().stop();
-                        deadTime = now;
-                    }
+                if (this.checkCollision(getEntities().get(i))) {
+                    alive = false;
+                    Audio.setDeadSound();
+                    Audio.getDeadSound().play();
+                    Audio.getBackgroundMusic().stop();
+                    deadTime = now;
                 }
             }
         }
@@ -232,9 +228,8 @@ public class Bomber extends Entity {
                 case DOWN -> moveDown();
                 case RIGHT -> moveRight();
                 case LEFT -> moveLeft();
-                case SPACE -> {
-                    getBombs();
-                }
+                case SPACE -> getBombs();
+
             }
         });
         scene.setOnKeyReleased(key -> {
@@ -267,6 +262,16 @@ public class Bomber extends Entity {
             numberOfBombsOnScreen++;
             Audio.setPlaceBomb();
             Audio.getPlaceBomb().play();
+        }
+    }
+
+    private void apply(Item item, long now) {
+        item.img = null;
+        if (item instanceof SpeedItem) {
+            this.isSpeedUp = true;
+            speedUpTime = now;
+        } else if (item instanceof BombItem) {
+            numberOfBombs++;
         }
     }
 }

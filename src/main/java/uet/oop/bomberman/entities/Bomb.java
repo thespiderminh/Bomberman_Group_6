@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Bomb extends Entity {
-    protected static int numberOfBombs = 3;
+    protected static int numberOfBombs = 1;
     protected static int numberOfBombsOnScreen = 0;
     private static final long BOMB_TIME = 2000000000L;
     private long startTime = 0;
