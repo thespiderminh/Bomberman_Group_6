@@ -252,26 +252,7 @@ public class BombermanGame extends Application {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);
                     a[i][j] = ' ';
-                }
-                else if (a[i][j] == 'b') {
-                    object = new Bomb(j, i, Sprite.powerup_bombs.getFxImage());
-                    entities.add(object);
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                }
-                else if (a[i][j] == 'f') {
-                    object = new SpeedItem(j, i, Sprite.powerup_flames.getFxImage());
-                    entities.add(object);
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                }
-                else if (a[i][j] == 's') {
-                    object = new FlameItem(j, i, Sprite.powerup_speed.getFxImage());
-                    entities.add(object);
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                }
-                else {
+                } else {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);
                 }
