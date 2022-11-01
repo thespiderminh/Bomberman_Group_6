@@ -16,7 +16,7 @@ public class SpriteSheet {
 	public int[] _pixels;
 	public BufferedImage image;
 
-	public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
+	public static SpriteSheet tiles = new SpriteSheet("/textures/classic4.png", 256);// clasic 2 3 4 choose what you want XD
 	
 	public SpriteSheet(String path, int size) {
 		_path = path;
