@@ -26,8 +26,6 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
 
-    public static int level;
-
     private GraphicsContext gc;
     private Canvas canvas;
     private static List<Entity> entities = new ArrayList<Entity>();
@@ -191,7 +189,6 @@ public class BombermanGame extends Application {
                                 Bomber.setAmountOfLives(Bomber.getAmountOfLives() - 1);
                                 entities.remove(bomberman);
                                 entities.removeIf(w -> w instanceof Bomb);
-                                entities.removeIf(w -> w instanceof Flame);
                                 Bomb.setNumberOfBombs(1);
                                 bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                                 bomberman.setAlive(true);
@@ -205,7 +202,6 @@ public class BombermanGame extends Application {
                                 Bomb.setNumberOfBombs(1);
                                 entities = new ArrayList<Entity>();
                                 stillObjects = new ArrayList<Entity>();
-                                level = 1;
                                 createMap(map);
 
                                 bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
@@ -217,11 +213,9 @@ public class BombermanGame extends Application {
                             Audio.setLevelUp();
                             Audio.getLevelUp().play();
                             map = load_map("res/levels/Level2.txt");
-                            Bomber.setAmountOfLives(3);
                             Bomb.setNumberOfBombs(1);
                             entities = new ArrayList<Entity>();
                             stillObjects = new ArrayList<Entity>();
-                            level = 2;
                             createMap(map);
 
                             bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
@@ -240,7 +234,6 @@ public class BombermanGame extends Application {
         Audio.getMenuSound().play();
 
         map = load_map("res/levels/Level1.txt");
-        level = 1;
         createMap(map);
 
         bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
@@ -248,7 +241,6 @@ public class BombermanGame extends Application {
     }
 
     public void createMap(char[][] a) {
-        numberOfEnemies = 0;
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 Entity object = null;

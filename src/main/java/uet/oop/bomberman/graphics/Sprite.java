@@ -292,4 +292,17 @@ public class Sprite {
 
         return output;
     }
+    /*
+       |--------------------------------------------------------------------------
+       | Board sprites
+       |--------------------------------------------------------------------------
+        */
+    public  static Sprite grass1 = new Sprite(DEFAULT_SIZE, 6, 0, SpriteSheet.tiles1, 16, 16);
+    public static Sprite brick1 = new Sprite(DEFAULT_SIZE, 7, 0, SpriteSheet.tiles1, 16, 16);
+    public static Sprite wall1 = new Sprite(DEFAULT_SIZE, 5, 0, SpriteSheet.tiles1, 16, 16);
 }
+
+
+
+
+
