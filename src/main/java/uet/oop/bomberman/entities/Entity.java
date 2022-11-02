@@ -79,4 +79,15 @@ public abstract class Entity {
     }
 
     public abstract void update(Scene scene, long now);
+    
+    public boolean checkCollision(Entity other) {
+        if (x + Sprite.SCALED_SIZE > other.getX() &&
+                x < other.getX() + Sprite.SCALED_SIZE) {
+            if (y + Sprite.SCALED_SIZE > other.getY() &&
+                    y < other.getY() + Sprite.SCALED_SIZE) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

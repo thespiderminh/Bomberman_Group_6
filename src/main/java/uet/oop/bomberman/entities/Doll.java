@@ -3,11 +3,9 @@ package uet.oop.bomberman.entities;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class Doll extends Oneal {
@@ -29,7 +27,7 @@ public class Doll extends Oneal {
 
     @Override
     public int generate_vertical_direction() {
-        if (!BombermanGame.bomberman.isAlive()) {
+        if (BombermanGame.bomberman.isAlive()) {
             return ((int)(Math.random() * 10) * 27) % 4 + 1;
         }
         if (BombermanGame.bomberman.getY() < this.y) {
@@ -42,7 +40,7 @@ public class Doll extends Oneal {
 
     @Override
     public int generate_horizontal_direction() {
-        if (!BombermanGame.bomberman.isAlive()) {
+        if (BombermanGame.bomberman.isAlive()) {
             return ((int)(Math.random() * 10) * 27) % 4 + 1;
         }
         if (BombermanGame.bomberman.getX() < this.x) {

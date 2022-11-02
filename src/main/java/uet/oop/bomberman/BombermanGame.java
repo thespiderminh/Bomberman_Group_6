@@ -191,6 +191,7 @@ public class BombermanGame extends Application {
                             createMap(map);
                             entities.remove(bomberman);
                             entities.removeIf(w -> w instanceof Bomb);
+                            Bomb.setNumberOfBombs(1);
 
                             bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                             entities.add(bomberman);
@@ -252,26 +253,7 @@ public class BombermanGame extends Application {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);
                     a[i][j] = ' ';
-                }
-                else if (a[i][j] == 'b') {
-                    object = new Bomb(j, i, Sprite.powerup_bombs.getFxImage());
-                    entities.add(object);
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                }
-                else if (a[i][j] == 'f') {
-                    object = new SpeedItem(j, i, Sprite.powerup_flames.getFxImage());
-                    entities.add(object);
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                }
-                else if (a[i][j] == 's') {
-                    object = new FlameItem(j, i, Sprite.powerup_speed.getFxImage());
-                    entities.add(object);
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                    stillObjects.add(object);
-                }
-                else {
+                } else {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);
                 }
@@ -289,6 +271,9 @@ public class BombermanGame extends Application {
         }
         for (int i = 0; i < stillObjects.size(); i++) {
             stillObjects.get(i).update(scene, now);
+            if (stillObjects.get(i).getImg() == null) {
+                stillObjects.remove(i);
+            }
         }
     }
 
