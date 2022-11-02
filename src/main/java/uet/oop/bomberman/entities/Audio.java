@@ -24,6 +24,8 @@ public class Audio {
 
     private static final String dead = "res/audio/dead.wav";
     private static final String getItem = "res/audio/power_up.wav";
+
+    private static final String lvUp = "res/audio/next_level.wav";
     private static MediaPlayer playStart;
 
     public static MediaPlayer getPlayStart() {
@@ -126,7 +128,7 @@ public class Audio {
 
     public static void setDeadSound() {
         deadSound = null;
-        deadSound =new MediaPlayer(new Media(new File(dead).toURI().toString()));
+        deadSound = new MediaPlayer(new Media(new File(dead).toURI().toString()));
     }
 
     private static MediaPlayer winSound;
@@ -139,6 +141,7 @@ public class Audio {
         winSound = null;
         winSound = new MediaPlayer(new Media(new File(win).toURI().toString()));
     }
+
     private static MediaPlayer powerUp;
 
     public static MediaPlayer getPowerUp() {
@@ -148,6 +151,17 @@ public class Audio {
     public static void setPowerUp() {
         powerUp = null;
         powerUp = new MediaPlayer(new Media(new File(getItem).toURI().toString()));
+    }
+
+    private static MediaPlayer levelUp;
+
+    public static MediaPlayer getLevelUp() {
+        return levelUp;
+    }
+
+    public static void setLevelUp() {
+        levelUp = null;
+        levelUp = new MediaPlayer(new Media(new File(lvUp).toURI().toString()));
     }
 }
 

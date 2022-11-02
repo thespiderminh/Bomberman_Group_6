@@ -197,7 +197,8 @@ public class BombermanGame extends Application {
                             entities.add(bomberman);
                         } else if (numberOfEnemies == 0 && bomberman.inPortal()) {
                             isAlive = true;
-
+                            Audio.setLevelUp();
+                            Audio.getLevelUp().play();
                             map = load_map("res/levels/Level2.txt");
                             Bomb.setNumberOfBombs(1);
                             entities = new ArrayList<Entity>();
