@@ -270,7 +270,9 @@ public class Bomber extends Entity {
     public boolean inPortal() {
         return BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == 'x';
     }
-
+    public boolean getCup() {
+        return BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == 'c';
+    }
     private void apply(Item item, long now) {
         item.img = null;
         if (item instanceof SpeedItem) {
