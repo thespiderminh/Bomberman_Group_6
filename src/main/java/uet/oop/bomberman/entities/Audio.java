@@ -23,6 +23,7 @@ public class Audio {
     private static final String win = "res/audio/win.wav";
 
     private static final String dead = "res/audio/dead.wav";
+    private static final String getItem = "res/audio/power_up.wav";
     private static MediaPlayer playStart;
 
     public static MediaPlayer getPlayStart() {
@@ -137,6 +138,16 @@ public class Audio {
     public static void setWinSound() {
         winSound = null;
         winSound = new MediaPlayer(new Media(new File(win).toURI().toString()));
+    }
+    private static MediaPlayer powerUp;
+
+    public static MediaPlayer getPowerUp() {
+        return powerUp;
+    }
+
+    public static void setPowerUp() {
+        powerUp = null;
+        powerUp = new MediaPlayer(new Media(new File(getItem).toURI().toString()));
     }
 }
 
