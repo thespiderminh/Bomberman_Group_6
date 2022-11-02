@@ -140,7 +140,6 @@ public class Bomber extends Entity {
             } else if (getStillObjects().get(i) instanceof Item) {
                 if (this.checkCollision(getStillObjects().get(i)) && getStillObjects().get(i).img != null) {
                     this.apply((Item) getStillObjects().get(i), now);
-                    break;
                 }
             }
         }
