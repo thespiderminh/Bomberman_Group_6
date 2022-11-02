@@ -28,8 +28,8 @@ public class BombermanGame extends Application {
 
     private GraphicsContext gc;
     private Canvas canvas;
-    private static List<Entity> entities = new ArrayList<>();
-    private static List<Entity> stillObjects = new ArrayList<>();
+    private static List<Entity> entities = new ArrayList<Entity>();
+    private static List<Entity> stillObjects = new ArrayList<Entity>();
 
     public static char[][] load_map(String absolute_path) {
         File file = new File(absolute_path);
@@ -68,7 +68,7 @@ public class BombermanGame extends Application {
         return a;
     }
 
-    public static char[][] map = load_map("res/levels/Level1.txt");
+    public static char[][] map;
 
 
     public static void main(String[] args) {
@@ -85,6 +85,7 @@ public class BombermanGame extends Application {
     File file, file1;
     String localUrl, localUrl1;
     public static Bomber bomberman;
+    public static int numberOfEnemies = 0;
 
     @Override
     public void start(Stage stage) throws MalformedURLException {
@@ -195,6 +196,17 @@ public class BombermanGame extends Application {
 
                             bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                             entities.add(bomberman);
+                        } else if (numberOfEnemies == 0 && bomberman.inPortal()) {
+                            isAlive = true;
+
+                            map = load_map("res/levels/Level2.txt");
+                            Bomb.setNumberOfBombs(1);
+                            entities = new ArrayList<Entity>();
+                            stillObjects = new ArrayList<Entity>();
+                            createMap(map);
+
+                            bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
+                            entities.add(bomberman);
                         }
                     }
 
@@ -207,7 +219,7 @@ public class BombermanGame extends Application {
         Audio.setMenuSound();
         Audio.getMenuSound().play();
 
-
+        map = load_map("res/levels/Level1.txt");
         createMap(map);
 
         bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
@@ -236,18 +248,21 @@ public class BombermanGame extends Application {
                     stillObjects.add(object);
                 }
                 else if (a[i][j] == '1') {
+                    ++numberOfEnemies;
                     movable = new Balloon(j, i, Sprite.balloom_right1.getFxImage());
                     entities.add(movable);
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);
                     a[i][j] = ' ';
                 } else if (a[i][j] == '2') {
+                    ++numberOfEnemies;
                     movable = new Oneal(j, i, Sprite.oneal_right1.getFxImage());
                     entities.add(movable);
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                     stillObjects.add(object);
                     a[i][j] = ' ';
                 } else if (a[i][j] == '3') {
+                    ++numberOfEnemies;
                     movable = new Doll(j, i, Sprite.doll_right1.getFxImage());
                     entities.add(movable);
                     object = new Grass(j, i, Sprite.grass.getFxImage());

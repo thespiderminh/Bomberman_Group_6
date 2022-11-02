@@ -43,24 +43,6 @@ public class Flame extends Entity {
         super(xUnit, yUnit, img);
     }
 
-//    public boolean inDeadZone(int d_x, int d_y) {
-//        if (d_y == y) {
-//            if ( x <= d_x && d_x <= x + scope) {  // Đi từ phải vào
-//                return true;
-//            } else if ( d_x <= x && x < d_x + Sprite.SCALED_SIZE ) {  // Đi từ trái vào
-//                return true;
-//            }
-//            return false;
-//        } else if (d_x == x) {
-//            if ( d_y <= y && y < d_y + Sprite.SCALED_SIZE) {  // Đi từ trên xuống
-//                return true;
-//            } else if ( y <= d_y && d_y < ) {  // Đi từ dưới lên
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
     public boolean isInited() {
         return inited;
     }

@@ -69,7 +69,7 @@ public class Oneal extends Enemy {
     @Override
     public void generate_direction(long now) {
         int i = 0;
-        if(BombermanGame.bomberman == null || now - start_delay > 1000000000L) {
+        if(!BombermanGame.bomberman.isAlive() || now - start_delay > 1000000000L) {
             i = ((int)(Math.random() * 10) * 27) % 4 + 1; // 1-4
         } else {
             int dir = (int)(Math.random() * 10) % 2; // 0-1

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static uet.oop.bomberman.BombermanGame.getEntities;
+import static uet.oop.bomberman.BombermanGame.numberOfEnemies;
 
 public class Enemy extends Entity {
     protected int velo = 1;
@@ -207,6 +208,7 @@ public class Enemy extends Entity {
             this.img = dead_image.get(3);
         } else {
             this.img = null;
+            -- numberOfEnemies;
         }
     }
 
