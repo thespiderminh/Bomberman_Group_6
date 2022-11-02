@@ -189,7 +189,9 @@ public class BombermanGame extends Application {
                                 Bomber.setAmountOfLives(Bomber.getAmountOfLives() - 1);
                                 entities.remove(bomberman);
                                 entities.removeIf(w -> w instanceof Bomb);
+                                entities.removeIf(w -> w instanceof Flame);
                                 Bomb.setNumberOfBombs(1);
+                                Bomb.setNumberOfBombsOnScreen(0);
                                 bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                                 bomberman.setAlive(true);
                                 entities.add(bomberman);
@@ -200,9 +202,10 @@ public class BombermanGame extends Application {
                                 map = load_map("res/levels/Level1.txt");
                                 Bomber.setAmountOfLives(3);
                                 Bomb.setNumberOfBombs(1);
+                                Bomb.setNumberOfBombsOnScreen(0);
                                 entities = new ArrayList<Entity>();
                                 stillObjects = new ArrayList<Entity>();
-                                createMap(map);
+                                createMap1(map);
 
                                 bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                                 bomberman.setAlive(true);
@@ -214,9 +217,10 @@ public class BombermanGame extends Application {
                             Audio.getLevelUp().play();
                             map = load_map("res/levels/Level2.txt");
                             Bomb.setNumberOfBombs(1);
+                            Bomb.setNumberOfBombsOnScreen(0);
                             entities = new ArrayList<Entity>();
                             stillObjects = new ArrayList<Entity>();
-                            createMap(map);
+                            createMap2(map);
 
                             bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                             bomberman.setAlive(true);
@@ -234,13 +238,13 @@ public class BombermanGame extends Application {
         Audio.getMenuSound().play();
 
         map = load_map("res/levels/Level1.txt");
-        createMap(map);
+        createMap1(map);
 
         bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
         entities.add(bomberman);
     }
 
-    public void createMap(char[][] a) {
+    public void createMap1(char[][] a) {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 Entity object = null;
@@ -284,6 +288,57 @@ public class BombermanGame extends Application {
                     a[i][j] = ' ';
                 } else {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
+                    stillObjects.add(object);
+                }
+            }
+        }
+
+    }
+
+    public void createMap2(char[][] a) {
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                Entity object = null;
+                Entity movable = null;
+                if (a[i][j] == '#') {
+                    object = new Wall(j, i, Sprite.wall1.getFxImage());
+                    stillObjects.add(object);
+                } else if (a[i][j] == '*') {
+                    object = new Brick(j, i, Sprite.brick1.getFxImage());
+                    stillObjects.add(object);
+                } else if (a[i][j] == 'p') {
+                    object = new Grass(j, i, Sprite.grass1.getFxImage());
+                    stillObjects.add(object);
+                    a[i][j] = ' ';
+                } else if (a[i][j] == 'x') {
+                    object = new Grass(j, i, Sprite.grass1.getFxImage());
+                    stillObjects.add(object);
+                    object = new Brick(j, i, Sprite.brick1.getFxImage());
+                    stillObjects.add(object);
+                }
+                else if (a[i][j] == '1') {
+                    ++numberOfEnemies;
+                    movable = new Balloon(j, i, Sprite.balloom_right1.getFxImage());
+                    entities.add(movable);
+                    object = new Grass(j, i, Sprite.grass1.getFxImage());
+                    stillObjects.add(object);
+                    a[i][j] = ' ';
+                } else if (a[i][j] == '2') {
+                    ++numberOfEnemies;
+                    movable = new Oneal(j, i, Sprite.oneal_right1.getFxImage());
+                    entities.add(movable);
+                    object = new Grass(j, i, Sprite.grass1.getFxImage());
+                    stillObjects.add(object);
+                    a[i][j] = ' ';
+                } else if (a[i][j] == '3') {
+                    ++numberOfEnemies;
+                    movable = new Doll(j, i, Sprite.doll_right1.getFxImage());
+                    entities.add(movable);
+                    object = new Grass(j, i, Sprite.grass1.getFxImage());
+                    stillObjects.add(object);
+                    a[i][j] = ' ';
+                } else {
+                    object = new Grass(j, i, Sprite.grass1.getFxImage());
                     stillObjects.add(object);
                 }
             }
