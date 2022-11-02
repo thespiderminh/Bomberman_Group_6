@@ -189,7 +189,6 @@ public class BombermanGame extends Application {
                             stage.setScene(startScene);
 
                             map = load_map("res/levels/Level1.txt");
-                            createMap(map);
                             entities.remove(bomberman);
                             entities.removeIf(w -> w instanceof Bomb);
                             Bomb.setNumberOfBombs(1);

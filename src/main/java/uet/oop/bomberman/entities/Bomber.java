@@ -45,7 +45,13 @@ public class Bomber extends Entity {
             control(scene);
             if (isSpeedUp) {
                 if (now - speedUpTime <= 5000000000L) {
-                    velo = 3;
+                    velo = 4;
+                    if (x % 4 == 2) {
+                        x += 2;
+                    }
+                    if (y % 4 == 2) {
+                        y += 2;
+                    }
                 } else {
                     velo = 2;
                     isSpeedUp = false;
