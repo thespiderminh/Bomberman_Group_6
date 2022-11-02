@@ -27,6 +27,7 @@ public class Flame extends Entity {
     private Brick deleteBrick2 = null;
     private Brick deleteBrick3 = null;
     private Brick deleteBrick4 = null;
+    List<Brick> deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
     private static final List<Image> horizontalFlame = Arrays.asList(Sprite.explosion_horizontal.getFxImage(), Sprite.explosion_horizontal1.getFxImage(), Sprite.explosion_horizontal2.getFxImage());
     private static final List<Image> leftHorizontalFlame = Arrays.asList(Sprite.explosion_horizontal_left_last.getFxImage(), Sprite.explosion_horizontal_left_last1.getFxImage(), Sprite.explosion_horizontal_left_last2.getFxImage());
     private static final List<Image> rightHorizontalFlame = Arrays.asList(Sprite.explosion_horizontal_right_last.getFxImage(), Sprite.explosion_horizontal_right_last1.getFxImage(), Sprite.explosion_horizontal_right_last2.getFxImage());
@@ -277,10 +278,10 @@ public class Flame extends Entity {
                         for (int i = 0; i < getStillObjects().size(); i++) {
                             int x = getStillObjects().get(i).getX();
                             int y = getStillObjects().get(i).getY();
-                            if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
+                            if (x == deleteBrick4.getX() && y == deleteBrick4.getY()) {
                                 if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
                                     getStillObjects().set(i, grass);
-                                    BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
+                                    BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] =' ';
                                 } else {
                                     if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
                                 }
@@ -305,14 +306,14 @@ public class Flame extends Entity {
         topVertical.setImg(verticalFlame.get(type));
         downVertical.setImg(verticalFlame.get(type));
         if (bombUp == 0) {
-            List<Brick> deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
+            deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
             for (int i = 0; i < 4; i++) {
                 if (deleteBrick.get(i) != null) {
                     deleteBrick.get(i).setImg(brokenBrick.get(type));
                 }
             }
-        } else if (bombUp == 1) {
-            List<Brick> deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
+        } else if (bombUp == 1 && type == 1) {
+            deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
             for (int i = 0; i < 4; i++) {
                 if (deleteBrick.get(i) != null) {
                     deleteBrick.get(i).getItem();
@@ -331,7 +332,7 @@ public class Flame extends Entity {
         topVertical.img = null;
         downVertical.img = null;
         for (int i = 0; i < 4; i++) {
-            List<Brick> deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
+            deleteBrick = Arrays.asList(deleteBrick1, deleteBrick2, deleteBrick3, deleteBrick4);
             if (deleteBrick.get(i) != null) {
                 deleteBrick.get(i).setImg(null);
             }
