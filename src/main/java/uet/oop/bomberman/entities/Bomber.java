@@ -17,7 +17,12 @@ public class Bomber extends Entity {
         return alive;
     }
 
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
     private boolean alive = true;
+    private static int amountOfLives = 3;
     private int velo = 2;
     private int velocityX = 0;
     private int velocityY = 0;
@@ -37,6 +42,14 @@ public class Bomber extends Entity {
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
+    }
+
+    public static int getAmountOfLives() {
+        return amountOfLives;
+    }
+
+    public static void setAmountOfLives(int amountOfLives) {
+        Bomber.amountOfLives = amountOfLives;
     }
 
     @Override

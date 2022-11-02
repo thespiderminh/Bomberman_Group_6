@@ -185,18 +185,31 @@ public class BombermanGame extends Application {
                             }
                         }
                         if (!isAlive) {
-                            isAlive = true;
-                            stage.setScene(startScene);
+                            if (Bomber.getAmountOfLives() > 0) { // Respawn
+                                Bomber.setAmountOfLives(Bomber.getAmountOfLives() - 1);
+                                entities.remove(bomberman);
+                                entities.removeIf(w -> w instanceof Bomb);
+                                Bomb.setNumberOfBombs(1);
+                                bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
+                                bomberman.setAlive(true);
+                                entities.add(bomberman);
+                            } else { // Restart
+                                stage.setScene(startScene);
+                                Audio.setLevelUp();
+                                Audio.getLevelUp().play();
+                                map = load_map("res/levels/Level1.txt");
+                                Bomber.setAmountOfLives(3);
+                                Bomb.setNumberOfBombs(1);
+                                entities = new ArrayList<Entity>();
+                                stillObjects = new ArrayList<Entity>();
+                                createMap(map);
 
-                            map = load_map("res/levels/Level1.txt");
-                            entities.remove(bomberman);
-                            entities.removeIf(w -> w instanceof Bomb);
-                            Bomb.setNumberOfBombs(1);
+                                bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
+                                bomberman.setAlive(true);
+                                entities.add(bomberman);
+                            }
 
-                            bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
-                            entities.add(bomberman);
-                        } else if (numberOfEnemies == 0 && bomberman.inPortal()) {
-                            isAlive = true;
+                        } else if (numberOfEnemies == 0 && bomberman.inPortal()) { // to Level 2
                             Audio.setLevelUp();
                             Audio.getLevelUp().play();
                             map = load_map("res/levels/Level2.txt");
@@ -206,6 +219,7 @@ public class BombermanGame extends Application {
                             createMap(map);
 
                             bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
+                            bomberman.setAlive(true);
                             entities.add(bomberman);
                         }
                     }
