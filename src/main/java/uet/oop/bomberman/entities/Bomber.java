@@ -25,6 +25,8 @@ public class Bomber extends Entity {
     private long deadTime = 0;
     private long speedUpTime = 0;
     private boolean isSpeedUp = false;
+    private long wallPassTime = 0;
+    private boolean isWallPass = false;
     private int type = 0;
     private int deadType = 0;
     private final List<Image> playerDown = Arrays.asList(Sprite.player_down_0.getFxImage(), Sprite.player_down_1.getFxImage(), Sprite.player_down_2.getFxImage());
@@ -56,6 +58,12 @@ public class Bomber extends Entity {
                     velo = 2;
                     isSpeedUp = false;
                     speedUpTime = 0;
+                }
+            }
+            if (isWallPass) {
+                if (now - wallPassTime >= 5000000000L) {
+                    isWallPass = false;
+                    wallPassTime = 0;
                 }
             }
         }
@@ -106,7 +114,45 @@ public class Bomber extends Entity {
         }
 
         for (int i = 0; i < getStillObjects().size(); i++) {
-            if (getStillObjects().get(i) instanceof Wall || getStillObjects().get(i) instanceof Brick) {
+            if (getStillObjects().get(i) instanceof Wall) {
+                if (velocityY != 0) {
+                    if (this.checkCollision(getStillObjects().get(i))) {
+                        y -= velocityY;
+                        if (x + Sprite.SCALED_SIZE / 2 < getStillObjects().get(i).getX()) {
+                            if (getStillObjects().get(i - 1) instanceof Grass) {
+                                if (velocityY > 0 && getStillObjects().get(i - 1 + WIDTH) instanceof Grass) {
+                                    x -= velo;
+                                } else if (velocityY < 0 && getStillObjects().get(i - 1 - WIDTH) instanceof Grass) {
+                                    x -= velo;
+                                }
+                            }
+                        } else if (x > getStillObjects().get(i).getX() + Sprite.SCALED_SIZE / 2) {
+                            if (getStillObjects().get(i + 1) instanceof Grass) {
+                                if (velocityY > 0 && getStillObjects().get(i + 1 + WIDTH) instanceof Grass) {
+                                    x += velo;
+                                } else if (velocityY < 0 && getStillObjects().get(i + 1 - WIDTH) instanceof Grass) {
+                                    x += velo;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (velocityX != 0) {
+                    if (this.checkCollision(getStillObjects().get(i))) {
+                        x -= velocityX;
+                        if (y + Sprite.SCALED_SIZE / 2 < getStillObjects().get(i).getY()) {
+                            if (getStillObjects().get(i - WIDTH) instanceof Grass) {
+                                y -= velo;
+                            }
+                        } else if (y > getStillObjects().get(i).getY() + Sprite.SCALED_SIZE / 2) {
+                            if (getStillObjects().get(i + WIDTH) instanceof Grass) {
+                                y += velo;
+                            }
+                        }
+                        break;
+                    }
+                }
+            } else if (getStillObjects().get(i) instanceof Brick && !isWallPass) {
                 if (velocityY != 0) {
                     if (this.checkCollision(getStillObjects().get(i))) {
                         y -= velocityY;
@@ -284,6 +330,9 @@ public class Bomber extends Entity {
             speedUpTime = now;
         } else if (item instanceof BombItem) {
             numberOfBombs++;
+        } else if (item instanceof WallPassItem) {
+            isWallPass = true;
+            wallPassTime = now;
         }
     }
 }
