@@ -59,31 +59,32 @@ public class Flame extends Entity {
 
     public void initFlame(Bomb bomb) {
         this.inited = true;
-        leftLastHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) - 2,
-                (int) (bomb.getY() / Sprite.SCALED_SIZE),
-                leftHorizontalFlame.get(0));
-        downLastVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                (int) (bomb.getY() / Sprite.SCALED_SIZE) + 2,
-                downVerticalFlame.get(0));
-        topLastVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 2,
-                topVerticalFlame.get(0));
-        rightLastHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 2,
-                (int) (bomb.getY() / Sprite.SCALED_SIZE),
-                rightHorizontalFlame.get(0));
+        if(BombermanGame.level == 1) {
+            leftLastHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) - 2,
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                    leftHorizontalFlame.get(0));
+            downLastVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE) + 2,
+                    downVerticalFlame.get(0));
+            topLastVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE) - 2,
+                    topVerticalFlame.get(0));
+            rightLastHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 2,
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                    rightHorizontalFlame.get(0));
 
-        leftHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) - 1,
-                (int) (bomb.getY() / Sprite.SCALED_SIZE),
-                horizontalFlame.get(0));
-        downVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                (int) (bomb.getY() / Sprite.SCALED_SIZE) + 1,
-                verticalFlame.get(0));
-        topVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 1,
-                verticalFlame.get(0));
-        rightHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
-                (int) (bomb.getY() / Sprite.SCALED_SIZE),
-                horizontalFlame.get(0));
+            leftHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) - 1,
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                    horizontalFlame.get(0));
+            downVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE) + 1,
+                    verticalFlame.get(0));
+            topVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE) - 1,
+                    verticalFlame.get(0));
+            rightHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                    horizontalFlame.get(0));
 
 //        deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
 //                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
@@ -98,197 +99,433 @@ public class Flame extends Entity {
 //                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
 //                brokenBrick.get(0));
 
-        if (rightHorizontal.flammable()) {
-            if (rightHorizontal.brickCollision()) {
-                deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
-                        (int) (bomb.getY() / Sprite.SCALED_SIZE),
-                        brokenBrick.get(0));
-                getEntities().add(deleteBrick1);
-                Entity grass = new Grass(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
-                Entity portal = new Portal(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
-                for (int i = 0; i < getStillObjects().size(); i++) {
-                    int x = getStillObjects().get(i).getX();
-                    int y = getStillObjects().get(i).getY();
-                    if (x == deleteBrick1.getX() && y == deleteBrick1.getY()) {
-                        if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
-                            getStillObjects().set(i, grass);
-                            BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] =' ';
-                        } else {
-                            if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
-                        }
-                    }
-                }
-            } else {
-                getEntities().add(rightHorizontal);
-                if (rightLastHorizontal.flammable()) {
-                    if (rightLastHorizontal.brickCollision()) {
-                        deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) + 2,
-                                (int) (bomb.getY() / Sprite.SCALED_SIZE),
-                                brokenBrick.get(0));
-                        getEntities().add(deleteBrick1);
-                        Entity grass = new Grass(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
-                        Entity portal = new Portal(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
-                        for (int i = 0; i < getStillObjects().size(); i++) {
-                            int x = getStillObjects().get(i).getX();
-                            int y = getStillObjects().get(i).getY();
-                            if (x == deleteBrick1.getX() && y == deleteBrick1.getY()) {
-                                if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
-                                    getStillObjects().set(i, grass);
-                                    BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] =' ';
-                                } else {
-                                    if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
-                                }
+            if (rightHorizontal.flammable()) {
+                if (rightHorizontal.brickCollision()) {
+                    deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
+                            (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                            brokenBrick.get(0));
+                    getEntities().add(deleteBrick1);
+                    Entity grass = new Grass(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                    Entity portal = new Portal(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                    for (int i = 0; i < getStillObjects().size(); i++) {
+                        int x = getStillObjects().get(i).getX();
+                        int y = getStillObjects().get(i).getY();
+                        if (x == deleteBrick1.getX() && y == deleteBrick1.getY()) {
+                            if (BombermanGame.map[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE] == '*') {
+                                getStillObjects().set(i, grass);
+                                BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] = ' ';
+                            } else {
+                                if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
                             }
                         }
-                    } else {
-                        getEntities().add(rightLastHorizontal);
+                    }
+                } else {
+                    getEntities().add(rightHorizontal);
+                    if (rightLastHorizontal.flammable()) {
+                        if (rightLastHorizontal.brickCollision()) {
+                            deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) + 2,
+                                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                                    brokenBrick.get(0));
+                            getEntities().add(deleteBrick1);
+                            Entity grass = new Grass(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                            Entity portal = new Portal(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                            for (int i = 0; i < getStillObjects().size(); i++) {
+                                int x = getStillObjects().get(i).getX();
+                                int y = getStillObjects().get(i).getY();
+                                if (x == deleteBrick1.getX() && y == deleteBrick1.getY()) {
+                                    if (BombermanGame.map[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE] == '*') {
+                                        getStillObjects().set(i, grass);
+                                        BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] = ' ';
+                                    } else {
+                                        if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                    }
+                                }
+                            }
+                        } else {
+                            getEntities().add(rightLastHorizontal);
+                        }
                     }
                 }
             }
-        }
 
-        if (leftHorizontal.flammable()) {
-            if (leftHorizontal.brickCollision()) {
-                deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) - 1,
-                        (int) (bomb.getY() / Sprite.SCALED_SIZE),
-                        brokenBrick.get(0));
-                getEntities().add(deleteBrick2);
-                Entity grass = new Grass(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
-                Entity portal = new Portal(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
-                for (int i = 0; i < getStillObjects().size(); i++) {
-                    int x = getStillObjects().get(i).getX();
-                    int y = getStillObjects().get(i).getY();
-                    if (x == deleteBrick2.getX() && y == deleteBrick2.getY()) {
-                        if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
-                            getStillObjects().set(i, grass);
-                            BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] =' ';
-                        } else {
-                            if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
-                        }
-                    }
-                }
-            } else {
-                getEntities().add(leftHorizontal);
-                if (leftLastHorizontal.flammable()) {
-                    if (leftLastHorizontal.brickCollision()) {
-                        deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) - 2,
-                                (int) (bomb.getY() / Sprite.SCALED_SIZE),
-                                brokenBrick.get(0));
-                        getEntities().add(deleteBrick2);
-                        Entity grass = new Grass(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
-                        Entity portal = new Portal(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
-                        for (int i = 0; i < getStillObjects().size(); i++) {
-                            int x = getStillObjects().get(i).getX();
-                            int y = getStillObjects().get(i).getY();
-                            if (x == deleteBrick2.getX() && y == deleteBrick2.getY()) {
-                                if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
-                                    getStillObjects().set(i, grass);
-                                    BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] =' ';
-                                } else {
-                                    if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
-                                }
+            if (leftHorizontal.flammable()) {
+                if (leftHorizontal.brickCollision()) {
+                    deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) - 1,
+                            (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                            brokenBrick.get(0));
+                    getEntities().add(deleteBrick2);
+                    Entity grass = new Grass(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                    Entity portal = new Portal(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                    for (int i = 0; i < getStillObjects().size(); i++) {
+                        int x = getStillObjects().get(i).getX();
+                        int y = getStillObjects().get(i).getY();
+                        if (x == deleteBrick2.getX() && y == deleteBrick2.getY()) {
+                            if (BombermanGame.map[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE] == '*') {
+                                getStillObjects().set(i, grass);
+                                BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] = ' ';
+                            } else {
+                                if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
                             }
                         }
-                    } else {
-                        getEntities().add(leftLastHorizontal);
+                    }
+                } else {
+                    getEntities().add(leftHorizontal);
+                    if (leftLastHorizontal.flammable()) {
+                        if (leftLastHorizontal.brickCollision()) {
+                            deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) - 2,
+                                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                                    brokenBrick.get(0));
+                            getEntities().add(deleteBrick2);
+                            Entity grass = new Grass(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                            Entity portal = new Portal(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                            for (int i = 0; i < getStillObjects().size(); i++) {
+                                int x = getStillObjects().get(i).getX();
+                                int y = getStillObjects().get(i).getY();
+                                if (x == deleteBrick2.getX() && y == deleteBrick2.getY()) {
+                                    if (BombermanGame.map[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE] == '*') {
+                                        getStillObjects().set(i, grass);
+                                        BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] = ' ';
+                                    } else {
+                                        if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                    }
+                                }
+                            }
+                        } else {
+                            getEntities().add(leftLastHorizontal);
+                        }
                     }
                 }
             }
-        }
 
-        if (downVertical.flammable()) {
-            if (downVertical.brickCollision()) {
-                deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                        (int) (bomb.getY() / Sprite.SCALED_SIZE) + 1,
-                        brokenBrick.get(0));
-                getEntities().add(deleteBrick3);
-                Entity grass = new Grass(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
-                Entity portal = new Portal(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
-                for (int i = 0; i < getStillObjects().size(); i++) {
-                    int x = getStillObjects().get(i).getX();
-                    int y = getStillObjects().get(i).getY();
-                    if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
-                        if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
-                            getStillObjects().set(i, grass);
-                            BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
-                        } else {
-                            if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
-                        }
-                    }
-                }
-            } else {
-                getEntities().add(downVertical);
-                if (downLastVertical.flammable()) {
-                    if (downLastVertical.brickCollision()) {
-                        deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                                (int) (bomb.getY() / Sprite.SCALED_SIZE) + 2,
-                                brokenBrick.get(0));
-                        getEntities().add(deleteBrick3);
-                        Entity grass = new Grass(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
-                        Entity portal = new Portal(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
-                        for (int i = 0; i < getStillObjects().size(); i++) {
-                            int x = getStillObjects().get(i).getX();
-                            int y = getStillObjects().get(i).getY();
-                            if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
-                                if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
-                                    getStillObjects().set(i, grass);
-                                    BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
-                                } else {
-                                    if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
-                                }
+            if (downVertical.flammable()) {
+                if (downVertical.brickCollision()) {
+                    deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                            (int) (bomb.getY() / Sprite.SCALED_SIZE) + 1,
+                            brokenBrick.get(0));
+                    getEntities().add(deleteBrick3);
+                    Entity grass = new Grass(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                    Entity portal = new Portal(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                    for (int i = 0; i < getStillObjects().size(); i++) {
+                        int x = getStillObjects().get(i).getX();
+                        int y = getStillObjects().get(i).getY();
+                        if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
+                            if (BombermanGame.map[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE] == '*') {
+                                getStillObjects().set(i, grass);
+                                BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] = ' ';
+                            } else {
+                                if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
                             }
                         }
-                    } else {
-                        getEntities().add(downLastVertical);
+                    }
+                } else {
+                    getEntities().add(downVertical);
+                    if (downLastVertical.flammable()) {
+                        if (downLastVertical.brickCollision()) {
+                            deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                                    (int) (bomb.getY() / Sprite.SCALED_SIZE) + 2,
+                                    brokenBrick.get(0));
+                            getEntities().add(deleteBrick3);
+                            Entity grass = new Grass(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                            Entity portal = new Portal(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                            for (int i = 0; i < getStillObjects().size(); i++) {
+                                int x = getStillObjects().get(i).getX();
+                                int y = getStillObjects().get(i).getY();
+                                if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
+                                    if (BombermanGame.map[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE] == '*') {
+                                        getStillObjects().set(i, grass);
+                                        BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] = ' ';
+                                    } else {
+                                        if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                    }
+                                }
+                            }
+                        } else {
+                            getEntities().add(downLastVertical);
+                        }
                     }
                 }
             }
-        }
 
-        if (topVertical.flammable()) {
-            if (topVertical.brickCollision()) {
-                deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                        (int) (bomb.getY() / Sprite.SCALED_SIZE) - 1,
-                        brokenBrick.get(0));
-                getEntities().add(deleteBrick4);
-                Entity grass = new Grass(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
-                Entity portal = new Portal(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
-                for (int i = 0; i < getStillObjects().size(); i++) {
-                    int x = getStillObjects().get(i).getX();
-                    int y = getStillObjects().get(i).getY();
-                    if (x == deleteBrick4.getX() && y == deleteBrick4.getY()) {
-                        if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
-                            getStillObjects().set(i, grass);
-                            BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] =' ';
+            if (topVertical.flammable()) {
+                if (topVertical.brickCollision()) {
+                    deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                            (int) (bomb.getY() / Sprite.SCALED_SIZE) - 1,
+                            brokenBrick.get(0));
+                    getEntities().add(deleteBrick4);
+                    Entity grass = new Grass(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                    Entity portal = new Portal(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                    for (int i = 0; i < getStillObjects().size(); i++) {
+                        int x = getStillObjects().get(i).getX();
+                        int y = getStillObjects().get(i).getY();
+                        if (x == deleteBrick4.getX() && y == deleteBrick4.getY()) {
+                            if (BombermanGame.map[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE] == '*') {
+                                getStillObjects().set(i, grass);
+                                BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] = ' ';
+                            } else {
+                                if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                            }
+                        }
+                    }
+                } else {
+                    getEntities().add(topVertical);
+                    if (topLastVertical.flammable()) {
+                        if (topLastVertical.brickCollision()) {
+                            deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                                    (int) (bomb.getY() / Sprite.SCALED_SIZE) - 2,
+                                    brokenBrick.get(0));
+                            getEntities().add(deleteBrick4);
+                            Entity grass = new Grass(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+                            Entity portal = new Portal(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                            for (int i = 0; i < getStillObjects().size(); i++) {
+                                int x = getStillObjects().get(i).getX();
+                                int y = getStillObjects().get(i).getY();
+                                if (x == deleteBrick4.getX() && y == deleteBrick4.getY()) {
+                                    if (BombermanGame.map[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE] == '*') {
+                                        getStillObjects().set(i, grass);
+                                        BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] = ' ';
+                                    } else {
+                                        if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                    }
+                                }
+                            }
                         } else {
-                            if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                            getEntities().add(topLastVertical);
                         }
                     }
                 }
-            } else {
-                getEntities().add(topVertical);
-                if (topLastVertical.flammable()) {
-                    if (topLastVertical.brickCollision()) {
-                        deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-                                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 2,
-                                brokenBrick.get(0));
-                        getEntities().add(deleteBrick4);
-                        Entity grass = new Grass(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
-                        Entity portal = new Portal(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
-                        for (int i = 0; i < getStillObjects().size(); i++) {
-                            int x = getStillObjects().get(i).getX();
-                            int y = getStillObjects().get(i).getY();
-                            if (x == deleteBrick4.getX() && y == deleteBrick4.getY()) {
-                                if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
-                                    getStillObjects().set(i, grass);
-                                    BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] =' ';
-                                } else {
-                                    if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
-                                }
+            }
+        } else {
+            leftLastHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) - 2,
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                    leftHorizontalFlame.get(0));
+            downLastVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE) + 2,
+                    downVerticalFlame.get(0));
+            topLastVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE) - 2,
+                    topVerticalFlame.get(0));
+            rightLastHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 2,
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                    rightHorizontalFlame.get(0));
+
+            leftHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) - 1,
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                    horizontalFlame.get(0));
+            downVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE) + 1,
+                    verticalFlame.get(0));
+            topVertical = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE) - 1,
+                    verticalFlame.get(0));
+            rightHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
+                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                    horizontalFlame.get(0));
+
+//        deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
+//                brokenBrick.get(0));
+//        deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
+//                brokenBrick.get(0));
+//        deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
+//                brokenBrick.get(0));
+//        deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
+//                brokenBrick.get(0));
+
+            if (rightHorizontal.flammable()) {
+                if (rightHorizontal.brickCollision()) {
+                    deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
+                            (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                            brokenBrick.get(0));
+                    getEntities().add(deleteBrick1);
+                    Entity grass = new Grass(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.grass1.getFxImage());
+                    Entity portal = new Portal(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                    for (int i = 0; i < getStillObjects().size(); i++) {
+                        int x = getStillObjects().get(i).getX();
+                        int y = getStillObjects().get(i).getY();
+                        if (x == deleteBrick1.getX() && y == deleteBrick1.getY()) {
+                            if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                getStillObjects().set(i, grass);
+                                BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] =' ';
+                            } else {
+                                if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
                             }
                         }
-                    } else {
-                        getEntities().add(topLastVertical);
+                    }
+                } else {
+                    getEntities().add(rightHorizontal);
+                    if (rightLastHorizontal.flammable()) {
+                        if (rightLastHorizontal.brickCollision()) {
+                            deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) + 2,
+                                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                                    brokenBrick.get(0));
+                            getEntities().add(deleteBrick1);
+                            Entity grass = new Grass(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.grass1.getFxImage());
+                            Entity portal = new Portal(deleteBrick1.getX() / Sprite.SCALED_SIZE, deleteBrick1.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                            for (int i = 0; i < getStillObjects().size(); i++) {
+                                int x = getStillObjects().get(i).getX();
+                                int y = getStillObjects().get(i).getY();
+                                if (x == deleteBrick1.getX() && y == deleteBrick1.getY()) {
+                                    if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                        getStillObjects().set(i, grass);
+                                        BombermanGame.map[deleteBrick1.getY() / Sprite.SCALED_SIZE][deleteBrick1.getX() / Sprite.SCALED_SIZE] =' ';
+                                    } else {
+                                        if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                    }
+                                }
+                            }
+                        } else {
+                            getEntities().add(rightLastHorizontal);
+                        }
+                    }
+                }
+            }
+
+            if (leftHorizontal.flammable()) {
+                if (leftHorizontal.brickCollision()) {
+                    deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) - 1,
+                            (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                            brokenBrick.get(0));
+                    getEntities().add(deleteBrick2);
+                    Entity grass = new Grass(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.grass1.getFxImage());
+                    Entity portal = new Portal(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                    for (int i = 0; i < getStillObjects().size(); i++) {
+                        int x = getStillObjects().get(i).getX();
+                        int y = getStillObjects().get(i).getY();
+                        if (x == deleteBrick2.getX() && y == deleteBrick2.getY()) {
+                            if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                getStillObjects().set(i, grass);
+                                BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] =' ';
+                            } else {
+                                if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                            }
+                        }
+                    }
+                } else {
+                    getEntities().add(leftHorizontal);
+                    if (leftLastHorizontal.flammable()) {
+                        if (leftLastHorizontal.brickCollision()) {
+                            deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) - 2,
+                                    (int) (bomb.getY() / Sprite.SCALED_SIZE),
+                                    brokenBrick.get(0));
+                            getEntities().add(deleteBrick2);
+                            Entity grass = new Grass(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.grass1.getFxImage());
+                            Entity portal = new Portal(deleteBrick2.getX() / Sprite.SCALED_SIZE, deleteBrick2.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                            for (int i = 0; i < getStillObjects().size(); i++) {
+                                int x = getStillObjects().get(i).getX();
+                                int y = getStillObjects().get(i).getY();
+                                if (x == deleteBrick2.getX() && y == deleteBrick2.getY()) {
+                                    if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                        getStillObjects().set(i, grass);
+                                        BombermanGame.map[deleteBrick2.getY() / Sprite.SCALED_SIZE][deleteBrick2.getX() / Sprite.SCALED_SIZE] =' ';
+                                    } else {
+                                        if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                    }
+                                }
+                            }
+                        } else {
+                            getEntities().add(leftLastHorizontal);
+                        }
+                    }
+                }
+            }
+
+            if (downVertical.flammable()) {
+                if (downVertical.brickCollision()) {
+                    deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                            (int) (bomb.getY() / Sprite.SCALED_SIZE) + 1,
+                            brokenBrick.get(0));
+                    getEntities().add(deleteBrick3);
+                    Entity grass = new Grass(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.grass1.getFxImage());
+                    Entity portal = new Portal(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                    for (int i = 0; i < getStillObjects().size(); i++) {
+                        int x = getStillObjects().get(i).getX();
+                        int y = getStillObjects().get(i).getY();
+                        if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
+                            if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                getStillObjects().set(i, grass);
+                                BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
+                            } else {
+                                if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                            }
+                        }
+                    }
+                } else {
+                    getEntities().add(downVertical);
+                    if (downLastVertical.flammable()) {
+                        if (downLastVertical.brickCollision()) {
+                            deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                                    (int) (bomb.getY() / Sprite.SCALED_SIZE) + 2,
+                                    brokenBrick.get(0));
+                            getEntities().add(deleteBrick3);
+                            Entity grass = new Grass(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.grass1.getFxImage());
+                            Entity portal = new Portal(deleteBrick3.getX() / Sprite.SCALED_SIZE, deleteBrick3.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                            for (int i = 0; i < getStillObjects().size(); i++) {
+                                int x = getStillObjects().get(i).getX();
+                                int y = getStillObjects().get(i).getY();
+                                if (x == deleteBrick3.getX() && y == deleteBrick3.getY()) {
+                                    if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                        getStillObjects().set(i, grass);
+                                        BombermanGame.map[deleteBrick3.getY() / Sprite.SCALED_SIZE][deleteBrick3.getX() / Sprite.SCALED_SIZE] =' ';
+                                    } else {
+                                        if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                    }
+                                }
+                            }
+                        } else {
+                            getEntities().add(downLastVertical);
+                        }
+                    }
+                }
+            }
+
+            if (topVertical.flammable()) {
+                if (topVertical.brickCollision()) {
+                    deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                            (int) (bomb.getY() / Sprite.SCALED_SIZE) - 1,
+                            brokenBrick.get(0));
+                    getEntities().add(deleteBrick4);
+                    Entity grass = new Grass(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.grass1.getFxImage());
+                    Entity portal = new Portal(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                    for (int i = 0; i < getStillObjects().size(); i++) {
+                        int x = getStillObjects().get(i).getX();
+                        int y = getStillObjects().get(i).getY();
+                        if (x == deleteBrick4.getX() && y == deleteBrick4.getY()) {
+                            if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                getStillObjects().set(i, grass);
+                                BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] =' ';
+                            } else {
+                                if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                            }
+                        }
+                    }
+                } else {
+                    getEntities().add(topVertical);
+                    if (topLastVertical.flammable()) {
+                        if (topLastVertical.brickCollision()) {
+                            deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
+                                    (int) (bomb.getY() / Sprite.SCALED_SIZE) - 2,
+                                    brokenBrick.get(0));
+                            getEntities().add(deleteBrick4);
+                            Entity grass = new Grass(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.grass1.getFxImage());
+                            Entity portal = new Portal(deleteBrick4.getX() / Sprite.SCALED_SIZE, deleteBrick4.getY() / Sprite.SCALED_SIZE, Sprite.portal.getFxImage());
+                            for (int i = 0; i < getStillObjects().size(); i++) {
+                                int x = getStillObjects().get(i).getX();
+                                int y = getStillObjects().get(i).getY();
+                                if (x == deleteBrick4.getX() && y == deleteBrick4.getY()) {
+                                    if (BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == '*') {
+                                        getStillObjects().set(i, grass);
+                                        BombermanGame.map[deleteBrick4.getY() / Sprite.SCALED_SIZE][deleteBrick4.getX() / Sprite.SCALED_SIZE] =' ';
+                                    } else {
+                                        if (getStillObjects().get(i) instanceof Brick) getStillObjects().set(i, portal);
+                                    }
+                                }
+                            }
+                        } else {
+                            getEntities().add(topLastVertical);
+                        }
                     }
                 }
             }

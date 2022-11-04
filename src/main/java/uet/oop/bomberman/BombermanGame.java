@@ -25,7 +25,6 @@ public class BombermanGame extends Application {
     private static final int FRAME_PER_SECOND = 90;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
-
     private GraphicsContext gc;
     private Canvas canvas;
     private static List<Entity> entities = new ArrayList<Entity>();
@@ -85,6 +84,7 @@ public class BombermanGame extends Application {
     File file, file1;
     String localUrl, localUrl1;
     public static Bomber bomberman;
+    public static int level =1;
     public static int numberOfEnemies = 0;
 //    private  Heart heart1 = new Heart(1,0, Sprite.fullHeart.getFxImage());
 //    private  Heart heart2 = new Heart(2,0, Sprite.fullHeart.getFxImage());
@@ -223,6 +223,7 @@ public class BombermanGame extends Application {
                             }
 
                         } else if (numberOfEnemies == 0 && bomberman.inPortal()) { // to Level 2
+                            level =2;
                             Audio.setLevelUp();
                             Audio.getLevelUp().play();
                             map = load_map("res/levels/Level2.txt");
