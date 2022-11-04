@@ -136,7 +136,7 @@ public class BombermanGame extends Application {
 
             }
         });
-
+        
         imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -172,6 +172,7 @@ public class BombermanGame extends Application {
 
             @Override
             public void handle(long now) {
+
                 long dt = now - prevTime;
 
                 if (dt > 1000000000 / FRAME_PER_SECOND) {
@@ -227,7 +228,6 @@ public class BombermanGame extends Application {
                             entities.add(bomberman);
                         }
                     }
-
                 }
                 render();
             }

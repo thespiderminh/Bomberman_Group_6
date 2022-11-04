@@ -75,8 +75,18 @@ public class Bomber extends Entity {
             }
             if (isWallPass) {
                 if (now - wallPassTime >= 5000000000L) {
-                    isWallPass = false;
-                    wallPassTime = 0;
+                    boolean check = false;
+                    for (int i = 0; i < getStillObjects().size(); i++) {
+                        if (getStillObjects().get(i) instanceof Brick) {
+                            if (this.checkCollision(getStillObjects().get(i))) {
+                                check = true;
+                            }
+                        }
+                    }
+                    if (!check) {
+                        isWallPass = false;
+                        wallPassTime = 0;
+                    }
                 }
             }
         }
