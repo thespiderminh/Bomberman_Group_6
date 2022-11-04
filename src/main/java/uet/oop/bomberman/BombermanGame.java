@@ -136,7 +136,7 @@ public class BombermanGame extends Application {
 
             }
         });
-
+        
         imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -172,6 +172,7 @@ public class BombermanGame extends Application {
 
             @Override
             public void handle(long now) {
+
                 long dt = now - prevTime;
 
                 if (dt > 1000000000 / FRAME_PER_SECOND) {
@@ -189,7 +190,9 @@ public class BombermanGame extends Application {
                                 Bomber.setAmountOfLives(Bomber.getAmountOfLives() - 1);
                                 entities.remove(bomberman);
                                 entities.removeIf(w -> w instanceof Bomb);
+                                entities.removeIf(w -> w instanceof Flame);
                                 Bomb.setNumberOfBombs(1);
+                                Bomb.setNumberOfBombsOnScreen(0);
                                 bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                                 bomberman.setAlive(true);
                                 entities.add(bomberman);
@@ -200,6 +203,7 @@ public class BombermanGame extends Application {
                                 map = load_map("res/levels/Level1.txt");
                                 Bomber.setAmountOfLives(3);
                                 Bomb.setNumberOfBombs(1);
+                                Bomb.setNumberOfBombsOnScreen(0);
                                 entities = new ArrayList<Entity>();
                                 stillObjects = new ArrayList<Entity>();
                                 createMap1(map);
@@ -214,6 +218,7 @@ public class BombermanGame extends Application {
                             Audio.getLevelUp().play();
                             map = load_map("res/levels/Level2.txt");
                             Bomb.setNumberOfBombs(1);
+                            Bomb.setNumberOfBombsOnScreen(0);
                             entities = new ArrayList<Entity>();
                             stillObjects = new ArrayList<Entity>();
                             createMap2(map);
@@ -223,7 +228,6 @@ public class BombermanGame extends Application {
                             entities.add(bomberman);
                         }
                     }
-
                 }
                 render();
             }
@@ -290,6 +294,7 @@ public class BombermanGame extends Application {
         }
 
     }
+
     public void createMap2(char[][] a) {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
@@ -340,6 +345,7 @@ public class BombermanGame extends Application {
         }
 
     }
+
     public void update(long now) {
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update(scene, now);

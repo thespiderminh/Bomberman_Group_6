@@ -62,6 +62,10 @@ public class Bomb extends Entity {
         Bomb.numberOfBombs = numberOfBombs;
     }
 
+    public static void setNumberOfBombsOnScreen(int numberOfBombsOnScreen) {
+        Bomb.numberOfBombsOnScreen = numberOfBombsOnScreen;
+    }
+
     public void setExplodeTime(long explodeTime) {
         this.explodeTime = explodeTime;
     }
