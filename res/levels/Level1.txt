@@ -38,3 +38,4 @@ f - Flame Item
 s - Speed Item
 
 Kí tự khác các kí tự trên - Grass
+
