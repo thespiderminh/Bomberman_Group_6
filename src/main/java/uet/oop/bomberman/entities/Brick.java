@@ -10,7 +10,7 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.getStillObjects;
 
 public class Brick extends Entity {
-    List<String> itemType = Arrays.asList("SpeedItem", "BombItem", "WallPassItem", "null");
+    List<String> itemType = Arrays.asList("SpeedItem", "BombItem", "WallPassItem","HeartItem", "null");
     String type = "notInit";
     public Brick(int x, int y, Image img) {
         super( x, y, img);
@@ -23,7 +23,11 @@ public class Brick extends Entity {
 
     public void getItem() {
         if (type.equals("notInit")) {
-            type = itemType.get((int)(Math.round(Math.random() * 10)) % itemType.size());
+            if(Bomber.getAmountOfLives()<4) {
+                type = itemType.get((int) (Math.round(Math.random() * 10)) % itemType.size());
+            } else {
+                type = itemType.get((int) (Math.round(Math.random() * 10)) % (itemType.size()-1));
+            }
         }
 
         if (type.equals("SpeedItem")) {
@@ -34,6 +38,9 @@ public class Brick extends Entity {
             this.img = null;
         } else if (type.equals("WallPassItem")) {
             getStillObjects().add(new WallPassItem(this.x / Sprite.SCALED_SIZE, this.y / Sprite.SCALED_SIZE, Sprite.powerup_wallpass.getFxImage()));
+            this.img = null;
+        } else if(type.equals("HeartItem")){
+            getStillObjects().add(new HeartItem(this.x / Sprite.SCALED_SIZE, this.y / Sprite.SCALED_SIZE, Sprite.powerup_detonator.getFxImage()));
             this.img = null;
         }
     }

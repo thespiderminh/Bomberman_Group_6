@@ -358,6 +358,11 @@ public class Bomber extends Entity {
         } else if (item instanceof WallPassItem) {
             isWallPass = true;
             wallPassTime = now;
+        } else if(item instanceof HeartItem) {
+            if (amountOfLives < 4) {
+                amountOfLives++;
+                Heart.getHeartItem();
+            }
         }
     }
 }
