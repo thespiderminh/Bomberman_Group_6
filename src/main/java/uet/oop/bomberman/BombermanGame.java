@@ -84,7 +84,7 @@ public class BombermanGame extends Application {
     File file, file1;
     String localUrl, localUrl1;
     public static Bomber bomberman;
-    public static int level =1;
+    public static int level = 0;
     public static int numberOfEnemies = 0;
 //    private  Heart heart1 = new Heart(1,0, Sprite.fullHeart.getFxImage());
 //    private  Heart heart2 = new Heart(2,0, Sprite.fullHeart.getFxImage());
@@ -216,6 +216,7 @@ public class BombermanGame extends Application {
                                 entities = new ArrayList<Entity>();
                                 stillObjects = new ArrayList<Entity>();
                                 createMap1(map);
+                                level = 1;
                                 bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                                 bomberman.setAlive(true);
                                 entities.add(bomberman);
@@ -223,7 +224,7 @@ public class BombermanGame extends Application {
                             }
 
                         } else if (numberOfEnemies == 0 && bomberman.inPortal()) { // to Level 2
-                            level =2;
+                            level = 2;
                             Audio.setLevelUp();
                             Audio.getLevelUp().play();
                             map = load_map("res/levels/Level2.txt");
@@ -255,7 +256,7 @@ public class BombermanGame extends Application {
 
         map = load_map("res/levels/Level1.txt");
         createMap1(map);
-
+        level = 1;
         bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
         entities.add(bomberman);
         Heart.addHeart();
