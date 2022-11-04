@@ -86,6 +86,9 @@ public class BombermanGame extends Application {
     String localUrl, localUrl1;
     public static Bomber bomberman;
     public static int numberOfEnemies = 0;
+//    private  Heart heart1 = new Heart(1,0, Sprite.fullHeart.getFxImage());
+//    private  Heart heart2 = new Heart(2,0, Sprite.fullHeart.getFxImage());
+//    private  Heart heart3 = new Heart(3,0, Sprite.fullHeart.getFxImage());
 
     @Override
     public void start(Stage stage) throws MalformedURLException {
@@ -136,7 +139,7 @@ public class BombermanGame extends Application {
 
             }
         });
-        
+
         imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -146,6 +149,9 @@ public class BombermanGame extends Application {
                 Audio.getPlayStart().play();
                 Audio.setBackgroundMusic();
                 Audio.getBackgroundMusic().play();
+//                entities.add(heart1);
+//                entities.add(heart2);
+//                entities.add(heart3);
             }
         });
 
@@ -180,22 +186,25 @@ public class BombermanGame extends Application {
                     if (stage.getScene().equals(scene)) {
                         update(now);
                         boolean isAlive = false;
-                        for(Entity w : entities) {
+                        for (Entity w : entities) {
                             if (w instanceof Bomber) {
                                 isAlive = true;
                             }
                         }
+
                         if (!isAlive) {
-                            if (Bomber.getAmountOfLives() > 0) { // Respawn
+                            if (Bomber.getAmountOfLives() > 1) { // Respawn
                                 Bomber.setAmountOfLives(Bomber.getAmountOfLives() - 1);
                                 entities.remove(bomberman);
                                 entities.removeIf(w -> w instanceof Bomb);
                                 entities.removeIf(w -> w instanceof Flame);
+                                Heart.setHeart(Bomber.getAmountOfLives());
                                 Bomb.setNumberOfBombs(1);
                                 Bomb.setNumberOfBombsOnScreen(0);
                                 bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                                 bomberman.setAlive(true);
                                 entities.add(bomberman);
+                                Audio.getBackgroundMusic().play();
                             } else { // Restart
                                 stage.setScene(startScene);
                                 Audio.setLevelUp();
@@ -207,10 +216,10 @@ public class BombermanGame extends Application {
                                 entities = new ArrayList<Entity>();
                                 stillObjects = new ArrayList<Entity>();
                                 createMap1(map);
-
                                 bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                                 bomberman.setAlive(true);
                                 entities.add(bomberman);
+                                Heart.addHeart();
                             }
 
                         } else if (numberOfEnemies == 0 && bomberman.inPortal()) { // to Level 2
@@ -222,7 +231,13 @@ public class BombermanGame extends Application {
                             entities = new ArrayList<Entity>();
                             stillObjects = new ArrayList<Entity>();
                             createMap2(map);
-
+                            if (Bomber.getAmountOfLives() == 3) {
+                                Heart.addHeart();
+                            } else if (Bomber.getAmountOfLives() == 2) {
+                                Heart.addHeart2();
+                            } else {
+                                Heart.addHeart1();
+                            }
                             bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                             bomberman.setAlive(true);
                             entities.add(bomberman);
@@ -242,6 +257,7 @@ public class BombermanGame extends Application {
 
         bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
         entities.add(bomberman);
+        Heart.addHeart();
     }
 
     public void createMap1(char[][] a) {
@@ -264,8 +280,7 @@ public class BombermanGame extends Application {
                     stillObjects.add(object);
                     object = new Brick(j, i, Sprite.brick.getFxImage());
                     stillObjects.add(object);
-                }
-                else if (a[i][j] == '1') {
+                } else if (a[i][j] == '1') {
                     ++numberOfEnemies;
                     movable = new Balloon(j, i, Sprite.balloom_right1.getFxImage());
                     entities.add(movable);
@@ -315,8 +330,7 @@ public class BombermanGame extends Application {
                     stillObjects.add(object);
                     object = new Brick(j, i, Sprite.brick1.getFxImage());
                     stillObjects.add(object);
-                }
-                else if (a[i][j] == '1') {
+                } else if (a[i][j] == '1') {
                     ++numberOfEnemies;
                     movable = new Balloon(j, i, Sprite.balloom_right1.getFxImage());
                     entities.add(movable);

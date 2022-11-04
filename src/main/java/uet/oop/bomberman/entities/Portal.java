@@ -12,4 +12,5 @@ public class Portal extends Entity {
     public void update(Scene scene, long now) {
 
     }
+
 }
