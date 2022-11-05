@@ -263,7 +263,7 @@ public class BombermanGame extends Application {
                             bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                             bomberman.setAlive(true);
                             entities.add(bomberman);
-                        } else if (numberOfEnemies == 0 && level == 1 && !gameCup) { // win game
+                        } else if (numberOfEnemies == 0 && level == 2 && !gameCup) { // win game
                             int c_x, c_y;
                             do {
                                 c_x = ((int)(Math.random() * 10) * 100) % 29 + 1; // 1-29
@@ -273,7 +273,7 @@ public class BombermanGame extends Application {
                             cup = new Cup(c_x, c_y, Sprite.cup.getFxImage());
                             entities.add(cup);
                             gameCup = true;
-                        } else if (BombermanGame.bomberman.getCup(cup) && gameCup) {
+                        } else if (BombermanGame.bomberman.getCup(cup) && gameCup) { // ending
                             System.out.println("Win game");
                             Audio.getBackgroundMusic().stop();
                             Audio.setEnding();
