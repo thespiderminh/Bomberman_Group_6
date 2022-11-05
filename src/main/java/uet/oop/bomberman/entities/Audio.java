@@ -19,6 +19,7 @@ public class Audio {
     private static final String placedBomb = "res/audio/placed_bomb.wav";
     private static final String bombExplore = "res/audio/bomb_explored.wav";
     private static final String menu = "res/audio/title_screen.mp3";
+    private static final String ending = "res/audio/ending.mp3";
 
     private static final String win = "res/audio/win.wav";
 
@@ -162,6 +163,18 @@ public class Audio {
     public static void setLevelUp() {
         levelUp = null;
         levelUp = new MediaPlayer(new Media(new File(lvUp).toURI().toString()));
+    }
+
+    public static MediaPlayer endingMusic;
+
+    public static MediaPlayer getEnding() {
+        return endingMusic;
+    }
+
+    public static void setEnding() {
+        endingMusic = null;
+        endingMusic = new MediaPlayer(new Media(new File(ending).toURI().toString()));
+        endingMusic.setCycleCount(MediaPlayer.INDEFINITE);
     }
 }
 

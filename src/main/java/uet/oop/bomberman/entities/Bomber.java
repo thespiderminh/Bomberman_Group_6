@@ -345,6 +345,13 @@ public class Bomber extends Entity {
     public boolean inPortal() {
         return BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == 'x';
     }
+
+    public boolean getCup(Entity cup) {
+        if (cup instanceof Cup) {
+            return (x == cup.getX() && y == cup.getY());
+        }
+        return false;
+    }
     public boolean getCup() {
         return BombermanGame.map[y/Sprite.SCALED_SIZE][x/Sprite.SCALED_SIZE] == 'c';
     }

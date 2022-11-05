@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
@@ -79,12 +80,17 @@ public class BombermanGame extends Application {
     private Scene scene;
     private Scene startScene;
     private Scene deathScene;
-    Image image, image1;
-    ImageView imageView, imageView1;
-    File file, file1;
-    String localUrl, localUrl1;
+    private Scene endScene;
+    Image image, image1, image2;
+    ImageView imageView, imageView1, imageView2;
+    File file, file1, file2;
+    String localUrl, localUrl1, localUrl2;
     public static Bomber bomberman;
     public static int level = 0;
+    public static Entity cup;
+    public static boolean gameCup = false;
+    public static boolean getCup = false;
+
     public static int numberOfEnemies = 0;
 //    private  Heart heart1 = new Heart(1,0, Sprite.fullHeart.getFxImage());
 //    private  Heart heart2 = new Heart(2,0, Sprite.fullHeart.getFxImage());
@@ -110,6 +116,12 @@ public class BombermanGame extends Application {
         localUrl1 = file1.toURI().toURL().toString();
         image1 = new Image(localUrl1);
         imageView1 = new ImageView(image1);
+
+        Group endGroup = new Group();
+        file2 = new File("res/sprites/ending.png");
+        localUrl2 = file2.toURI().toURL().toString();
+        image2 = new Image(localUrl2);
+        imageView2 = new ImageView(image2);
 
         imageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -163,11 +175,19 @@ public class BombermanGame extends Application {
         imageView1.setScaleY(0.5);
         imageView1.setX(-300);
         imageView1.setY(-200);
+        imageView2.setScaleX(1);
+        imageView2.setScaleY(1);
+        imageView2.setX(0);
+        imageView2.setY(0);
+        imageView2.setFitHeight(Sprite.SCALED_SIZE * HEIGHT);
+        imageView2.setFitWidth(Sprite.SCALED_SIZE * WIDTH);
         startGroup.getChildren().addAll(imageView1, imageView);
+        endGroup.getChildren().add(imageView2);
 
         // Tao scene
         scene = new Scene(root);
         startScene = new Scene(startGroup, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        endScene = new Scene(endGroup, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
 
         // Them scene vao stage
         stage.setScene(startScene);
@@ -192,7 +212,7 @@ public class BombermanGame extends Application {
                             }
                         }
 
-                        if (!isAlive) {
+                        if (!isAlive) { // bomber be killed
                             if (Bomber.getAmountOfLives() > 1) { // Respawn
                                 Bomber.setAmountOfLives(Bomber.getAmountOfLives() - 1);
                                 entities.remove(bomberman);
@@ -243,10 +263,33 @@ public class BombermanGame extends Application {
                             bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                             bomberman.setAlive(true);
                             entities.add(bomberman);
+                        } else if (numberOfEnemies == 0 && level == 1 && !gameCup) { // win game
+                            int c_x, c_y;
+                            do {
+                                c_x = ((int)(Math.random() * 10) * 100) % 29 + 1; // 1-29
+                                c_y = ((int)(Math.random() * 10) * 100) % 11 + 1; // 1-11
+                                System.out.println(c_x + " " + c_y);
+                            } while (BombermanGame.map[c_y][c_x] != ' ');
+                            cup = new Cup(c_x, c_y, Sprite.cup.getFxImage());
+                            entities.add(cup);
+                            gameCup = true;
+                        } else if (BombermanGame.bomberman.getCup(cup) && gameCup) {
+                            System.out.println("Win game");
+                            Audio.getBackgroundMusic().stop();
+                            Audio.setEnding();
+                            Audio.getEnding().play();
+                            stage.setScene(endScene);
+                            stage.show();
                         }
                     }
                 }
                 render();
+            }
+
+            public void write() {
+                if (gameCup) {
+                    System.out.println("Winning");
+                }
             }
         };
         timer.start();
@@ -263,6 +306,7 @@ public class BombermanGame extends Application {
     }
 
     public void createMap1(char[][] a) {
+        numberOfEnemies = 0;
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 Entity object = null;
@@ -313,6 +357,7 @@ public class BombermanGame extends Application {
     }
 
     public void createMap2(char[][] a) {
+        numberOfEnemies = 0;
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 Entity object = null;
