@@ -10,7 +10,7 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.getStillObjects;
 
 public class Brick extends Entity {
-    List<String> itemType = Arrays.asList("SpeedItem", "BombItem", "WallPassItem","HeartItem", "null");
+    List<String> itemType = Arrays.asList("SpeedItem", "BombItem", "WallPassItem", "null","HeartItem");
     String type = "notInit";
     public Brick(int x, int y, Image img) {
         super( x, y, img);
