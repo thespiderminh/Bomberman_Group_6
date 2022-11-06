@@ -14,7 +14,6 @@ public class Doll extends Oneal {
         right_images = Arrays.asList(Sprite.doll_right1.getFxImage(), Sprite.doll_right2.getFxImage(), Sprite.doll_right3.getFxImage());
         left_images = Arrays.asList(Sprite.doll_left1.getFxImage(), Sprite.doll_left2.getFxImage(), Sprite.doll_left3.getFxImage());
         dead_image = Arrays.asList(Sprite.doll_dead.getFxImage(), Sprite.mob_dead1.getFxImage(), Sprite.mob_dead2.getFxImage(), Sprite.mob_dead3.getFxImage());
-        life = 1;
     }
 
     @Override
@@ -73,7 +72,6 @@ public class Doll extends Oneal {
     public void update(Scene scene, long now) {
         if (get_burned() && !Objects.equals(current_state, "Dead") && !Objects.equals(current_state, "NULL")) {
             current_state = "Dead";   // Dead
-            --life;
         }
 
         if (Objects.equals(current_state, "Dead") || Objects.equals(current_state, "NULL")) {
@@ -87,11 +85,6 @@ public class Doll extends Oneal {
                 start_move = now;
             }
         }
-
-//        if (des_x == x && des_y == y && (now - start_velo >= velo_time)) {
-//            generate_velo();
-//            start_velo = now;
-//        }
 
         if (Objects.equals(current_state, "Right")) {
             step = Sprite.SCALED_SIZE;
