@@ -86,19 +86,6 @@ public class Flame extends Entity {
                     (int) (bomb.getY() / Sprite.SCALED_SIZE),
                     horizontalFlame.get(0));
 
-//        deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-//                brokenBrick.get(0));
-//        deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-//                brokenBrick.get(0));
-//        deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-//                brokenBrick.get(0));
-//        deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-//                brokenBrick.get(0));
-
             if (rightHorizontal.flammable()) {
                 if (rightHorizontal.brickCollision()) {
                     deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
@@ -320,19 +307,6 @@ public class Flame extends Entity {
             rightHorizontal = new Flame((int) (bomb.getX() / Sprite.SCALED_SIZE) + 1,
                     (int) (bomb.getY() / Sprite.SCALED_SIZE),
                     horizontalFlame.get(0));
-
-//        deleteBrick1 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-//                brokenBrick.get(0));
-//        deleteBrick2 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-//                brokenBrick.get(0));
-//        deleteBrick3 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-//                brokenBrick.get(0));
-//        deleteBrick4 = new Brick((int) (bomb.getX() / Sprite.SCALED_SIZE),
-//                (int) (bomb.getY() / Sprite.SCALED_SIZE) - 100,
-//                brokenBrick.get(0));
 
             if (rightHorizontal.flammable()) {
                 if (rightHorizontal.brickCollision()) {

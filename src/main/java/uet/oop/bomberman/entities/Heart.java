@@ -26,8 +26,17 @@ public class Heart extends Entity {
     public void setAdded(boolean added) {
         isAdded = added;
     }
-
-    public static void addHeart() {
+    public static void addHeart4() {
+        BombermanGame.getEntities().add(death4);
+        BombermanGame.getEntities().add(death1);
+        BombermanGame.getEntities().add(death2);
+        BombermanGame.getEntities().add(death3);
+        BombermanGame.getEntities().add(heart1);
+        BombermanGame.getEntities().add(heart2);
+        BombermanGame.getEntities().add(heart3);
+        BombermanGame.getEntities().add(heart4);
+    }
+    public static void addHeart3() {
         BombermanGame.getEntities().add(death1);
         BombermanGame.getEntities().add(death2);
         BombermanGame.getEntities().add(death3);

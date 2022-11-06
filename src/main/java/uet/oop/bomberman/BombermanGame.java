@@ -92,9 +92,6 @@ public class BombermanGame extends Application {
     public static boolean getCup = false;
 
     public static int numberOfEnemies = 0;
-//    private  Heart heart1 = new Heart(1,0, Sprite.fullHeart.getFxImage());
-//    private  Heart heart2 = new Heart(2,0, Sprite.fullHeart.getFxImage());
-//    private  Heart heart3 = new Heart(3,0, Sprite.fullHeart.getFxImage());
 
     @Override
     public void start(Stage stage) throws MalformedURLException {
@@ -161,9 +158,6 @@ public class BombermanGame extends Application {
                 Audio.getPlayStart().play();
                 Audio.setBackgroundMusic();
                 Audio.getBackgroundMusic().play();
-//                entities.add(heart1);
-//                entities.add(heart2);
-//                entities.add(heart3);
             }
         });
 
@@ -240,7 +234,7 @@ public class BombermanGame extends Application {
                                 bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
                                 bomberman.setAlive(true);
                                 entities.add(bomberman);
-                                Heart.addHeart();
+                                Heart.addHeart3();
                             }
 
                         } else if (numberOfEnemies == 0 && bomberman.inPortal()) { // to Level 2
@@ -253,8 +247,10 @@ public class BombermanGame extends Application {
                             entities = new ArrayList<Entity>();
                             stillObjects = new ArrayList<Entity>();
                             createMap2(map);
-                            if (Bomber.getAmountOfLives() == 3) {
-                                Heart.addHeart();
+                            if (Bomber.getAmountOfLives() == 4) {
+                                Heart.addHeart4();
+                            } else if(Bomber.getAmountOfLives() == 3) {
+                                Heart.addHeart3();
                             } else if (Bomber.getAmountOfLives() == 2) {
                                 Heart.addHeart2();
                             } else {
@@ -266,8 +262,8 @@ public class BombermanGame extends Application {
                         } else if (numberOfEnemies == 0 && level == 2 && !gameCup) { // win game
                             int c_x, c_y;
                             do {
-                                c_x = ((int)(Math.random() * 10) * 100) % 29 + 1; // 1-29
-                                c_y = ((int)(Math.random() * 10) * 100) % 11 + 1; // 1-11
+                                c_x = ((int) (Math.random() * 10) * 100) % 29 + 1; // 1-29
+                                c_y = ((int) (Math.random() * 10) * 100) % 11 + 1; // 1-11
                                 System.out.println(c_x + " " + c_y);
                             } while (BombermanGame.map[c_y][c_x] != ' ');
                             cup = new Cup(c_x, c_y, Sprite.cup.getFxImage());
@@ -302,7 +298,7 @@ public class BombermanGame extends Application {
         level = 1;
         bomberman = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
         entities.add(bomberman);
-        Heart.addHeart();
+        Heart.addHeart3();
     }
 
     public void createMap1(char[][] a) {
