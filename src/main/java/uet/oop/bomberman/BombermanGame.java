@@ -322,6 +322,7 @@ public class BombermanGame extends Application {
                     stillObjects.add(object);
                     object = new Brick(j, i, Sprite.brick.getFxImage());
                     stillObjects.add(object);
+                    a[i][j] = ' ';
                 } else if (a[i][j] == '1') {
                     ++numberOfEnemies;
                     movable = new Balloon(j, i, Sprite.balloom_right1.getFxImage());
