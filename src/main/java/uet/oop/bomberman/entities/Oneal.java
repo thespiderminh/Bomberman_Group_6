@@ -14,8 +14,6 @@ public class Oneal extends Enemy {
      + Di chuyển về phía bomber.
      */
 
-    protected int life = 1;
-
     /**
      * 1: 50%
      * 2: 30%
@@ -126,7 +124,6 @@ public class Oneal extends Enemy {
 
         if (get_burned() && !Objects.equals(current_state, "Dead") && !Objects.equals(current_state, "NULL")) {
             current_state = "Dead";   // Dead
-            --life;
         }
 
         if (Objects.equals(current_state, "Dead") || Objects.equals(current_state, "NULL")) {
